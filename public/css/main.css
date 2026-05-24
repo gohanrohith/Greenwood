@@ -1100,5 +1100,9 @@ ul  { list-style: none; }
   .container { width: 95%; }
   .page-hero { padding: 52px 0 36px; }
   .section-header { margin-bottom: 36px; }
+  .faculty-grid { grid-template-columns: 1fr 1fr !important; }
+  .gallery-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+  .events-grid  { grid-template-columns: 1fr !important; }
+  .btn { padding: 8px 18px; font-size: .82rem; }
 }
 

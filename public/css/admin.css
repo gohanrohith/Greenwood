@@ -23,8 +23,10 @@ body.site-admin, body.admin-login-page {
 
 /* â”€â”€â”€ LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .admin-wrapper { display: flex; min-height: 100vh; }
-.admin-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-.admin-body    { flex: 1; padding: 2rem; overflow-y: auto; }
+.admin-content { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; min-width: 0; }
+.admin-body    { flex: 1; padding: 2rem; }
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 998; }
+.sidebar-overlay.active { display: block; }
 
 /* â”€â”€â”€ SIDEBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .admin-sidebar {
@@ -251,15 +253,23 @@ body.site-admin, body.admin-login-page {
 .login-footer a { color: var(--admin-primary); }
 
 /* â”€â”€â”€ RESPONSIVE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@media (max-width: 1024px) {
+  .admin-body { padding: 1.5rem; }
+}
 @media (max-width: 768px) {
-  .admin-sidebar { position: fixed; left: -240px; top: 0; bottom: 0; z-index: 1000; transition: left .25s ease; }
+  .admin-sidebar { position: fixed; left: -240px; top: 0; bottom: 0; z-index: 1000; transition: left .3s ease; box-shadow: 4px 0 24px rgba(0,0,0,.3); }
   .admin-sidebar.open { left: 0; }
   #sidebarClose { display: block; }
-  .admin-body { padding: 1.25rem; }
+  .admin-body { padding: 1rem; }
   .form-row { grid-template-columns: 1fr; }
   .dashboard-cards { grid-template-columns: 1fr 1fr; }
+  .admin-card { overflow-x: auto; }
+  .admin-page-header { flex-wrap: wrap; gap: .75rem; }
+  .admin-page-header h1 { font-size: 1.25rem; }
+  .admin-topbar { padding: .75rem 1rem; }
 }
 @media (max-width: 480px) {
   .dashboard-cards { grid-template-columns: 1fr; }
+  .admin-body { padding: .75rem; }
 }
 
