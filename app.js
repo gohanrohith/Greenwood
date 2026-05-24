@@ -37,13 +37,23 @@ const sessionConfig = {
 if (process.env.DB_PASS) {
   try {
     const pool = require('./config/database');
-    sessionConfig.store = new MySQLStore({
+    const mysqlStore = new MySQLStore({
       clearExpired: true,
       checkExpirationInterval: 900000,
       expiration: 86400000,
+      createDatabaseTable: false,
     }, pool);
+
+    // Wrap the store so DB errors don't 503 every request.
+    // Public pages need no session; admin will fail to log in (expected when DB is down).
+    class SafeStore extends session.Store {
+      get(sid, cb) { mysqlStore.get(sid, (e, s) => cb(null, e ? null : s)); }
+      set(sid, s, cb) { mysqlStore.set(sid, s, () => cb(null)); }
+      destroy(sid, cb) { mysqlStore.destroy(sid, () => cb(null)); }
+    }
+    sessionConfig.store = new SafeStore();
   } catch (e) {
-    console.warn('Session store fallback to memory (DB not ready)');
+    console.warn('Session store init failed, using memory store:', e.message);
   }
 }
 
