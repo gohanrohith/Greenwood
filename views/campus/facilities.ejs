@@ -19,7 +19,7 @@
     <div class="container">
       <h1>Facilities</h1>
       <p>World-class infrastructure at <%= campus.name %></p>
-      <div class="breadcrumb"><a href="/">Home</a> / Facilities</div>
+      <div class="breadcrumb"><a href="<%= campusBase %>">Home</a> / Facilities</div>
     </div>
   </section>
 
@@ -100,8 +100,8 @@
         <h2>Come See Our Facilities</h2>
         <p>Schedule a campus tour and see everything <%= campus.name %> has to offer.</p>
         <div class="cta-actions">
-          <a href="/contact" class="btn btn-white">Book a Visit</a>
-          <a href="/admissions" class="btn btn-outline-white">Apply Now</a>
+          <a href="<%= campusBase %>/contact" class="btn btn-white">Book a Visit</a>
+          <a href="<%= campusBase %>/admissions" class="btn btn-outline-white">Apply Now</a>
         </div>
       </div>
     </div>

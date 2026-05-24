@@ -1,4 +1,4 @@
-﻿<footer class="footer-campus">
+<footer class="footer-campus">
   <div class="footer-top">
     <div class="container footer-grid">
       <div class="footer-col">
@@ -10,15 +10,15 @@
       <div class="footer-col">
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About Campus</a></li>
-          <li><a href="/academics">Academics</a></li>
-          <li><a href="/facilities">Facilities</a></li>
-          <li><a href="/events">Events</a></li>
-          <li><a href="/gallery">Gallery</a></li>
-          <li><a href="/notices">Notices</a></li>
-          <li><a href="/downloads">Downloads</a></li>
-          <li><a href="/disclosure"><%= campus.cbse ? 'Mandatory Disclosure' : 'School Information' %></a></li>
+          <li><a href="<%= campusBase %>">Home</a></li>
+          <li><a href="<%= campusBase %>/about">About Campus</a></li>
+          <li><a href="<%= campusBase %>/academics">Academics</a></li>
+          <li><a href="<%= campusBase %>/facilities">Facilities</a></li>
+          <li><a href="<%= campusBase %>/events">Events</a></li>
+          <li><a href="<%= campusBase %>/gallery">Gallery</a></li>
+          <li><a href="<%= campusBase %>/notices">Notices</a></li>
+          <li><a href="<%= campusBase %>/downloads">Downloads</a></li>
+          <li><a href="<%= campusBase %>/disclosure"><%= campus.cbse ? 'Mandatory Disclosure' : 'School Information' %></a></li>
         </ul>
       </div>
 
@@ -29,18 +29,18 @@
           <li><i class="fas fa-phone"></i> <%= campus.phone %></li>
           <li><i class="fas fa-envelope"></i> <%= campus.email %></li>
         </ul>
-        <a href="/admissions" class="btn-footer-cta">Apply Now</a>
+        <a href="<%= campusBase %>/admissions" class="btn-footer-cta">Apply Now</a>
       </div>
 
       <div class="footer-col">
         <h4>Greenwood Group</h4>
         <ul>
-          <li><a href="https://ghs.ac.in">Main Website</a></li>
-          <li><a href="https://hasanparthy.ghs.ac.in">Hasanparthy (CBSE)</a></li>
-          <li><a href="https://hunterroad.ghs.ac.in">Hunter Road (CBSE)</a></li>
-          <li><a href="https://mancherial.ghs.ac.in">Mancherial (CBSE)</a></li>
-          <li><a href="https://naimnagar.ghs.ac.in">Naimnagar (State Board)</a></li>
-          <li><a href="https://gopalpur.ghs.ac.in">Gopalpur (State Board)</a></li>
+          <li><a href="/">Main Website</a></li>
+          <li><a href="/hasanparthy">Hasanparthy (CBSE)</a></li>
+          <li><a href="/hunterroad">Hunter Road (CBSE)</a></li>
+          <li><a href="/mancherial">Mancherial (CBSE)</a></li>
+          <li><a href="/naimnagar">Naimnagar (State Board)</a></li>
+          <li><a href="/gopalpur">Gopalpur (State Board)</a></li>
           <li><a href="http://gtimes.in">GTimes</a></li>
         </ul>
       </div>
@@ -62,7 +62,7 @@
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
     <p style="margin:0;font-size:.82rem;line-height:1.5">
       We use cookies to improve your experience.
-      <a href="https://ghs.ac.in/cookie-policy" style="color:#B5D236">Learn more</a>
+      <a href="/cookie-policy" style="color:#B5D236">Learn more</a>
     </p>
     <div style="display:flex;gap:.5rem;flex-shrink:0">
       <button onclick="acceptCookies()" style="padding:.35rem 1rem;border-radius:20px;background:#00663A;color:#fff;border:none;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer">Accept</button>
@@ -88,4 +88,3 @@ function declineCookies() {
   document.getElementById('cookieBanner').style.display='none';
 }
 </script>
-

@@ -121,7 +121,7 @@ exports.admissions = async (req, res) => {
 
 exports.admissionEnquiry = async (req, res) => {
   const { name, phone, email, student_name, class: cls, message } = req.body;
-  if (!name || !phone) return res.redirect('/admissions?error=Fill+required+fields');
+  if (!name || !phone) return res.redirect(req.campusBase + '/admissions?error=Fill+required+fields');
   try {
     const { query } = require('../config/db');
     await query(
@@ -131,7 +131,7 @@ exports.admissionEnquiry = async (req, res) => {
     const { notifyAdmissionEnquiry } = require('../config/mailer');
     notifyAdmissionEnquiry({ parent_name: name, phone, email, student_name, class_seeking: cls, campus: req.campus.name, message }).catch(() => {});
   } catch (e) { console.error('Admission save error:', e.message); }
-  res.redirect('/admissions?success=1');
+  res.redirect(req.campusBase + '/admissions?success=1');
 };
 
 exports.notices = async (req, res) => {
@@ -160,7 +160,7 @@ exports.contactSubmit = async (req, res) => {
       [name, phone, email || null, `Campus enquiry: ${req.campus.name}`, message]
     );
   } catch (e) { console.error('Contact save error:', e.message); }
-  res.redirect('/contact?success=1');
+  res.redirect(req.campusBase + '/contact?success=1');
 };
 
 exports.disclosure = async (req, res) => {

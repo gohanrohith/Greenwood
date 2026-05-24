@@ -65,15 +65,12 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(campusMiddleware);
 
-// API routes (no campus detection needed)
-app.use('/api', apiRoutes);
+const CAMPUS_SLUGS = ['hasanparthy', 'hunterroad', 'naimnagar', 'mancherial', 'gopalpur'];
 
-// Site router
-app.use((req, res, next) => {
-  if (req.site === 'admin')  return adminRoutes(req, res, next);
-  if (req.site === 'main')   return mainRoutes(req, res, next);
-  return campusRoutes(req, res, next);
-});
+app.use('/api', apiRoutes);
+app.use('/admin', adminRoutes);
+CAMPUS_SLUGS.forEach(slug => app.use(`/${slug}`, campusRoutes));
+app.use('/', mainRoutes);
 
 app.use((req, res) => {
   res.status(404).render('404', { site: req.site || 'main', campus: req.campus || null });

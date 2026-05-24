@@ -20,7 +20,7 @@
     <div class="container">
       <h1>Academics</h1>
       <p><%= campus.board %> Curriculum at <%= campus.name %></p>
-      <div class="breadcrumb"><a href="/">Home</a> / Academics</div>
+      <div class="breadcrumb"><a href="<%= campusBase %>">Home</a> / Academics</div>
     </div>
   </section>
 
@@ -154,8 +154,8 @@
         <h2>Secure Your Child's Academic Future</h2>
         <p>Apply to <%= campus.name %> for the 2025–26 academic year.</p>
         <div class="cta-actions">
-          <a href="/admissions" class="btn btn-white">Apply Now</a>
-          <a href="/faculty" class="btn btn-outline-white">Meet Our Faculty</a>
+          <a href="<%= campusBase %>/admissions" class="btn btn-white">Apply Now</a>
+          <a href="<%= campusBase %>/faculty" class="btn btn-outline-white">Meet Our Faculty</a>
         </div>
       </div>
     </div>

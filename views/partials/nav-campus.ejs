@@ -1,6 +1,6 @@
 <nav class="navbar navbar-campus" id="mainNav">
   <div class="container">
-    <a href="/" class="navbar-brand">
+    <a href="<%= campusBase %>" class="navbar-brand">
       <img src="/images/logo.png" alt="<%= campus.name %>" class="logo"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
       <span class="logo-text" style="display:none">
@@ -16,34 +16,33 @@
     </button>
 
     <ul class="nav-menu" id="navMenu">
-      <li><a href="/" class="nav-link">Home</a></li>
+      <li><a href="<%= campusBase %>" class="nav-link">Home</a></li>
 
-      <li><a href="/about" class="nav-link">About</a></li>
+      <li><a href="<%= campusBase %>/about" class="nav-link">About</a></li>
 
       <li class="has-dropdown">
-        <a href="/academics" class="nav-link">Academics <i class="fas fa-chevron-down" style="font-size:.65rem;margin-left:2px"></i></a>
+        <a href="<%= campusBase %>/academics" class="nav-link">Academics <i class="fas fa-chevron-down" style="font-size:.65rem;margin-left:2px"></i></a>
         <ul class="dropdown">
-          <li><a href="/academics"><i class="fas fa-book-open"></i> Curriculum</a></li>
-          <li><a href="/faculty"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
-          <li><a href="/facilities"><i class="fas fa-flask"></i> Facilities</a></li>
+          <li><a href="<%= campusBase %>/academics"><i class="fas fa-book-open"></i> Curriculum</a></li>
+          <li><a href="<%= campusBase %>/faculty"><i class="fas fa-chalkboard-teacher"></i> Faculty</a></li>
+          <li><a href="<%= campusBase %>/facilities"><i class="fas fa-flask"></i> Facilities</a></li>
         </ul>
       </li>
 
       <li class="has-dropdown">
-        <a href="/events" class="nav-link">Campus Life <i class="fas fa-chevron-down" style="font-size:.65rem;margin-left:2px"></i></a>
+        <a href="<%= campusBase %>/events" class="nav-link">Campus Life <i class="fas fa-chevron-down" style="font-size:.65rem;margin-left:2px"></i></a>
         <ul class="dropdown">
-          <li><a href="/events"><i class="fas fa-calendar-alt"></i> Events & Activities</a></li>
-          <li><a href="/gallery"><i class="fas fa-images"></i> Gallery</a></li>
-          <li><a href="/notices"><i class="fas fa-bell"></i> Notices & Circulars</a></li>
-          <li><a href="/downloads"><i class="fas fa-download"></i> Downloads</a></li>
+          <li><a href="<%= campusBase %>/events"><i class="fas fa-calendar-alt"></i> Events & Activities</a></li>
+          <li><a href="<%= campusBase %>/gallery"><i class="fas fa-images"></i> Gallery</a></li>
+          <li><a href="<%= campusBase %>/notices"><i class="fas fa-bell"></i> Notices & Circulars</a></li>
+          <li><a href="<%= campusBase %>/downloads"><i class="fas fa-download"></i> Downloads</a></li>
         </ul>
       </li>
 
-      <li><a href="/disclosure" class="nav-link">Mandatory Disclosure</a></li>
+      <li><a href="<%= campusBase %>/disclosure" class="nav-link">Mandatory Disclosure</a></li>
 
-
-      <li><a href="/contact" class="nav-link">Contact</a></li>
-      <li><a href="/admissions" class="nav-link nav-cta">Admissions</a></li>
+      <li><a href="<%= campusBase %>/contact" class="nav-link">Contact</a></li>
+      <li><a href="<%= campusBase %>/admissions" class="nav-link nav-cta">Admissions</a></li>
     </ul>
   </div>
 </nav>

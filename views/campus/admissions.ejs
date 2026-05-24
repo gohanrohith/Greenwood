@@ -19,7 +19,7 @@
     <div class="container">
       <h1>Admissions 2025–26</h1>
       <p><%= campus.name %> — <%= campus.board %> · <%= campus.classes %></p>
-      <div class="breadcrumb"><a href="/">Home</a> / Admissions</div>
+      <div class="breadcrumb"><a href="<%= campusBase %>">Home</a> / Admissions</div>
     </div>
   </section>
 
@@ -37,7 +37,7 @@
         <span class="section-tag">Enquiry Form</span>
         <h2 style="margin:.75rem 0 .5rem;color:var(--navy)">Submit Your Enquiry</h2>
         <p style="color:var(--gray);margin-bottom:2rem;font-size:.92rem">Our admissions team will contact you within 24 hours to guide you through the next steps.</p>
-        <form action="/admissions/enquiry" method="POST" class="enquiry-form">
+        <form action="<%= campusBase %>/admissions/enquiry" method="POST" class="enquiry-form">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="form-row">
             <div class="form-group">

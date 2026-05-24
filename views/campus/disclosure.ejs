@@ -35,7 +35,7 @@
       <h1>School Info &amp; Disclosures</h1>
       <p><%= campus.name %> — Telangana State Board</p>
       <% } %>
-      <div class="breadcrumb"><a href="/">Home</a> / <%= campus.cbse ? 'Mandatory Disclosure' : 'School Info' %></div>
+      <div class="breadcrumb"><a href="<%= campusBase %>">Home</a> / <%= campus.cbse ? 'Mandatory Disclosure' : 'School Info' %></div>
     </div>
   </section>
 
@@ -49,7 +49,7 @@
           <h2 style="color:var(--navy);font-size:1.3rem;margin-bottom:.25rem">Mandatory Disclosure &amp; School Info</h2>
           <p style="color:var(--gray);font-size:.88rem;margin:0">CBSE Affiliation Bye-Laws compliance — <%= campus.name %></p>
         </div>
-        <a href="/downloads" class="btn btn-primary" style="flex-shrink:0"><i class="fas fa-file-alt" style="margin-right:.4rem"></i>Mandatory Disclosure</a>
+        <a href="<%= campusBase %>/downloads" class="btn btn-primary" style="flex-shrink:0"><i class="fas fa-file-alt" style="margin-right:.4rem"></i>Mandatory Disclosure</a>
       </div>
       <div style="background:var(--campus-light);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:2.5rem;display:flex;gap:1rem;align-items:flex-start">
         <i class="fas fa-info-circle" style="color:var(--campus-primary);font-size:1.25rem;margin-top:.1rem;flex-shrink:0"></i>
@@ -156,7 +156,7 @@
             <tr><td>Non-Teaching Staff</td><td style="color:var(--gray)">To be updated</td><td>Various</td></tr>
           </tbody>
         </table>
-        <a href="/faculty" class="btn btn-outline">View Faculty Profiles</a>
+        <a href="<%= campusBase %>/faculty" class="btn btn-outline">View Faculty Profiles</a>
       </div>
 
       <div class="disclosure-section">
@@ -175,7 +175,7 @@
           <tr><th>Hostel</th><td>Yes — Separate Boys & Girls Hostels</td></tr>
           <% } %>
         </table>
-        <a href="/facilities" class="btn btn-outline">View Full Facilities List</a>
+        <a href="<%= campusBase %>/facilities" class="btn btn-outline">View Full Facilities List</a>
       </div>
 
       <div class="disclosure-section">
@@ -200,7 +200,7 @@
         <% if (docs['fee_structure'] && docs['fee_structure'][0]) { %>
         <a href="/uploads/compliance/<%= docs['fee_structure'][0].filename %>" target="_blank" class="btn btn-outline">Download Fee Structure (PDF)</a>
         <% } else { %>
-        <a href="/downloads" class="btn btn-outline">View Downloads Section</a>
+        <a href="<%= campusBase %>/downloads" class="btn btn-outline">View Downloads Section</a>
         <% } %>
       </div>
 
@@ -211,7 +211,7 @@
           <h2 style="color:var(--navy);font-size:1.3rem;margin-bottom:.25rem">School Info &amp; Disclosures</h2>
           <p style="color:var(--gray);font-size:.88rem;margin:0">Public information — <%= campus.name %></p>
         </div>
-        <a href="/downloads" class="btn btn-primary" style="flex-shrink:0"><i class="fas fa-file-alt" style="margin-right:.4rem"></i>View Documents</a>
+        <a href="<%= campusBase %>/downloads" class="btn btn-primary" style="flex-shrink:0"><i class="fas fa-file-alt" style="margin-right:.4rem"></i>View Documents</a>
       </div>
       <div style="background:var(--campus-light);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:2.5rem;display:flex;gap:1rem;align-items:flex-start">
         <i class="fas fa-info-circle" style="color:var(--campus-primary);font-size:1.25rem;margin-top:.1rem;flex-shrink:0"></i>
@@ -309,7 +309,7 @@
         <div>
           <p style="font-weight:700;color:var(--navy);margin-bottom:.25rem">Need a document?</p>
           <p style="font-size:.86rem;color:var(--gray);margin-bottom:.75rem">Additional certificates and forms are available in the Downloads section.</p>
-          <a href="/downloads" class="btn btn-outline">View Downloads</a>
+          <a href="<%= campusBase %>/downloads" class="btn btn-outline">View Downloads</a>
         </div>
       </div>
 

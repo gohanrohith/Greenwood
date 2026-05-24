@@ -93,7 +93,7 @@
           <div class="principal-label">Campus Principal</div>
           <h3><%= campus.principal %></h3>
           <p>Academic Head, <%= campus.name %></p>
-          <a href="/contact" class="btn btn-sm btn-outline" style="margin-top:1rem">Contact Us</a>
+          <a href="<%= campusBase %>/contact" class="btn btn-sm btn-outline" style="margin-top:1rem">Contact Us</a>
         </div>
       </div>
     </div>
@@ -123,8 +123,8 @@
         <h2>Admissions Open — <%= campus.name %></h2>
         <p>Limited seats available. Apply early to secure your child's future.</p>
         <div class="cta-actions">
-          <a href="/admissions" class="btn btn-white">Apply Now</a>
-          <a href="/contact" class="btn btn-outline-white">Contact Us</a>
+          <a href="<%= campusBase %>/admissions" class="btn btn-white">Apply Now</a>
+          <a href="<%= campusBase %>/contact" class="btn btn-outline-white">Contact Us</a>
         </div>
       </div>
     </div>

@@ -25,7 +25,8 @@ exports.contactForm = [
 exports.handleErrors = (redirectPath) => (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.redirect(`${redirectPath}?error=${encodeURIComponent(errors.array()[0].msg)}`);
+    const base = req.campusBase || '';
+    return res.redirect(`${base}${redirectPath}?error=${encodeURIComponent(errors.array()[0].msg)}`);
   }
   next();
 };

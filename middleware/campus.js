@@ -4,47 +4,44 @@ const school = require('../config/school');
 const CAMPUS_SLUGS = ['hasanparthy', 'hunterroad', 'naimnagar', 'mancherial', 'gopalpur'];
 
 module.exports = function campusMiddleware(req, res, next) {
-  const mainDomain = process.env.MAIN_DOMAIN || 'lvh.me';
-  const hostname = req.hostname; // e.g. hasanparthy.lvh.me or hasanparthy.ghs.ac.in
+  const segments = req.path.split('/').filter(Boolean);
+  const first = segments[0] || '';
 
-  // Strip the main domain to get the subdomain part
-  let subdomain = '';
-  if (hostname === mainDomain || hostname === `www.${mainDomain}`) {
-    subdomain = '';
-  } else if (hostname.endsWith(`.${mainDomain}`)) {
-    subdomain = hostname.slice(0, hostname.length - mainDomain.length - 1);
-  }
-
-  // Determine which site is being requested
-  if (subdomain === 'admin') {
+  if (first === 'admin') {
     req.site = 'admin';
     req.campus = null;
-  } else if (CAMPUS_SLUGS.includes(subdomain)) {
-    req.site = 'campus';
-    req.campus = getCampus(subdomain);
-    if (!req.campus) {
+    req.campusBase = '/admin';
+  } else if (CAMPUS_SLUGS.includes(first)) {
+    const campus = getCampus(first);
+    if (campus) {
+      req.site = 'campus';
+      req.campus = campus;
+      req.campusBase = `/${first}`;
+    } else {
       req.site = 'main';
       req.campus = null;
+      req.campusBase = '';
     }
   } else {
     req.site = 'main';
     req.campus = null;
+    req.campusBase = '';
   }
 
-  // Canonical URL — always use production domain for SEO correctness
   const canonicalDomain = process.env.MAIN_DOMAIN || 'ghs.ac.in';
   if (req.site === 'campus' && req.campus) {
-    res.locals.canonicalUrl = `https://${req.campus.slug}.${canonicalDomain}${req.path}`;
+    const subPath = req.path.slice(req.campusBase.length) || '/';
+    res.locals.canonicalUrl = `https://${canonicalDomain}/${req.campus.slug}${subPath}`;
   } else if (req.site === 'main') {
     res.locals.canonicalUrl = `https://${canonicalDomain}${req.path}`;
   } else {
     res.locals.canonicalUrl = null;
   }
 
-  // Make campus/site available in all EJS templates
-  res.locals.site    = req.site;
-  res.locals.campus  = req.campus;
-  res.locals.school  = school;
+  res.locals.site        = req.site;
+  res.locals.campus      = req.campus;
+  res.locals.school      = school;
+  res.locals.campusBase  = req.campusBase || '';
   res.locals.currentYear = new Date().getFullYear();
 
   next();

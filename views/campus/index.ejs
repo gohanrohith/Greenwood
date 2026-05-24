@@ -23,8 +23,8 @@
       <h1><%= campus.name %></h1>
       <p><%= campus.tagline %></p>
       <div class="hero-actions">
-        <a href="/admissions" class="btn btn-primary">Apply for Admissions</a>
-        <a href="/contact" class="btn btn-outline-white">Contact Us</a>
+        <a href="<%= campusBase %>/admissions" class="btn btn-primary">Apply for Admissions</a>
+        <a href="<%= campusBase %>/contact" class="btn btn-outline-white">Contact Us</a>
       </div>
     </div>
   </section>
@@ -84,7 +84,7 @@
           <li><i class="fas fa-check-circle"></i> <%= h %></li>
           <% }) %>
         </ul>
-        <a href="/about" class="btn btn-primary" style="margin-top:1.25rem">Learn More</a>
+        <a href="<%= campusBase %>/about" class="btn btn-primary" style="margin-top:1.25rem">Learn More</a>
       </div>
     </div>
   </section>
@@ -116,7 +116,7 @@
           <div class="principal-label">Campus Principal</div>
           <h3><%= campus.principal %></h3>
           <p>Academic Head, <%= campus.name %></p>
-          <a href="/about" class="btn btn-sm btn-outline" style="margin-top:1rem">Meet Our Team</a>
+          <a href="<%= campusBase %>/about" class="btn btn-sm btn-outline" style="margin-top:1rem">Meet Our Team</a>
         </div>
       </div>
     </div>
@@ -216,7 +216,7 @@
         <% }) %>
       </div>
       <div class="section-cta">
-        <a href="/facilities" class="btn btn-primary">Explore All Facilities</a>
+        <a href="<%= campusBase %>/facilities" class="btn btn-primary">Explore All Facilities</a>
       </div>
     </div>
   </section>
@@ -228,8 +228,8 @@
         <h2>Admissions Open 2025–26 — <%= campus.name %></h2>
         <p>Join the Greenwood family. Limited seats available. Apply early to secure your child's future.</p>
         <div class="cta-actions">
-          <a href="/admissions" class="btn btn-white">Apply Online</a>
-          <a href="/contact" class="btn btn-outline-white">Schedule a Visit</a>
+          <a href="<%= campusBase %>/admissions" class="btn btn-white">Apply Online</a>
+          <a href="<%= campusBase %>/contact" class="btn btn-outline-white">Schedule a Visit</a>
         </div>
       </div>
     </div>
@@ -250,8 +250,8 @@
           <li><i class="fab fa-whatsapp"></i> <%= campus.whatsapp %></li>
         </ul>
         <div style="margin-top:1.75rem;display:flex;gap:1rem;flex-wrap:wrap">
-          <a href="/contact" class="btn btn-primary">Contact Us</a>
-          <a href="/admissions" class="btn btn-outline">Admissions Enquiry</a>
+          <a href="<%= campusBase %>/contact" class="btn btn-primary">Contact Us</a>
+          <a href="<%= campusBase %>/admissions" class="btn btn-outline">Admissions Enquiry</a>
         </div>
       </div>
       <div class="campus-map-embed">

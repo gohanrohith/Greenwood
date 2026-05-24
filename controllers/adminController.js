@@ -54,7 +54,7 @@ async function q1(sql, params = []) {
 
 // ── Auth ──────────────────────────────────────────────
 exports.loginPage = (req, res) => {
-  if (req.session.adminId !== undefined) return res.redirect('/');
+  if (req.session.adminId !== undefined) return res.redirect('/admin');
   res.render('admin/login', { title: 'Admin Login | Greenwood', error: null });
 };
 
@@ -68,14 +68,14 @@ exports.loginSubmit = async (req, res) => {
       req.session.adminName = admin.name;
       req.session.adminRole = admin.role;
       req.session.adminCampus = admin.campus;
-      return res.redirect('/');
+      return res.redirect('/admin');
     }
   } catch { /* DB not ready — deny */ }
   res.render('admin/login', { title: 'Admin Login | Greenwood', error: 'Invalid credentials' });
 };
 
 exports.logout = (req, res) => {
-  req.session.destroy(() => res.redirect('/login'));
+  req.session.destroy(() => res.redirect('/admin/login'));
 };
 
 // ── Dashboard ─────────────────────────────────────────
@@ -111,11 +111,11 @@ exports.createNotice = async (req, res) => {
   const { title, content, campus, category } = req.body;
   await q('INSERT INTO notices (title, content, campus, category, created_by) VALUES (?,?,?,?,?)',
     [title, content, campus || 'all', category || 'general', req.session.adminId || null]);
-  res.redirect('/notices');
+  res.redirect('/admin/notices');
 };
 exports.deleteNotice = async (req, res) => {
   await q('UPDATE notices SET is_active=0 WHERE id=?', [req.params.id]);
-  res.redirect('/notices');
+  res.redirect('/admin/notices');
 };
 
 // ── Events ────────────────────────────────────────────
@@ -127,11 +127,11 @@ exports.createEvent = async (req, res) => {
   const { title, description, campus, event_date, category } = req.body;
   await q('INSERT INTO events (title, description, campus, event_date, category, created_by) VALUES (?,?,?,?,?,?)',
     [title, description || null, campus || 'all', event_date || null, category || 'general', req.session.adminId || null]);
-  res.redirect('/events');
+  res.redirect('/admin/events');
 };
 exports.deleteEvent = async (req, res) => {
   await q('UPDATE events SET is_active=0 WHERE id=?', [req.params.id]);
-  res.redirect('/events');
+  res.redirect('/admin/events');
 };
 
 // ── Gallery ───────────────────────────────────────────
@@ -141,7 +141,7 @@ exports.gallery = async (req, res) => {
 };
 exports.uploadGallery = (req, res) => {
   galleryUpload(req, res, async err => {
-    if (err) return res.redirect('/gallery?error=' + encodeURIComponent(err.message));
+    if (err) return res.redirect('/admin/gallery?error=' + encodeURIComponent(err.message));
     const { caption, campus, category } = req.body;
     let uploaded = 0;
     for (const file of (req.files || [])) {
@@ -152,14 +152,14 @@ exports.uploadGallery = (req, res) => {
       uploaded++;
     }
     if (uploaded === 0 && (req.files || []).length > 0) {
-      return res.redirect('/gallery?error=No+valid+images.+Files+must+be+real+JPG%2FPNG%2FGIF%2FWebP.');
+      return res.redirect('/admin/gallery?error=No+valid+images.+Files+must+be+real+JPG%2FPNG%2FGIF%2FWebP.');
     }
-    res.redirect('/gallery');
+    res.redirect('/admin/gallery');
   });
 };
 exports.deleteGallery = async (req, res) => {
   await q('UPDATE gallery SET is_active=0 WHERE id=?', [req.params.id]);
-  res.redirect('/gallery');
+  res.redirect('/admin/gallery');
 };
 
 // ── Admissions ────────────────────────────────────────
@@ -179,7 +179,7 @@ exports.admissionDetail = async (req, res) => {
 };
 exports.updateAdmissionStatus = async (req, res) => {
   await q('UPDATE admission_enquiries SET status=? WHERE id=?', [req.body.status, req.params.id]);
-  res.redirect(`/admissions/${req.params.id}`);
+  res.redirect(`/admin/admissions/${req.params.id}`);
 };
 
 // ── Faculty ───────────────────────────────────────────
@@ -194,24 +194,24 @@ exports.facultyList = async (req, res) => {
 };
 exports.createFaculty = (req, res) => {
   facultyUpload(req, res, async err => {
-    if (err) return res.redirect('/faculty?error=' + encodeURIComponent(err.message));
+    if (err) return res.redirect('/admin/faculty?error=' + encodeURIComponent(err.message));
     const { campus, name, designation, subject, qualification, experience, sort_order } = req.body;
     let photo = req.files?.[0]?.filename || null;
     if (photo) {
       const filePath = path.join(__dirname, '../public/uploads/faculty', photo);
       if (!isValidImage(filePath)) {
         fs.unlinkSync(filePath);
-        return res.redirect('/faculty?error=Invalid+image+file+type');
+        return res.redirect('/admin/faculty?error=Invalid+image+file+type');
       }
     }
     await q('INSERT INTO faculty (campus, name, designation, subject, qualification, experience, photo, sort_order) VALUES (?,?,?,?,?,?,?,?)',
       [campus, name, designation, subject || null, qualification || null, experience || null, photo, sort_order || 0]);
-    res.redirect('/faculty');
+    res.redirect('/admin/faculty');
   });
 };
 exports.deleteFaculty = async (req, res) => {
   await q('UPDATE faculty SET is_active=0 WHERE id=?', [req.params.id]);
-  res.redirect('/faculty');
+  res.redirect('/admin/faculty');
 };
 
 // ── Compliance Documents ──────────────────────────────
@@ -226,22 +226,22 @@ exports.complianceList = async (req, res) => {
 };
 exports.uploadComplianceDoc = (req, res) => {
   documentUpload(req, res, async err => {
-    if (err) return res.redirect('/compliance?error=' + encodeURIComponent(err.message));
+    if (err) return res.redirect('/admin/compliance?error=' + encodeURIComponent(err.message));
     const { campus, doc_type, label, year, sort_order } = req.body;
-    if (!req.file) return res.redirect('/compliance?error=No+file+uploaded');
+    if (!req.file) return res.redirect('/admin/compliance?error=No+file+uploaded');
     const filePath = path.join(__dirname, '../public/uploads/documents', req.file.filename);
     if (!isValidDocument(filePath)) {
       fs.unlinkSync(filePath);
-      return res.redirect('/compliance?error=Invalid+file+type.+Only+PDF%2C+DOC%2C+DOCX%2C+XLS%2C+XLSX+allowed.');
+      return res.redirect('/admin/compliance?error=Invalid+file+type.+Only+PDF%2C+DOC%2C+DOCX%2C+XLS%2C+XLSX+allowed.');
     }
     await q('INSERT INTO compliance_documents (campus, doc_type, label, filename, year, sort_order, uploaded_by) VALUES (?,?,?,?,?,?,?)',
       [campus, doc_type, label, req.file.filename, year || null, sort_order || 0, req.session.adminId || null]);
-    res.redirect('/compliance');
+    res.redirect('/admin/compliance');
   });
 };
 exports.deleteComplianceDoc = async (req, res) => {
   await q('UPDATE compliance_documents SET is_active=0 WHERE id=?', [req.params.id]);
-  res.redirect('/compliance');
+  res.redirect('/admin/compliance');
 };
 
 // ── Downloads ─────────────────────────────────────────
@@ -251,22 +251,22 @@ exports.downloadsList = async (req, res) => {
 };
 exports.uploadDownload = (req, res) => {
   downloadUpload(req, res, async err => {
-    if (err) return res.redirect('/downloads?error=' + encodeURIComponent(err.message));
+    if (err) return res.redirect('/admin/downloads?error=' + encodeURIComponent(err.message));
     const { campus, label, category } = req.body;
-    if (!req.file) return res.redirect('/downloads?error=No+file+uploaded');
+    if (!req.file) return res.redirect('/admin/downloads?error=No+file+uploaded');
     const filePath = path.join(__dirname, '../public/uploads/downloads', req.file.filename);
     if (!isValidDocument(filePath)) {
       fs.unlinkSync(filePath);
-      return res.redirect('/downloads?error=Invalid+file+type.+Only+PDF%2C+DOC%2C+DOCX%2C+XLS%2C+XLSX+allowed.');
+      return res.redirect('/admin/downloads?error=Invalid+file+type.+Only+PDF%2C+DOC%2C+DOCX%2C+XLS%2C+XLSX+allowed.');
     }
     await q('INSERT INTO downloads (campus, label, filename, category, uploaded_by) VALUES (?,?,?,?,?)',
       [campus || 'all', label, req.file.filename, category || 'other', req.session.adminId || null]);
-    res.redirect('/downloads');
+    res.redirect('/admin/downloads');
   });
 };
 exports.deleteDownload = async (req, res) => {
   await q('UPDATE downloads SET is_active=0 WHERE id=?', [req.params.id]);
-  res.redirect('/downloads');
+  res.redirect('/admin/downloads');
 };
 
 // ── Settings ──────────────────────────────────────────
@@ -303,19 +303,19 @@ exports.saveSettings = async (req, res) => {
   }
 
   if (new_password) {
-    if (new_password !== confirm_password) return res.redirect('/settings?error=Passwords+do+not+match');
+    if (new_password !== confirm_password) return res.redirect('/admin/settings?error=Passwords+do+not+match');
     try {
       const { queryOne } = require('../config/db');
       const admin = await queryOne('SELECT password FROM admins WHERE id=?', [req.session.adminId]);
       if (!admin || !await bcrypt.compare(current_password, admin.password)) {
-        return res.redirect('/settings?error=Wrong+current+password');
+        return res.redirect('/admin/settings?error=Wrong+current+password');
       }
       const hash = await bcrypt.hash(new_password, 10);
       await q('UPDATE admins SET password=? WHERE id=?', [hash, req.session.adminId]);
     } catch { /* DB issue */ }
   }
 
-  res.redirect('/settings?success=1');
+  res.redirect('/admin/settings?success=1');
 };
 
 // ── Testimonials ──────────────────────────────────────
@@ -330,15 +330,15 @@ exports.testimonialsList = async (req, res) => {
 
 exports.createTestimonial = async (req, res) => {
   const { name, role, campus, quote, sort_order } = req.body;
-  if (!name || !quote) return res.redirect('/testimonials?error=Name+and+quote+required');
+  if (!name || !quote) return res.redirect('/admin/testimonials?error=Name+and+quote+required');
   await q('INSERT INTO testimonials (name, role, campus, quote, sort_order) VALUES (?,?,?,?,?)',
     [name.trim(), role || 'Parent', campus || null, quote.trim(), parseInt(sort_order) || 0]);
-  res.redirect('/testimonials?success=1');
+  res.redirect('/admin/testimonials?success=1');
 };
 
 exports.deleteTestimonial = async (req, res) => {
   await q('UPDATE testimonials SET is_active=0 WHERE id=?', [req.params.id]);
-  res.redirect('/testimonials');
+  res.redirect('/admin/testimonials');
 };
 
 // ── Newsletter admin ──────────────────────────────────
@@ -352,5 +352,5 @@ exports.newsletterList = async (req, res) => {
 
 exports.deleteNewsletterSub = async (req, res) => {
   await q('DELETE FROM newsletter_subscribers WHERE id=?', [req.params.id]);
-  res.redirect('/newsletter');
+  res.redirect('/admin/newsletter');
 };

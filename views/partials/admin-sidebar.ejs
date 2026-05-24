@@ -4,30 +4,30 @@
     <button id="sidebarClose"><i class="fas fa-times"></i></button>
   </div>
   <nav class="sidebar-nav">
-    <a href="/" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='dashboard' ? 'active' : '' %>"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="/admin" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='dashboard' ? 'active' : '' %>"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
 
     <div class="sidebar-section">Content</div>
-    <a href="/notices" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='notices' ? 'active' : '' %>"><i class="fas fa-bell"></i> Notices</a>
-    <a href="/events" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='events' ? 'active' : '' %>"><i class="fas fa-calendar-alt"></i> Events</a>
-    <a href="/gallery" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='gallery' ? 'active' : '' %>"><i class="fas fa-images"></i> Gallery</a>
+    <a href="/admin/notices" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='notices' ? 'active' : '' %>"><i class="fas fa-bell"></i> Notices</a>
+    <a href="/admin/events" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='events' ? 'active' : '' %>"><i class="fas fa-calendar-alt"></i> Events</a>
+    <a href="/admin/gallery" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='gallery' ? 'active' : '' %>"><i class="fas fa-images"></i> Gallery</a>
 
-    <a href="/testimonials" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='testimonials' ? 'active' : '' %>"><i class="fas fa-quote-left"></i> Testimonials</a>
+    <a href="/admin/testimonials" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='testimonials' ? 'active' : '' %>"><i class="fas fa-quote-left"></i> Testimonials</a>
 
     <div class="sidebar-section">People</div>
-    <a href="/faculty" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='faculty' ? 'active' : '' %>"><i class="fas fa-chalkboard-teacher"></i> Faculty</a>
+    <a href="/admin/faculty" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='faculty' ? 'active' : '' %>"><i class="fas fa-chalkboard-teacher"></i> Faculty</a>
 
     <div class="sidebar-section">Admissions</div>
-    <a href="/admissions" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='admissions' ? 'active' : '' %>"><i class="fas fa-user-graduate"></i> Enquiries</a>
+    <a href="/admin/admissions" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='admissions' ? 'active' : '' %>"><i class="fas fa-user-graduate"></i> Enquiries</a>
 
     <div class="sidebar-section">Documents</div>
-    <a href="/compliance" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='compliance' ? 'active' : '' %>"><i class="fas fa-certificate"></i> Compliance</a>
-    <a href="/downloads" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='downloads' ? 'active' : '' %>"><i class="fas fa-download"></i> Downloads</a>
+    <a href="/admin/compliance" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='compliance' ? 'active' : '' %>"><i class="fas fa-certificate"></i> Compliance</a>
+    <a href="/admin/downloads" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='downloads' ? 'active' : '' %>"><i class="fas fa-download"></i> Downloads</a>
 
     <div class="sidebar-section">Engagement</div>
-    <a href="/newsletter" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='newsletter' ? 'active' : '' %>"><i class="fas fa-envelope"></i> Newsletter</a>
+    <a href="/admin/newsletter" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='newsletter' ? 'active' : '' %>"><i class="fas fa-envelope"></i> Newsletter</a>
 
     <div class="sidebar-section">System</div>
-    <a href="/settings" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> Settings</a>
-    <a href="/logout" class="sidebar-link sidebar-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <a href="/admin/settings" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> Settings</a>
+    <a href="/admin/logout" class="sidebar-link sidebar-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </nav>
 </aside>
