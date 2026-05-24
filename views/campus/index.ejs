@@ -122,6 +122,62 @@
     </div>
   </section>
 
+  <!-- FGES FINNISH EDUCATION PARTNERSHIP (Mancherial only) -->
+  <% if (campus.fges) { %>
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center">
+        <div>
+          <span class="section-tag">International Partnership</span>
+          <h2 style="font-size:1.6rem;font-weight:700;color:var(--navy);margin:.75rem 0 1rem">Finnish Education Partnership</h2>
+          <p style="color:var(--gray);font-size:.94rem;line-height:1.85;margin-bottom:1.25rem">
+            Greenwood Mancherial is proud to partner with <strong>FGES, Finland</strong> — bringing Finnish pedagogical excellence to our campus. Finland's education system is globally recognised for its student-centred approach, emphasis on curiosity-driven learning, and outstanding outcomes.
+          </p>
+          <p style="color:var(--gray);font-size:.94rem;line-height:1.85;margin-bottom:1.75rem">
+            Through this collaboration, our students benefit from Finnish-inspired teaching methodologies, teacher training, and curriculum enrichment that complements the CBSE framework — blending global best practices with India's academic rigour.
+          </p>
+          <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem">
+            <% [
+              'Student-centred, inquiry-based learning',
+              'Collaborative classroom culture',
+              'Focus on critical thinking over rote learning',
+              'Teacher professional development with Finnish educators',
+              'Holistic assessment — beyond test scores'
+            ].forEach(item => { %>
+            <li style="display:flex;align-items:flex-start;gap:.6rem;font-size:.9rem;color:var(--gray-dark)">
+              <i class="fas fa-check-circle" style="color:var(--green);margin-top:.15rem;flex-shrink:0"></i>
+              <%= item %>
+            </li>
+            <% }) %>
+          </ul>
+          <a href="https://fges.fi/" target="_blank" rel="noopener" class="btn btn-outline" style="display:inline-flex;align-items:center;gap:.5rem">
+            <i class="fas fa-external-link-alt" style="font-size:.8rem"></i> Learn about FGES Finland
+          </a>
+        </div>
+        <div>
+          <div style="border-radius:var(--radius-lg);overflow:hidden;background:linear-gradient(135deg,#003580 0%,#005bbd 50%,#ffffff 100%);height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;text-align:center;position:relative">
+            <img src="/images/partners/fges-logo.png" alt="FGES Finland"
+                 style="max-width:180px;margin-bottom:1.5rem"
+                 onerror="this.style.display='none'">
+            <div style="width:70px;height:70px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem">
+              <i class="fas fa-globe-europe" style="font-size:2rem;color:#fff"></i>
+            </div>
+            <p style="color:#fff;font-size:1.1rem;font-weight:700;margin-bottom:.4rem">FGES Finland</p>
+            <p style="color:rgba(255,255,255,.75);font-size:.85rem">Finnish Education &amp; Global Skills</p>
+            <div style="margin-top:1.5rem;display:flex;align-items:center;gap:.5rem">
+              <span style="display:inline-block;width:18px;height:11px;background:#003580;border:1px solid rgba(255,255,255,.3);border-radius:2px"></span>
+              <span style="color:rgba(255,255,255,.65);font-size:.78rem">Finland</span>
+              <span style="color:rgba(255,255,255,.3);margin:0 .25rem">×</span>
+              <span style="display:inline-block;width:18px;height:11px;background:linear-gradient(180deg,#FF9933 33%,#fff 33%,#fff 66%,#138808 66%);border-radius:2px"></span>
+              <span style="color:rgba(255,255,255,.65);font-size:.78rem">India</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
   <!-- KEY FACILITIES -->
   <section class="section">
     <div class="container">
@@ -145,7 +201,9 @@
           'Boys & Girls Hostel': 'fas fa-home',
           'Dining Hall': 'fas fa-utensils',
           'Math Excellence Centre': 'fas fa-calculator',
-          'Textile Skill Lab': 'fas fa-tshirt',
+          'Textile Skill Lab': 'fas fa-scissors',
+          'Pottery Lab': 'fas fa-palette',
+          'Public Speaking Lab': 'fas fa-microphone-alt',
           'Playground': 'fas fa-child'
         };
         campus.facilities.forEach(f => {
