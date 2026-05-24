@@ -7,52 +7,56 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="/css/admin.css">
 </head>
-<body class="ghs-admin">
-<%- include('../partials/admin-topbar') %>
-<div class="admin-layout">
+<body class="site-admin">
+<div class="admin-wrapper">
   <%- include('../partials/admin-sidebar') %>
-  <main class="admin-main">
-    <div class="admin-page-header">
-      <h1>Newsletter Subscribers</h1>
-      <span class="badge" style="background:var(--green);color:#fff;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;font-weight:600"><%= subscribers.length %> total</span>
-    </div>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
 
-    <div class="admin-card">
-      <% if (subscribers.length > 0) { %>
-      <div style="overflow-x:auto">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Email</th>
-              <th>Name</th>
-              <th>Subscribed</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% subscribers.forEach((s, i) => { %>
-            <tr>
-              <td style="color:var(--gray);font-size:.8rem"><%= i + 1 %></td>
-              <td><%= s.email %></td>
-              <td><%= s.name || '—' %></td>
-              <td style="font-size:.82rem;color:var(--gray)"><%= new Date(s.created_at).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) %></td>
-              <td>
-                <form method="POST" action="/newsletter/<%= s.id %>/delete" onsubmit="return confirm('Remove this subscriber?')">
-                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                  <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                </form>
-              </td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
+      <div class="admin-page-header">
+        <h1>Newsletter Subscribers</h1>
+        <span class="badge" style="background:var(--admin-primary);color:#fff;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;font-weight:600"><%= subscribers.length %> total</span>
       </div>
-      <% } else { %>
-      <div class="empty-state"><i class="fas fa-envelope"></i><p>No subscribers yet.</p></div>
-      <% } %>
+
+      <div class="admin-card">
+        <% if (subscribers.length > 0) { %>
+        <div style="overflow-x:auto">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Subscribed</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% subscribers.forEach((s, i) => { %>
+              <tr>
+                <td style="color:var(--admin-gray);font-size:.8rem"><%= i + 1 %></td>
+                <td><%= s.email %></td>
+                <td><%= s.name || '—' %></td>
+                <td style="font-size:.82rem;color:var(--admin-gray)"><%= new Date(s.created_at).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) %></td>
+                <td>
+                  <form method="POST" action="/admin/newsletter/<%= s.id %>/delete" onsubmit="return confirm('Remove this subscriber?')">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <% } else { %>
+        <div class="empty-state"><i class="fas fa-envelope"></i><p>No subscribers yet.</p></div>
+        <% } %>
+      </div>
+
     </div>
-  </main>
+  </div>
 </div>
 <script src="/js/admin.js"></script>
 </body>

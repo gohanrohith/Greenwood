@@ -7,81 +7,83 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="/css/admin.css">
 </head>
-<body class="ghs-admin">
-<%- include('../partials/admin-topbar') %>
-<div class="admin-layout">
+<body class="site-admin">
+<div class="admin-wrapper">
   <%- include('../partials/admin-sidebar') %>
-  <main class="admin-main">
-    <div class="admin-page-header">
-      <h1>Testimonials</h1>
-    </div>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
 
-    <% if (success) { %>
-    <div class="alert alert-success"><i class="fas fa-check-circle"></i> Saved.</div>
-    <% } %>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
-
-      <!-- Add form -->
-      <div class="admin-card">
-        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:1rem">Add Testimonial</h3>
-        <form action="/testimonials/create" method="POST">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <div class="form-group">
-            <label>Parent/Person Name *</label>
-            <input type="text" name="name" required placeholder="e.g. Ramesh Kumar">
-          </div>
-          <div class="form-group">
-            <label>Role</label>
-            <input type="text" name="role" placeholder="e.g. Parent, Alumni" value="Parent">
-          </div>
-          <div class="form-group">
-            <label>Campus</label>
-            <select name="campus">
-              <option value="">All / General</option>
-              <option value="Hasanparthy Campus">Hasanparthy Campus</option>
-              <option value="Hunter Road Campus">Hunter Road Campus</option>
-              <option value="Naimnagar Campus">Naimnagar Campus</option>
-              <option value="Mancherial Campus">Mancherial Campus</option>
-              <option value="Gopalpur Campus">Gopalpur Campus</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Quote *</label>
-            <textarea name="quote" rows="4" required placeholder="What they said about Greenwood…"></textarea>
-          </div>
-          <div class="form-group">
-            <label>Sort Order <span style="font-weight:400;color:var(--gray)">(lower = first)</span></label>
-            <input type="number" name="sort_order" value="0" min="0">
-          </div>
-          <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add Testimonial</button>
-        </form>
+      <div class="admin-page-header">
+        <h1>Testimonials</h1>
       </div>
 
-      <!-- List -->
-      <div>
-        <% if (testimonials.length > 0) { %>
-        <% testimonials.forEach(t => { %>
-        <div class="admin-card" style="margin-bottom:1rem">
-          <p style="font-size:.9rem;font-style:italic;margin-bottom:.75rem">"<%= t.quote %>"</p>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <strong style="font-size:.85rem"><%= t.name %></strong>
-              <span style="font-size:.78rem;color:var(--gray)"> — <%= t.role %><% if(t.campus){ %>, <%= t.campus %><% } %></span>
+      <% if (success) { %>
+      <div class="alert alert-success"><i class="fas fa-check-circle"></i> Saved.</div>
+      <% } %>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
+
+        <div class="admin-card">
+          <h3>Add Testimonial</h3>
+          <form action="/admin/testimonials/create" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div class="form-group">
+              <label>Parent/Person Name *</label>
+              <input type="text" name="name" required placeholder="e.g. Ramesh Kumar">
             </div>
-            <form method="POST" action="/testimonials/<%= t.id %>/delete" onsubmit="return confirm('Delete this testimonial?')">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-              <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-            </form>
-          </div>
+            <div class="form-group">
+              <label>Role</label>
+              <input type="text" name="role" placeholder="e.g. Parent, Alumni" value="Parent">
+            </div>
+            <div class="form-group">
+              <label>Campus</label>
+              <select name="campus">
+                <option value="">All / General</option>
+                <option value="Hasanparthy Campus">Hasanparthy Campus</option>
+                <option value="Hunter Road Campus">Hunter Road Campus</option>
+                <option value="Naimnagar Campus">Naimnagar Campus</option>
+                <option value="Mancherial Campus">Mancherial Campus</option>
+                <option value="Gopalpur Campus">Gopalpur Campus</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Quote *</label>
+              <textarea name="quote" rows="4" required placeholder="What they said about Greenwood…"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Sort Order <span style="font-weight:400;color:var(--admin-gray)">(lower = first)</span></label>
+              <input type="number" name="sort_order" value="0" min="0">
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add Testimonial</button>
+          </form>
         </div>
-        <% }) %>
-        <% } else { %>
-        <div class="empty-state"><i class="fas fa-quote-left"></i><p>No testimonials yet.</p></div>
-        <% } %>
+
+        <div>
+          <% if (testimonials.length > 0) { %>
+          <% testimonials.forEach(t => { %>
+          <div class="admin-card" style="margin-bottom:1rem">
+            <p style="font-size:.9rem;font-style:italic;margin-bottom:.75rem">"<%= t.quote %>"</p>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <strong style="font-size:.85rem"><%= t.name %></strong>
+                <span style="font-size:.78rem;color:var(--admin-gray)"> — <%= t.role %><% if(t.campus){ %>, <%= t.campus %><% } %></span>
+              </div>
+              <form method="POST" action="/admin/testimonials/<%= t.id %>/delete" onsubmit="return confirm('Delete this testimonial?')">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+              </form>
+            </div>
+          </div>
+          <% }) %>
+          <% } else { %>
+          <div class="empty-state"><i class="fas fa-quote-left"></i><p>No testimonials yet.</p></div>
+          <% } %>
+        </div>
+
       </div>
     </div>
-  </main>
+  </div>
 </div>
 <script src="/js/admin.js"></script>
 </body>

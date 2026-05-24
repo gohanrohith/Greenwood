@@ -2,9 +2,11 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --admin-primary: #1a5276;
-  --admin-bg:      #f0f2f5;
-  --admin-sidebar: #0f2d3e;
+  --admin-primary: #00663A;
+  --admin-primary-dark: #004d2b;
+  --admin-bg:      #f4f6f4;
+  --admin-sidebar: #1F1B76;
+  --admin-sidebar-dark: #161260;
   --admin-white:   #ffffff;
   --admin-gray:    #6c757d;
   --admin-border:  #dee2e6;
@@ -55,7 +57,8 @@ body.site-admin, body.admin-login-page {
   transition: all .2s;
   text-decoration: none;
 }
-.sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,.1); color: var(--admin-white); }
+.sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,.12); color: var(--admin-white); }
+.sidebar-link.active { border-left: 3px solid #B5D236; }
 .sidebar-link i { width: 18px; text-align: center; font-size: .95rem; }
 .sidebar-section {
   padding: .6rem 1.5rem;
@@ -195,7 +198,7 @@ body.site-admin, body.admin-login-page {
   text-decoration: none;
 }
 .btn-primary { background: var(--admin-primary); color: var(--admin-white); }
-.btn-primary:hover { opacity: .88; }
+.btn-primary:hover { background: var(--admin-primary-dark); }
 .btn-outline { background: transparent; color: var(--admin-primary); border-color: var(--admin-primary); }
 .btn-outline:hover { background: var(--admin-primary); color: var(--admin-white); }
 .btn-block { display: block; width: 100%; text-align: center; }
@@ -231,7 +234,7 @@ body.site-admin, body.admin-login-page {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0f2d3e 0%, #1a5276 100%);
+  background: linear-gradient(135deg, #1F1B76 0%, #00663A 100%);
 }
 .login-container { width: 100%; max-width: 420px; padding: 1rem; }
 .login-card {
