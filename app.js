@@ -52,16 +52,12 @@ if (process.env.DB_PASS) {
     class SafeStore extends session.Store {
       constructor() { super(); this._mem = {}; }
       get(sid, cb) {
-        mysqlStore.get(sid, (e, s) => {
-          const src = (!e && s) ? 'mysql' : (this._mem[sid] ? 'mem' : 'miss');
-          console.log('[session.get]', sid.slice(0,8), src, e ? e.message : '');
-          cb(null, (!e && s) ? s : (this._mem[sid] || null));
-        });
+        mysqlStore.get(sid, (e, s) => cb(null, (!e && s) ? s : (this._mem[sid] || null)));
       }
       set(sid, s, cb) {
         this._mem[sid] = s;
         cb(null);
-        mysqlStore.set(sid, s, (e) => { if (e) console.warn('[session.set] mysql fail:', e.message); });
+        mysqlStore.set(sid, s, () => {});
       }
       destroy(sid, cb) {
         delete this._mem[sid];
