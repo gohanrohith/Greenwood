@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="About <%= campus.name %> — <%= campus.board %> campus in <%= campus.address %>. Principal, leadership, and campus history.">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/campus.css">
+  <style>:root{--campus-primary:<%= campus.theme.primary %>;--campus-accent:<%= campus.theme.accent %>;--campus-light:<%= campus.theme.light %>;}</style>
+</head>
+<body class="site-campus campus-<%= campus.slug %>">
+<%- include('../partials/topbar-campus') %>
+<%- include('../partials/nav-campus') %>
+<main>
+
+  <section class="campus-hero" style="background-image:url('/images/campuses/<%= campus.slug %>-hero.jpg')">
+    <div class="hero-overlay"></div>
+    <div class="container campus-hero-content">
+      <span class="campus-hero-tag"><%= campus.board %> &nbsp;|&nbsp; <%= campus.type %></span>
+      <h1>About <%= campus.name %></h1>
+      <p>Our history, leadership, and the values that guide us</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section">
+    <div class="container campus-about-grid">
+      <div class="campus-about-image">
+        <img src="/images/campuses/<%= campus.slug %>.jpg" alt="<%= campus.name %>"
+             onerror="this.parentElement.style.background='<%= campus.theme.light %>';this.style.display='none'">
+      </div>
+      <div class="campus-about-text">
+        <span class="section-tag">Our Campus</span>
+        <h2><%= campus.name %></h2>
+        <p><%= campus.description %></p>
+        <div class="campus-meta" style="margin-top:1.5rem">
+          <span><i class="fas fa-map-marker-alt"></i> <%= campus.address %></span>
+          <span><i class="fas fa-graduation-cap"></i> <%= campus.classes %></span>
+          <span><i class="fas fa-certificate"></i> <%= campus.board %></span>
+          <% if (campus.established) { %><span><i class="fas fa-calendar"></i> Established <%= campus.established %></span><% } %>
+          <% if (campus.affiliation) { %><span><i class="fas fa-id-card"></i> Affiliation No: <%= campus.affiliation %></span><% } %>
+          <% if (campus.schoolCode) { %><span><i class="fas fa-hashtag"></i> School Code: <%= campus.schoolCode %></span><% } %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISION MISSION -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Purpose</span>
+        <h2>Vision & Mission</h2>
+      </div>
+      <div class="vision-mission-grid">
+        <div class="vision-card">
+          <h4><i class="fas fa-eye"></i> Our Vision</h4>
+          <p>"<%= school.vision %>"</p>
+        </div>
+        <div class="vision-card">
+          <h4><i class="fas fa-bullseye"></i> Our Mission</h4>
+          <p>"<%= school.mission %>"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Leadership</span>
+        <h2>Guided by Vision</h2>
+      </div>
+      <div class="directors-grid">
+        <% school.directors.slice(0, campus.directorCount || 2).forEach(d => { %>
+        <div class="director-card">
+          <div class="director-photo">
+            <img src="<%= d.photo %>" alt="<%= d.name %>"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="director-photo-placeholder" style="display:none"><i class="fas fa-user"></i></div>
+          </div>
+          <div class="director-role"><%= d.role %></div>
+          <h3 class="director-name"><%= d.name %></h3>
+          <p class="director-designation"><%= d.designation %></p>
+          <p class="director-bio"><%= d.bio %></p>
+        </div>
+        <% }) %>
+        <div class="principal-info-card">
+          <div class="principal-icon"><i class="fas fa-user-tie"></i></div>
+          <div class="principal-label">Campus Principal</div>
+          <h3><%= campus.principal %></h3>
+          <p>Academic Head, <%= campus.name %></p>
+          <a href="/contact" class="btn btn-sm btn-outline" style="margin-top:1rem">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHTS -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Why <%= campus.shortName %></span>
+        <h2>Campus Highlights</h2>
+      </div>
+      <div class="why-grid">
+        <% campus.highlights.forEach(h => { %>
+        <div class="why-card" style="border-top-color:var(--campus-primary)">
+          <div class="why-icon" style="background:var(--campus-light);color:var(--campus-primary)"><i class="fas fa-check"></i></div>
+          <p style="font-size:.9rem;color:var(--gray-dark);font-weight:500"><%= h %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Admissions Open — <%= campus.name %></h2>
+        <p>Limited seats available. Apply early to secure your child's future.</p>
+        <div class="cta-actions">
+          <a href="/admissions" class="btn btn-white">Apply Now</a>
+          <a href="/contact" class="btn btn-outline-white">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-campus') %>
+<a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

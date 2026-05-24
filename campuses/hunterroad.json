@@ -1,0 +1,46 @@
+{
+  "slug": "hunterroad",
+  "name": "Hunter Road Campus",
+  "shortName": "Hunter Road",
+  "board": "CBSE",
+  "type": "Day Scholar",
+  "cbse": true,
+  "affiliation": "130446",
+  "schoolCode": "57714",
+  "established": "2009",
+  "directorCount": 2,
+  "principal": "Mrs. Saritarani",
+  "address": "Hunter Road, Warangal, Telangana",
+  "phone": "+91 9866514513",
+  "email": "hunterroad@ghs.ac.in",
+  "mapEmbed": "",
+  "whatsapp": "+91 9866514518",
+  "classes": "Pre-Primary to Class X",
+  "strength": "",
+  "tagline": "Building Tomorrow's Leaders Today",
+  "description": "Located in the heart of Warangal on Hunter Road, this CBSE day scholar campus combines rigorous academics with holistic development. The campus is known for its experienced faculty, smart infrastructure, and consistent board exam performance.",
+  "theme": {
+    "primary": "#145a32",
+    "accent": "#f39c12",
+    "light": "#eafaf1"
+  },
+  "highlights": [
+    "CBSE curriculum",
+    "Smart classrooms with projectors",
+    "Experienced, trained faculty",
+    "Safe, secure campus",
+    "GPS-tracked transport",
+    "Regular parent-teacher communication",
+    "Co-curricular & sports activities"
+  ],
+  "facilities": [
+    "Science Labs",
+    "Computer Lab",
+    "Library",
+    "Sports Ground",
+    "Smart Classrooms",
+    "Transport",
+    "CCTV Surveillance",
+    "Medical Room"
+  ]
+}

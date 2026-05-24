@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Error | Greenwood High School</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f8f9ff;font-family:'Outfit',sans-serif;margin:0}
+    .error-wrap{text-align:center;padding:2rem}
+    .error-code{font-size:8rem;font-weight:800;color:#EE141F;line-height:1;opacity:.1;display:block}
+    .error-icon{font-size:4rem;color:#EE141F;margin-bottom:1.25rem;display:block}
+    .error-wrap h1{font-size:1.75rem;font-weight:700;color:#1F1B76;margin-bottom:.5rem}
+    .error-wrap p{color:#6b7280;font-size:.95rem;margin-bottom:2rem;max-width:420px}
+    .error-links{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+<div class="error-wrap">
+  <span class="error-code">500</span>
+  <i class="fas fa-tools error-icon"></i>
+  <h1>Something Went Wrong</h1>
+  <p>We encountered an unexpected error. Our team has been notified. Please try again in a moment.</p>
+  <div class="error-links">
+    <a href="/" class="btn btn-primary">Go to Home</a>
+    <a href="javascript:history.back()" class="btn btn-outline">Go Back</a>
+  </div>
+</div>
+</body>
+</html>

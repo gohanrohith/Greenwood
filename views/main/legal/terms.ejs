@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../../partials/topbar') %>
+<%- include('../../partials/nav-main') %>
+<main>
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Terms & Conditions</h1>
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/compliance">Compliance</a> / Terms & Conditions</div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container" style="max-width:820px">
+      <div style="background:var(--white);border-radius:var(--radius-lg);padding:3rem;box-shadow:var(--shadow)">
+        <p style="color:var(--gray);font-size:.88rem;margin-bottom:2rem">Last updated: January 2025 &nbsp;|&nbsp; Greenwood High School, Warangal</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">1. Acceptance of Terms</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">By accessing the Greenwood High School website (ghs.ac.in) and its campus subdomains, you agree to be bound by these Terms and Conditions. If you do not agree, please discontinue use of the website.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">2. Use of Website</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">This website is provided for informational purposes about Greenwood High School and its campuses. You may use it to submit admission enquiries, contact us, and access public information. Unauthorized use, data scraping, or attempts to compromise security are prohibited.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">3. Admission Enquiries</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">Submission of an admission enquiry form does not guarantee admission to any Greenwood campus. Admissions are subject to seat availability, eligibility criteria, and the decisions of the campus admission committee. Fees and terms of enrollment are communicated separately.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">4. Intellectual Property</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">All content on this website — including text, images, logos, and school branding — is the property of Greenwood High School / Akarshmanasa Educational Society. Reproduction or commercial use without written permission is prohibited.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">5. Accuracy of Information</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">We make reasonable efforts to keep website information accurate and current. However, specific details such as fee structures, seat availability, and campus policies may change. Always confirm current information directly with the relevant campus office.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">6. Limitation of Liability</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">Greenwood High School is not liable for any loss or damage arising from reliance on website information, technical errors, or temporary unavailability of the site.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">7. Governing Law</h2>
+        <p style="color:var(--gray);line-height:1.8">These terms are governed by the laws of India. Any disputes shall be subject to the jurisdiction of courts in Warangal, Telangana.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('../../partials/footer-main') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

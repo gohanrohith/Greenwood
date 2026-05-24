@@ -1,0 +1,14 @@
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <span><i class="fas fa-phone"></i> +91 9866514515</span>
+      <span><i class="fas fa-envelope"></i> office@ghs.ac.in</span>
+    </div>
+    <div class="topbar-right">
+      <% if (school && school.social.facebook)  { %><a href="<%= school.social.facebook %>"  target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a><% } %>
+      <% if (school && school.social.instagram) { %><a href="<%= school.social.instagram %>" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a><% } %>
+      <% if (school && school.social.youtube)   { %><a href="<%= school.social.youtube %>"   target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a><% } %>
+      <% if (school && school.social.twitter)   { %><a href="<%= school.social.twitter %>"   target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a><% } %>
+    </div>
+  </div>
+</div>

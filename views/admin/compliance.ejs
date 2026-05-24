@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="admin-page-header">
+        <h1>Compliance Documents</h1>
+        <p>Upload official certificates shown on the Mandatory Public Disclosure pages.</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Upload Document</h3>
+        <form action="/compliance/upload?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="admin-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Campus *</label>
+              <select name="campus" required>
+                <option value="">Select Campus</option>
+                <option value="hasanparthy">Hasanparthy (CBSE)</option>
+                <option value="hunterroad">Hunter Road (CBSE)</option>
+                <option value="naimnagar">Naimnagar (State Board)</option>
+                <option value="mancherial">Mancherial (CBSE)</option>
+                <option value="gopalpur">Gopalpur (State Board)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Document Type *</label>
+              <select name="doc_type" required>
+                <option value="">Select Type</option>
+                <optgroup label="CBSE Mandatory Disclosure">
+                  <option value="cbse_affiliation">CBSE Affiliation Letter</option>
+                  <option value="noc">NOC from State Government</option>
+                  <option value="recognition">Recognition Certificate</option>
+                  <option value="fire_safety">Fire Safety Certificate</option>
+                  <option value="building_safety">Building Safety Certificate</option>
+                  <option value="deo_certificate">DEO Certificate</option>
+                  <option value="land_certificate">Land/Building Certificate</option>
+                  <option value="results">Academic Results</option>
+                  <option value="fee_structure">Fee Structure</option>
+                </optgroup>
+                <optgroup label="State Board Disclosure">
+                  <option value="recognition">School Recognition Certificate</option>
+                  <option value="noc">NOC from District Authority</option>
+                  <option value="fire_safety">Fire Safety Certificate</option>
+                  <option value="building_safety">Building Safety Certificate</option>
+                </optgroup>
+                <optgroup label="Additional / Custom">
+                  <option value="prospectus">Prospectus / Brochure</option>
+                  <option value="academic_calendar">Academic Calendar</option>
+                  <option value="syllabus">Syllabus</option>
+                  <option value="tc_form">Transfer Certificate</option>
+                  <option value="other">Other (use Label field to name it)</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Label / Description</label>
+              <input type="text" name="label" placeholder="e.g. CBSE Affiliation Certificate 2024–25">
+            </div>
+            <div class="form-group">
+              <label>Sort Order</label>
+              <input type="number" name="sort_order" value="0" min="0">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>File * (PDF, max 10MB)</label>
+            <input type="file" name="file" required accept=".pdf,.jpg,.jpeg,.png">
+          </div>
+          <button type="submit" class="btn btn-primary">Upload Document</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h3>Uploaded Documents (<%= docs ? docs.length : 0 %>)</h3>
+        <% if (!docs || docs.length === 0) { %>
+        <div class="empty-state"><i class="fas fa-file-certificate"></i><p>No compliance documents yet. Upload one above.</p></div>
+        <% } else { %>
+        <table class="admin-table">
+          <thead>
+            <tr><th>Label</th><th>Campus</th><th>Type</th><th>File</th><th>Date</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <% docs.forEach(d => { %>
+            <tr>
+              <td><strong><%= d.label || d.doc_type %></strong></td>
+              <td><span class="badge"><%= d.campus %></span></td>
+              <td><span class="badge badge-info"><%= d.doc_type %></span></td>
+              <td><a href="/uploads/compliance/<%= d.filename %>" target="_blank" class="btn btn-sm btn-outline">View</a></td>
+              <td><%= new Date(d.created_at).toLocaleDateString('en-IN') %></td>
+              <td>
+                <form action="/compliance/<%= d.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this document?')">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+</body>
+</html>

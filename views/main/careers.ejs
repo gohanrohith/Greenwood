@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Join the Greenwood High School team — teaching and non-teaching vacancies across 5 campuses in Warangal and Mancherial.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Careers at Greenwood</h1>
+      <p>Join a team that shapes futures every single day</p>
+      <div class="breadcrumb"><a href="/">Home</a> / Careers</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-grid">
+      <div class="about-image">
+        <img src="/images/careers.jpg" alt="Teaching at Greenwood"
+             onerror="this.parentElement.style.background='var(--green-light)';this.style.display='none'">
+      </div>
+      <div class="about-text">
+        <span class="section-tag">Why Teach Here</span>
+        <h2>A Place Where Teachers Thrive</h2>
+        <p>Greenwood is more than a school — it's a community of educators who care deeply about children and about their own professional growth. We invest in our teachers with structured training, collaborative planning time, and a supportive school culture.</p>
+        <p>With five campuses across Warangal and Mancherial districts, Greenwood offers a stable, respected workplace where experienced teachers are valued and young educators are mentored.</p>
+        <div class="about-features">
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Competitive compensation</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Regular training & development</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Supportive leadership</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Smart classroom tools</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Career growth pathways</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Positive work culture</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Open Positions</span>
+        <h2>Current Vacancies</h2>
+        <p>We are always looking for passionate, qualified educators to join our team</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px">
+        <% [
+          {role:'PGT — Physics / Chemistry / Mathematics', campus:'Hasanparthy Campus', type:'Teaching', cbse:true},
+          {role:'TGT — English', campus:'All CBSE Campuses', type:'Teaching', cbse:true},
+          {role:'TGT — Social Studies', campus:'Hunter Road / Mancherial', type:'Teaching', cbse:true},
+          {role:'Primary Teacher (Telugu Medium)', campus:'Naimnagar / Gopalpur', type:'Teaching', cbse:false},
+          {role:'Computer Science Teacher', campus:'All Campuses', type:'Teaching', cbse:false},
+          {role:'Physical Education Teacher', campus:'All Campuses', type:'Teaching', cbse:false},
+          {role:'Hostel Warden (Female)', campus:'Hasanparthy Campus', type:'Non-Teaching', cbse:false},
+          {role:'Accountant / Office Assistant', campus:'Any Campus', type:'Non-Teaching', cbse:false},
+        ].forEach(v => { %>
+        <div style="background:var(--white);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow);border-left:4px solid var(--lime)">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.75rem">
+            <h3 style="font-size:.97rem;font-weight:700;color:var(--navy);line-height:1.4"><%= v.role %></h3>
+            <span style="background:<%= v.type==='Teaching'?'var(--green-light)':'rgba(181,210,54,.15)' %>;color:<%= v.type==='Teaching'?'var(--green)':'var(--gray-dark)' %>;padding:3px 10px;border-radius:10px;font-size:.7rem;font-weight:700;white-space:nowrap"><%= v.type %></span>
+          </div>
+          <p style="font-size:.82rem;color:var(--gray);margin-bottom:1rem"><i class="fas fa-map-marker-alt" style="margin-right:.35rem;color:var(--green)"></i><%= v.campus %></p>
+          <a href="mailto:office@ghs.ac.in?subject=Application: <%= encodeURIComponent(v.role) %>" class="btn btn-sm btn-outline">Apply via Email</a>
+        </div>
+        <% }) %>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem;padding:2rem;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow)">
+        <h3 style="color:var(--navy);margin-bottom:.5rem">Don't see your role listed?</h3>
+        <p style="color:var(--gray);font-size:.9rem;margin-bottom:1.25rem">Send us your resume and we'll reach out when a suitable position opens.</p>
+        <a href="mailto:office@ghs.ac.in?subject=General Application — Greenwood High School" class="btn btn-primary">Send Your Resume</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">How to Apply</span>
+        <h2>Application Process</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:800px;margin:0 auto">
+        <% [
+          {step:'1',icon:'fas fa-envelope',title:'Send Resume',desc:'Email your CV and cover letter to office@ghs.ac.in with the position in the subject line.'},
+          {step:'2',icon:'fas fa-phone',title:'Initial Screening',desc:'Our HR team reviews applications and calls shortlisted candidates within 5 working days.'},
+          {step:'3',icon:'fas fa-chalkboard-teacher',title:'Demo Class / Interview',desc:'Shortlisted candidates are invited for a demo class and a panel interview at the respective campus.'},
+          {step:'4',icon:'fas fa-file-signature',title:'Offer & Joining',desc:'Selected candidates receive a formal offer letter with designation, location, and salary details.'},
+        ].forEach(s => { %>
+        <div style="text-align:center;padding:2rem 1.25rem;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow)">
+          <div style="width:40px;height:40px;background:var(--navy);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;margin:0 auto .75rem"><%= s.step %></div>
+          <div style="font-size:1.3rem;color:var(--green);margin-bottom:.6rem"><i class="<%= s.icon %>"></i></div>
+          <h3 style="font-size:.92rem;font-weight:700;color:var(--navy);margin-bottom:.4rem"><%= s.title %></h3>
+          <p style="font-size:.82rem;color:var(--gray);line-height:1.6"><%= s.desc %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

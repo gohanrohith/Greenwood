@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Contact Greenwood High School Warangal — phone, email, address, and enquiry form for all campuses.">
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p>We're here to help — reach out to us anytime</p>
+      <div class="breadcrumb"><a href="/">Home</a> / Contact</div>
+    </div>
+  </section>
+
+  <% if (success) { %>
+  <div style="background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;padding:1.25rem;text-align:center;font-weight:600">
+    <i class="fas fa-check-circle"></i> Thank you! Your message has been received. We'll get back to you within 24 hours.
+  </div>
+  <% } %>
+
+  <!-- FORM + INFO -->
+  <section class="section">
+    <div class="container contact-form-grid">
+
+      <!-- FORM -->
+      <div>
+        <span class="section-tag">Send a Message</span>
+        <h2 style="margin:.75rem 0 .5rem;color:var(--navy)">Get in Touch</h2>
+        <p style="color:var(--gray);margin-bottom:2rem;font-size:.92rem">For general enquiries, admissions questions, or to schedule a campus visit — fill in the form and we'll respond within 24 hours.</p>
+        <form action="/contact" method="POST" class="enquiry-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name *</label>
+              <input type="text" name="name" required placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input type="tel" name="phone" required placeholder="+91 XXXXXXXXXX">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label>Subject</label>
+              <select name="subject">
+                <option value="">Select Subject</option>
+                <option>Admission Enquiry</option>
+                <option>Campus Visit Request</option>
+                <option>Fee Structure</option>
+                <option>Complaint / Feedback</option>
+                <option>Career / Job Application</option>
+                <option>General Enquiry</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Message *</label>
+            <textarea name="message" rows="5" required placeholder="Write your message here..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;padding:13px 32px">
+            <i class="fas fa-paper-plane" style="margin-right:.5rem"></i> Send Message
+          </button>
+        </form>
+      </div>
+
+      <!-- CONTACT INFO -->
+      <div>
+        <span class="section-tag">Contact Info</span>
+        <h2 style="margin:.75rem 0 1.5rem;color:var(--navy)">Main Contact</h2>
+
+        <div style="display:flex;flex-direction:column;gap:1rem;margin-bottom:2.5rem">
+          <div style="display:flex;gap:1rem;align-items:flex-start;background:var(--off-white);padding:1.25rem;border-radius:var(--radius)">
+            <div style="width:42px;height:42px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-envelope" style="color:var(--white)"></i></div>
+            <div>
+              <div style="font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray);margin-bottom:.2rem">Email</div>
+              <a href="mailto:office@ghs.ac.in" style="color:var(--navy);font-weight:600;font-size:.94rem">office@ghs.ac.in</a>
+            </div>
+          </div>
+          <div style="display:flex;gap:1rem;align-items:flex-start;background:var(--off-white);padding:1.25rem;border-radius:var(--radius)">
+            <div style="width:42px;height:42px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-phone" style="color:var(--white)"></i></div>
+            <div>
+              <div style="font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray);margin-bottom:.2rem">Phone</div>
+              <span style="color:var(--navy);font-weight:600;font-size:.94rem">+91 XXXXXXXXXX</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:1rem;align-items:flex-start;background:var(--off-white);padding:1.25rem;border-radius:var(--radius)">
+            <div style="width:42px;height:42px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fab fa-whatsapp" style="color:var(--white)"></i></div>
+            <div>
+              <div style="font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray);margin-bottom:.2rem">WhatsApp</div>
+              <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener" style="color:var(--navy);font-weight:600;font-size:.94rem">+91 XXXXXXXXXX</a>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="color:var(--navy);margin-bottom:1.25rem">Campus Contacts</h3>
+        <div style="display:flex;flex-direction:column;gap:.65rem">
+          <% campuses.forEach(c => { %>
+          <a href="http://<%= c.slug %>.ghs.ac.in/contact" style="background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius);padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--gray-light)'">
+            <div>
+              <strong style="font-size:.9rem;color:var(--navy)"><%= c.shortName %> Campus</strong>
+              <div style="font-size:.75rem;color:var(--gray);margin-top:.15rem"><%= c.board %> · <%= c.address.split(',')[0] %></div>
+            </div>
+            <i class="fas fa-chevron-right" style="color:var(--green);font-size:.8rem"></i>
+          </a>
+          <% }) %>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

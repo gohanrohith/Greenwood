@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="<%= campus.name %> academics — <%= campus.board %> curriculum, class structure, subjects, and academic programs.">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/campus.css">
+  <style>:root{--campus-primary:<%= campus.theme.primary %>;--campus-accent:<%= campus.theme.accent %>;--campus-light:<%= campus.theme.light %>;}</style>
+</head>
+<body class="site-campus campus-<%= campus.slug %>">
+<%- include('../partials/topbar-campus') %>
+<%- include('../partials/nav-campus') %>
+<main>
+
+  <section class="page-hero" style="background:linear-gradient(120deg,var(--campus-primary),var(--navy))">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Academics</h1>
+      <p><%= campus.board %> Curriculum at <%= campus.name %></p>
+      <div class="breadcrumb"><a href="/">Home</a> / Academics</div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="section">
+    <div class="container campus-about-grid">
+      <div class="campus-about-image">
+        <img src="/images/campuses/<%= campus.slug %>-class.jpg" alt="Classroom at <%= campus.name %>"
+             onerror="this.parentElement.style.background='<%= campus.theme.light %>';this.style.display='none'">
+      </div>
+      <div class="campus-about-text">
+        <span class="section-tag"><%= campus.board %></span>
+        <h2>Our Academic Program</h2>
+        <p>At <%= campus.name %>, we follow the <%= campus.board %> curriculum with a strong emphasis on conceptual understanding, analytical thinking, and holistic development. Our experienced faculty ensures every student reaches their full potential.</p>
+        <div class="campus-meta" style="margin-top:1.25rem">
+          <span><i class="fas fa-graduation-cap"></i> <%= campus.classes %></span>
+          <span><i class="fas fa-certificate"></i> <%= campus.board %></span>
+          <span><i class="fas fa-chalkboard-teacher"></i> Experienced Faculty</span>
+          <span><i class="fas fa-laptop"></i> Smart Classrooms</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CBSE CURRICULUM (CBSE campuses only) -->
+  <% if (campus.cbse) { %>
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">CBSE Curriculum</span>
+        <h2>Class Structure & Subjects</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px">
+        <% const cbseLevels = [
+          {level:'Pre-Primary',classes:'Pre-KG to UKG',subjects:['Language & Literacy','Numeracy','Environmental Studies','Art & Craft','Music & Movement'],icon:'fas fa-child'},
+          {level:'Primary',classes:'Class I to Class V',subjects:['English','Telugu / Hindi','Mathematics','Environmental Science','Computer','Art & Craft'],icon:'fas fa-pencil-alt'},
+          {level:'Upper Primary',classes:'Class VI to Class VIII',subjects:['English','Second Language','Mathematics','Science','Social Studies','Computer Science'],icon:'fas fa-book-open'},
+          {level:'Secondary',classes:'Class IX to Class X',subjects:['English','Second Language','Mathematics','Science (Phy/Chem/Bio)','Social Science','IT'],icon:'fas fa-graduation-cap'},
+        ];
+        if (campus.slug === 'hasanparthy') {
+          cbseLevels.push({level:'Senior Secondary',classes:'Class XI to Class XII',subjects:['Physics','Chemistry','Mathematics','Biology','English','Computer Science'],icon:'fas fa-atom'});
+        }
+        cbseLevels.forEach(l => { %>
+        <div style="background:var(--white);border-radius:var(--radius-lg);padding:1.75rem;box-shadow:var(--shadow);border-top:4px solid var(--campus-primary)">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem">
+            <div style="width:44px;height:44px;background:var(--campus-light);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--campus-primary);font-size:1.1rem"><i class="<%= l.icon %>"></i></div>
+            <div>
+              <h3 style="font-size:.97rem;font-weight:700;color:var(--navy)"><%= l.level %></h3>
+              <p style="font-size:.75rem;color:var(--gray)"><%= l.classes %></p>
+            </div>
+          </div>
+          <ul style="display:flex;flex-direction:column;gap:.3rem">
+            <% l.subjects.forEach(s => { %>
+            <li style="font-size:.84rem;color:var(--gray-dark);display:flex;align-items:center;gap:.5rem"><i class="fas fa-check" style="color:var(--campus-primary);font-size:.68rem"></i> <%= s %></li>
+            <% }) %>
+          </ul>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <% } else { %>
+
+  <!-- STATE BOARD CURRICULUM -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">State Board Curriculum</span>
+        <h2>Class Structure & Subjects</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px">
+        <% const stateLevels = [
+          {level:'Primary',classes:'Class I to Class V',subjects:['Telugu','English','Mathematics','Environmental Studies','General Science','Art'],icon:'fas fa-child'},
+          {level:'Upper Primary',classes:'Class VI to Class VIII',subjects:['Telugu','English','Hindi','Mathematics','Physical Science','Biological Science','Social Studies'],icon:'fas fa-book-open'},
+          {level:'Secondary',classes:'Class IX to Class X',subjects:['Telugu','English','Hindi','Mathematics','Physical Science','Biological Science','Social Studies','Computer'],icon:'fas fa-graduation-cap'},
+        ];
+        const availableLevels = campus.slug === 'gopalpur'
+          ? stateLevels.slice(0, 2)
+          : stateLevels;
+        availableLevels.forEach(l => { %>
+        <div style="background:var(--white);border-radius:var(--radius-lg);padding:1.75rem;box-shadow:var(--shadow);border-top:4px solid var(--campus-primary)">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem">
+            <div style="width:44px;height:44px;background:var(--campus-light);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--campus-primary);font-size:1.1rem"><i class="<%= l.icon %>"></i></div>
+            <div>
+              <h3 style="font-size:.97rem;font-weight:700;color:var(--navy)"><%= l.level %></h3>
+              <p style="font-size:.75rem;color:var(--gray)"><%= l.classes %></p>
+            </div>
+          </div>
+          <ul style="display:flex;flex-direction:column;gap:.3rem">
+            <% l.subjects.forEach(s => { %>
+            <li style="font-size:.84rem;color:var(--gray-dark);display:flex;align-items:center;gap:.5rem"><i class="fas fa-check" style="color:var(--campus-primary);font-size:.68rem"></i> <%= s %></li>
+            <% }) %>
+          </ul>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+  <!-- ACADEMIC APPROACH -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Our Approach</span>
+        <h2>How We Teach</h2>
+      </div>
+      <div class="why-grid">
+        <% [
+          {icon:'fas fa-chalkboard',title:'Smart Classrooms',desc:'Interactive digital boards make lessons visual and engaging. Technology is integrated thoughtfully into daily teaching.'},
+          {icon:'fas fa-flask',title:'Practical Learning',desc:'Science labs, computer labs, and project work ensure students learn by doing, not just by reading.'},
+          {icon:'fas fa-chart-line',title:'Regular Assessment',desc:'Unit tests, half-yearly, and annual exams with detailed report cards and parent communication.'},
+          {icon:'fas fa-comments',title:'Doubt Sessions',desc:'Dedicated doubt-clearing periods and extra classes ensure no student is left behind.'},
+          {icon:'fas fa-star',title:'Olympiad Prep',desc:'Students are encouraged to participate in NSO, IMO, IEO, and other national competitions.'},
+          {icon:'fas fa-users',title:'Parent Engagement',desc:'Regular PTMs, progress updates, and open communication between teachers and parents.'},
+        ].forEach(a => { %>
+        <div class="why-card">
+          <div class="why-icon" style="background:var(--campus-light);color:var(--campus-primary)"><i class="<%= a.icon %>"></i></div>
+          <h3><%= a.title %></h3>
+          <p><%= a.desc %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Secure Your Child's Academic Future</h2>
+        <p>Apply to <%= campus.name %> for the 2025–26 academic year.</p>
+        <div class="cta-actions">
+          <a href="/admissions" class="btn btn-white">Apply Now</a>
+          <a href="/faculty" class="btn btn-outline-white">Meet Our Faculty</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-campus') %>
+<a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

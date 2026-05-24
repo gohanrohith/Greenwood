@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/campus.css">
+  <style>:root{--campus-primary:<%= campus.theme.primary %>;--campus-accent:<%= campus.theme.accent %>;--campus-light:<%= campus.theme.light %>;}</style>
+</head>
+<body class="site-campus campus-<%= campus.slug %>">
+<%- include('../partials/topbar-campus') %>
+<%- include('../partials/nav-campus') %>
+<main>
+
+  <section class="page-hero" style="background:linear-gradient(120deg,var(--campus-primary),var(--navy))">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p><%= campus.name %></p>
+      <div class="breadcrumb"><a href="/">Home</a> / Contact</div>
+    </div>
+  </section>
+
+  <% if (success) { %>
+  <div style="background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;padding:1.25rem;text-align:center;font-weight:600">
+    <i class="fas fa-check-circle"></i> Message sent! We'll get back to you within 24 hours.
+  </div>
+  <% } %>
+
+  <section class="campus-stats-bar">
+    <div class="container stats-grid">
+      <div class="stat-item">
+        <i class="fas fa-phone" style="font-size:1.3rem;color:var(--campus-primary)"></i>
+        <span class="stat-label" style="font-size:.82rem"><%= campus.phone %></span>
+      </div>
+      <div class="stat-item">
+        <i class="fas fa-envelope" style="font-size:1.3rem;color:var(--campus-primary)"></i>
+        <span class="stat-label" style="font-size:.82rem"><%= campus.email %></span>
+      </div>
+      <div class="stat-item">
+        <i class="fab fa-whatsapp" style="font-size:1.3rem;color:#25d366"></i>
+        <span class="stat-label" style="font-size:.82rem"><%= campus.whatsapp %></span>
+      </div>
+      <div class="stat-item">
+        <i class="fas fa-clock" style="font-size:1.3rem;color:var(--campus-primary)"></i>
+        <span class="stat-label" style="font-size:.82rem">Mon–Sat · 8AM–5PM</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container admissions-grid">
+
+      <!-- FORM -->
+      <div>
+        <span class="section-tag">Get in Touch</span>
+        <h2 style="margin:.75rem 0 .5rem;color:var(--navy)">Send Us a Message</h2>
+        <p style="color:var(--gray);margin-bottom:2rem;font-size:.92rem">Have a question about admissions, fees, or campus life? Our team will respond within 24 hours.</p>
+        <form action="/contact" method="POST" class="enquiry-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name *</label>
+              <input type="text" name="name" required placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label>Phone *</label>
+              <input type="tel" name="phone" required placeholder="+91 XXXXXXXXXX">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Message *</label>
+            <textarea name="message" rows="5" required placeholder="Your question or message..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;background:var(--campus-primary);border-color:var(--campus-primary);padding:13px 32px">
+            <i class="fas fa-paper-plane" style="margin-right:.5rem"></i> Send Message
+          </button>
+        </form>
+      </div>
+
+      <!-- INFO -->
+      <div>
+        <span class="section-tag">Campus Info</span>
+        <h2 style="margin:.75rem 0 1.5rem;color:var(--navy)"><%= campus.name %></h2>
+
+        <div style="background:var(--campus-light);border-radius:var(--radius-lg);padding:1.75rem;margin-bottom:1.75rem">
+          <div style="display:flex;flex-direction:column;gap:.85rem">
+            <div style="display:flex;gap:.75rem;align-items:flex-start">
+              <i class="fas fa-map-marker-alt" style="color:var(--campus-primary);width:18px;margin-top:.2rem"></i>
+              <span style="font-size:.9rem;color:var(--gray-dark)"><strong>Address:</strong> <%= campus.address %></span>
+            </div>
+            <div style="display:flex;gap:.75rem;align-items:center">
+              <i class="fas fa-phone" style="color:var(--campus-primary);width:18px"></i>
+              <span style="font-size:.9rem;color:var(--gray-dark)"><strong>Phone:</strong> <%= campus.phone %></span>
+            </div>
+            <div style="display:flex;gap:.75rem;align-items:center">
+              <i class="fas fa-envelope" style="color:var(--campus-primary);width:18px"></i>
+              <span style="font-size:.9rem;color:var(--gray-dark)"><strong>Email:</strong> <%= campus.email %></span>
+            </div>
+            <div style="display:flex;gap:.75rem;align-items:center">
+              <i class="fas fa-clock" style="color:var(--campus-primary);width:18px"></i>
+              <span style="font-size:.9rem;color:var(--gray-dark)"><strong>Hours:</strong> Mon–Sat, 8:00 AM – 5:00 PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.25rem">
+          <h4 style="color:var(--navy);margin-bottom:.75rem;font-size:.92rem"><i class="fab fa-whatsapp" style="color:#25d366;margin-right:.4rem"></i> WhatsApp Us</h4>
+          <p style="font-size:.84rem;color:var(--gray);margin-bottom:.75rem">Quick questions? Message us directly on WhatsApp.</p>
+          <a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>?text=Hi, I have a query about <%= encodeURIComponent(campus.name) %>" target="_blank" rel="noopener" class="btn btn-sm" style="background:#25d366;color:var(--white);border:none">Chat on WhatsApp</a>
+        </div>
+
+        <div style="background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius);padding:1.25rem">
+          <h4 style="color:var(--navy);margin-bottom:.5rem;font-size:.92rem">Admissions Enquiry</h4>
+          <p style="font-size:.84rem;color:var(--gray);margin-bottom:.75rem">For admission-specific queries, visit our dedicated admissions page.</p>
+          <a href="/admissions" class="btn btn-sm btn-outline">Go to Admissions</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <% if (campus.mapEmbed) { %>
+  <section style="padding-bottom:4rem">
+    <div class="container">
+      <iframe src="<%= campus.mapEmbed %>" width="100%" height="420"
+              style="border:0;border-radius:var(--radius-lg);display:block"
+              allowfullscreen loading="lazy" title="<%= campus.name %> Location"></iframe>
+    </div>
+  </section>
+  <% } else { %>
+  <section style="padding-bottom:4rem">
+    <div class="container">
+      <div style="background:var(--campus-light);border-radius:var(--radius-lg);padding:3rem;text-align:center">
+        <i class="fas fa-map-marked-alt" style="font-size:2.5rem;color:var(--campus-primary);opacity:.5;margin-bottom:1rem;display:block"></i>
+        <p style="font-weight:600;color:var(--navy);margin-bottom:.25rem"><%= campus.name %></p>
+        <p style="color:var(--gray);font-size:.9rem;margin-bottom:1.25rem"><%= campus.address %></p>
+        <a href="https://www.google.com/maps/search/<%= encodeURIComponent(campus.name + ' ' + campus.address) %>"
+           target="_blank" rel="noopener" class="btn btn-outline">
+          <i class="fas fa-external-link-alt" style="margin-right:.4rem"></i> Open in Google Maps
+        </a>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+</main>
+<%- include('../partials/footer-campus') %>
+<a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

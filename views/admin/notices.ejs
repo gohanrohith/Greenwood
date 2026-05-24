@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="admin-page-header"><h1>Notices & Circulars</h1></div>
+      <div class="admin-card">
+        <h3>Add New Notice</h3>
+        <form action="/notices/create" method="POST" class="admin-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="form-row">
+            <div class="form-group"><label>Title *</label><input type="text" name="title" required placeholder="Notice title"></div>
+            <div class="form-group">
+              <label>Campus</label>
+              <select name="campus">
+                <option value="all">All Campuses</option>
+                <option value="hasanparthy">Hasanparthy</option>
+                <option value="hunterroad">Hunter Road</option>
+                <option value="naimnagar">Naimnagar</option>
+                <option value="mancherial">Mancherial</option>
+                <option value="gopalpur">Gopalpur</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label>Content *</label><textarea name="content" rows="4" required placeholder="Notice details..."></textarea></div>
+          <button type="submit" class="btn btn-primary">Post Notice</button>
+        </form>
+      </div>
+      <div class="admin-card">
+        <h3>All Notices (<%= notices.length %>)</h3>
+        <% if (notices.length === 0) { %>
+          <div class="empty-state"><i class="fas fa-bell-slash"></i><p>No notices yet. Add one above.</p></div>
+        <% } else { %>
+          <table class="admin-table">
+            <thead><tr><th>Title</th><th>Campus</th><th>Date</th><th>Action</th></tr></thead>
+            <tbody>
+              <% notices.forEach(n => { %>
+              <tr>
+                <td><strong><%= n.title %></strong></td>
+                <td><span class="badge"><%= n.campus %></span></td>
+                <td><%= new Date(n.created_at).toLocaleDateString('en-IN') %></td>
+                <td>
+                  <form action="/notices/<%= n.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this notice?')">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+</body>
+</html>
+

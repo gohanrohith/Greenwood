@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Search</h1>
+    <form action="/search" method="GET" style="display:flex;gap:.5rem;max-width:500px;margin-top:1rem">
+      <input type="text" name="q" value="<%= q %>" placeholder="Search notices, news, events…" class="form-control" style="flex:1;padding:.6rem 1rem;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-family:inherit">
+      <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+    </form>
+  </div>
+</div>
+
+<main class="section">
+  <div class="container" style="max-width:800px">
+    <% if (q) { %>
+    <p style="margin-bottom:1.5rem;color:var(--gray)"><strong style="color:var(--dark)"><%= total %></strong> result<%= total!==1?'s':'' %> for "<strong><%= q %></strong>"</p>
+
+    <% if (results.articles.length > 0) { %>
+    <h3 style="font-size:1rem;font-weight:700;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:2px solid var(--green)"><i class="fas fa-newspaper" style="color:var(--green)"></i> News</h3>
+    <% results.articles.forEach(a => { %>
+    <div style="padding:1rem 0;border-bottom:1px solid var(--border)">
+      <% if (a.gtimes_url) { %>
+      <a href="<%= a.gtimes_url %>" target="_blank" rel="noopener" style="font-weight:700;color:var(--dark);font-size:1rem"><%= a.title %> <i class="fas fa-external-link-alt" style="font-size:.7rem"></i></a>
+      <% } else { %>
+      <span style="font-weight:700;color:var(--dark);font-size:1rem"><%= a.title %></span>
+      <% } %>
+      <p style="font-size:.88rem;color:var(--gray);margin:.25rem 0 0"><%= (a.excerpt||'').substring(0,120) %></p>
+    </div>
+    <% }) %>
+    <% } %>
+
+    <% if (results.events.length > 0) { %>
+    <h3 style="font-size:1rem;font-weight:700;margin:1.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:2px solid var(--navy)"><i class="fas fa-calendar-alt" style="color:var(--navy)"></i> Events</h3>
+    <% results.events.forEach(e => { %>
+    <div style="padding:1rem 0;border-bottom:1px solid var(--border)">
+      <span style="font-weight:700;color:var(--dark)"><%= e.title %></span>
+      <% if (e.event_date) { %><span style="font-size:.78rem;color:var(--gray);margin-left:.5rem"><i class="fas fa-calendar"></i> <%= new Date(e.event_date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) %></span><% } %>
+      <p style="font-size:.88rem;color:var(--gray);margin:.25rem 0 0"><%= (e.description||'').substring(0,120) %></p>
+    </div>
+    <% }) %>
+    <% } %>
+
+    <% if (results.notices.length > 0) { %>
+    <h3 style="font-size:1rem;font-weight:700;margin:1.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:2px solid var(--red)"><i class="fas fa-bell" style="color:var(--red)"></i> Notices</h3>
+    <% results.notices.forEach(n => { %>
+    <div style="padding:1rem 0;border-bottom:1px solid var(--border)">
+      <span style="font-weight:700;color:var(--dark)"><%= n.title %></span>
+      <p style="font-size:.88rem;color:var(--gray);margin:.25rem 0 0"><%= n.content.substring(0,120) %></p>
+    </div>
+    <% }) %>
+    <% } %>
+
+    <% if (total === 0) { %>
+    <div style="text-align:center;padding:3rem;color:var(--gray)">
+      <i class="fas fa-search" style="font-size:2.5rem;margin-bottom:1rem;display:block;opacity:.3"></i>
+      <p>No results found for "<strong><%= q %></strong>". Try different keywords.</p>
+    </div>
+    <% } %>
+    <% } else { %>
+    <div style="text-align:center;padding:3rem;color:var(--gray)">
+      <i class="fas fa-search" style="font-size:2.5rem;margin-bottom:1rem;display:block;opacity:.3"></i>
+      <p>Enter a keyword to search across news, events, and notices.</p>
+    </div>
+    <% } %>
+  </div>
+</main>
+
+<%- include('../partials/footer-main') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Greenwood High School academics — CBSE and Telangana State Board curriculum, pedagogy, and academic programs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Academics</h1>
+      <p>A rigorous, future-ready curriculum across CBSE and State Board streams</p>
+      <div class="breadcrumb"><a href="/">Home</a> / Academics</div>
+    </div>
+  </section>
+
+  <!-- TABS -->
+  <section class="section">
+    <div class="container">
+      <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem">
+        <button class="tab-btn active" data-tab="tab-overview" style="padding:10px 24px;border-radius:var(--radius);border:2px solid var(--green);background:var(--green);color:var(--white);font-family:inherit;font-weight:600;cursor:pointer;transition:all .2s">Overview</button>
+        <button class="tab-btn" data-tab="tab-cbse" style="padding:10px 24px;border-radius:var(--radius);border:2px solid var(--green);background:transparent;color:var(--green);font-family:inherit;font-weight:600;cursor:pointer;transition:all .2s">CBSE Program</button>
+        <button class="tab-btn" data-tab="tab-state" style="padding:10px 24px;border-radius:var(--radius);border:2px solid var(--green);background:transparent;color:var(--green);font-family:inherit;font-weight:600;cursor:pointer;transition:all .2s">State Board Program</button>
+        <button class="tab-btn" data-tab="tab-pedagogy" style="padding:10px 24px;border-radius:var(--radius);border:2px solid var(--green);background:transparent;color:var(--green);font-family:inherit;font-weight:600;cursor:pointer;transition:all .2s">Our Pedagogy</button>
+      </div>
+
+      <!-- OVERVIEW -->
+      <div class="tab-content active" id="tab-overview">
+        <div class="about-grid">
+          <div class="about-image">
+            <img src="/images/academics.jpg" alt="Academics at Greenwood"
+                 onerror="this.parentElement.style.background='var(--green-light)';this.style.display='none'">
+          </div>
+          <div class="about-text">
+            <span class="section-tag">Academic Philosophy</span>
+            <h2>Learning That Goes Beyond the Textbook</h2>
+            <p>Greenwood's academic program is built on the belief that education is not just about passing exams — it is about developing thinkers, problem-solvers, and compassionate human beings.</p>
+            <p>Our curriculum combines the structured rigour of CBSE and State Board syllabi with activity-based learning, project work, and continuous assessment to keep students engaged and motivated.</p>
+            <div class="about-features">
+              <div class="about-feature"><i class="fas fa-check-circle"></i> Class I to Class XII</div>
+              <div class="about-feature"><i class="fas fa-check-circle"></i> CBSE & State Board</div>
+              <div class="about-feature"><i class="fas fa-check-circle"></i> Smart Classrooms</div>
+              <div class="about-feature"><i class="fas fa-check-circle"></i> Digital Learning Tools</div>
+              <div class="about-feature"><i class="fas fa-check-circle"></i> Regular Assessments</div>
+              <div class="about-feature"><i class="fas fa-check-circle"></i> Parent Progress Reports</div>
+            </div>
+          </div>
+        </div>
+        <div class="why-grid" style="margin-top:3rem">
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-flask"></i></div>
+            <h3>Science Labs</h3>
+            <p>Fully equipped Physics, Chemistry, and Biology labs for hands-on experimentation from Class VI onwards.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-desktop"></i></div>
+            <h3>Computer Labs</h3>
+            <p>Modern computer labs with internet access and coding programs integrated into the curriculum.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-book"></i></div>
+            <h3>Library</h3>
+            <p>Well-stocked libraries on every campus with curriculum books, references, and recreational reading.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-calculator"></i></div>
+            <h3>Mathematics</h3>
+            <p>Strong emphasis on Mathematics with dedicated doubt-clearing sessions and Olympiad preparation.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-language"></i></div>
+            <h3>Languages</h3>
+            <p>English, Telugu, and Hindi taught by specialists. Communication skills developed through activities and debate.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon"><i class="fas fa-music"></i></div>
+            <h3>Arts & Co-curricular</h3>
+            <p>Music, art, craft, and cultural activities integrated into the weekly schedule for holistic development.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CBSE PROGRAM -->
+      <div class="tab-content" id="tab-cbse">
+        <div class="section-header" style="margin-bottom:2rem">
+          <span class="section-tag">CBSE</span>
+          <h2>Central Board of Secondary Education Program</h2>
+          <p>Campuses: Hasanparthy · Hunter Road · Mancherial</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+          <% const cbseStreams = [
+            { level:'Pre-Primary & Primary',classes:'Pre-KG to Class V',desc:'Foundation years focused on language development, numeracy, environmental awareness, and play-based learning.',icon:'fas fa-child'},
+            { level:'Upper Primary',classes:'Class VI to Class VIII',desc:'Introduction to Sciences, Social Studies, and Mathematics. Lab work and project-based learning begins.',icon:'fas fa-book-open'},
+            { level:'Secondary',classes:'Class IX to Class X',desc:'Board preparation with intensive focus on core subjects. Mock exams, revision cycles, and doubt sessions.',icon:'fas fa-graduation-cap'},
+            { level:'Senior Secondary',classes:'Class XI to Class XII',desc:'Science stream (PCM/PCB) available. Expert faculty and JEE/NEET foundation support at Hasanparthy.',icon:'fas fa-atom'},
+          ]; %>
+          <% cbseStreams.forEach(s => { %>
+          <div style="background:var(--white);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow);border-top:4px solid var(--green)">
+            <div style="width:50px;height:50px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;color:var(--green);font-size:1.2rem"><i class="<%= s.icon %>"></i></div>
+            <h3 style="color:var(--navy);font-size:1rem;margin-bottom:.3rem"><%= s.level %></h3>
+            <p style="font-size:.78rem;font-weight:700;color:var(--green);margin-bottom:.75rem"><%= s.classes %></p>
+            <p style="color:var(--gray);font-size:.87rem;line-height:1.7"><%= s.desc %></p>
+          </div>
+          <% }) %>
+        </div>
+        <div style="background:var(--green-light);border-radius:var(--radius-lg);padding:2rem;margin-top:2rem">
+          <h3 style="color:var(--navy);margin-bottom:1rem"><i class="fas fa-certificate" style="color:var(--green);margin-right:.5rem"></i> CBSE Affiliation</h3>
+          <p style="color:var(--gray-dark);font-size:.9rem">Hasanparthy, Hunter Road, and Mancherial campuses are affiliated with the Central Board of Secondary Education (CBSE), New Delhi. Affiliation details and Mandatory Public Disclosure are available on each campus website.</p>
+        </div>
+      </div>
+
+      <!-- STATE BOARD PROGRAM -->
+      <div class="tab-content" id="tab-state">
+        <div class="section-header" style="margin-bottom:2rem">
+          <span class="section-tag">State Board</span>
+          <h2>Telangana State Board Program</h2>
+          <p>Campuses: Naimnagar · Gopalpur</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+          <% const stateStreams = [
+            { level:'Primary',classes:'Class I to Class V',desc:'Telugu medium instruction with English as a core subject. Strong foundational skills in reading, writing, and arithmetic.',icon:'fas fa-child'},
+            { level:'Upper Primary',classes:'Class VI to Class VIII',desc:'All major subjects in Telugu/English bilingual format. Science practicals, social studies projects, and language enrichment.',icon:'fas fa-book-open'},
+            { level:'Secondary',classes:'Class IX to Class X',desc:'SSC board preparation. Comprehensive coverage of Telangana State Board syllabus with mock tests and revision.',icon:'fas fa-graduation-cap'},
+          ]; %>
+          <% stateStreams.forEach(s => { %>
+          <div style="background:var(--white);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow);border-top:4px solid var(--navy)">
+            <div style="width:50px;height:50px;background:rgba(31,27,118,.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;color:var(--navy);font-size:1.2rem"><i class="<%= s.icon %>"></i></div>
+            <h3 style="color:var(--navy);font-size:1rem;margin-bottom:.3rem"><%= s.level %></h3>
+            <p style="font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:.75rem"><%= s.classes %></p>
+            <p style="color:var(--gray);font-size:.87rem;line-height:1.7"><%= s.desc %></p>
+          </div>
+          <% }) %>
+        </div>
+        <div style="background:rgba(31,27,118,.06);border-radius:var(--radius-lg);padding:2rem;margin-top:2rem">
+          <h3 style="color:var(--navy);margin-bottom:1rem"><i class="fas fa-school" style="color:var(--navy);margin-right:.5rem"></i> Telangana State Board Recognition</h3>
+          <p style="color:var(--gray-dark);font-size:.9rem">Naimnagar and Gopalpur campuses follow the Telangana State Board curriculum and are recognised by the Government of Telangana. School information and recognition details are available on each campus website.</p>
+        </div>
+      </div>
+
+      <!-- PEDAGOGY -->
+      <div class="tab-content" id="tab-pedagogy">
+        <div class="section-header" style="margin-bottom:2rem">
+          <span class="section-tag">How We Teach</span>
+          <h2>The Greenwood Pedagogy</h2>
+        </div>
+        <div class="why-grid">
+          <% const pedItems = [
+            { icon:'fas fa-chalkboard-teacher', title:'Expert Faculty', desc:'Subject specialists trained in modern teaching methodologies with regular professional development.'},
+            { icon:'fas fa-laptop', title:'Smart Classrooms', desc:'Interactive digital boards in every classroom making lessons visual, engaging, and memorable.'},
+            { icon:'fas fa-users', title:'Small Batch Sizes', desc:'Controlled class sizes ensure each student gets adequate teacher attention and personal guidance.'},
+            { icon:'fas fa-chart-line', title:'Continuous Assessment', desc:'Regular unit tests, class tests, and formative assessments to track every student\'s progress.'},
+            { icon:'fas fa-comments', title:'Parent Communication', desc:'Regular PTMs, progress reports, and open communication channels between teachers and parents.'},
+            { icon:'fas fa-star', title:'Olympiad Preparation', desc:'Structured preparation for NSO, IMO, IEO, and other national and international competitions.'},
+          ]; %>
+          <% pedItems.forEach(p => { %>
+          <div class="why-card">
+            <div class="why-icon"><i class="<%= p.icon %>"></i></div>
+            <h3><%= p.title %></h3>
+            <p><%= p.desc %></p>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Questions About Admissions?</h2>
+        <p>Our team is ready to guide you to the right campus and stream for your child.</p>
+        <div class="cta-actions">
+          <a href="/admissions" class="btn btn-white">Apply Now</a>
+          <a href="/campuses" class="btn btn-outline-white">View Campuses</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

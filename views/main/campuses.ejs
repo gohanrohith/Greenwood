@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Explore all 5 Greenwood campuses — Hasanparthy (CBSE Residential), Hunter Road, Mancherial, Naimnagar, and Gopalpur.">
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Our Campuses</h1>
+      <p>Five unique learning environments — one shared commitment to excellence</p>
+      <div class="breadcrumb"><a href="/">Home</a> / Campuses</div>
+    </div>
+  </section>
+
+  <!-- CAMPUS OVERVIEW STATS -->
+  <section class="stats-bar">
+    <div class="container stats-grid">
+      <div class="stat-item"><span class="stat-number">5</span><span class="stat-label">Campuses</span></div>
+      <div class="stat-item"><span class="stat-number">3</span><span class="stat-label">CBSE Campuses</span></div>
+      <div class="stat-item"><span class="stat-number">2</span><span class="stat-label">State Board Campuses</span></div>
+      <div class="stat-item"><span class="stat-number">Warangal & Mancherial</span><span class="stat-label">Districts</span></div>
+    </div>
+  </section>
+
+  <!-- DETAILED CAMPUS CARDS -->
+  <section class="section">
+    <div class="container">
+      <div class="campuses-detail">
+        <% campuses.forEach((c, i) => { %>
+        <div class="campus-detail-card <%= i % 2 !== 0 ? 'reverse' : '' %>" id="<%= c.slug %>">
+          <div class="campus-detail-image">
+            <img src="/images/campuses/<%= c.slug %>.jpg" alt="<%= c.name %>"
+                 onerror="this.parentElement.style.background='<%= c.theme.light %>';this.style.display='none'">
+            <div class="campus-detail-badge" style="background:<%= c.theme.primary %>">
+              <%= c.board %> · <%= c.type %>
+            </div>
+          </div>
+          <div class="campus-detail-info">
+            <span class="section-tag"><%= c.board %></span>
+            <h2 style="margin-top:.5rem"><%= c.name %></h2>
+            <p class="campus-tagline"><%= c.tagline %></p>
+            <p style="color:var(--gray);font-size:.93rem;line-height:1.75"><%= c.description %></p>
+            <div class="campus-meta">
+              <span><i class="fas fa-map-marker-alt"></i> <%= c.address %></span>
+              <span><i class="fas fa-phone"></i> <%= c.phone %></span>
+              <span><i class="fas fa-graduation-cap"></i> <%= c.classes %></span>
+              <% if (c.established) { %><span><i class="fas fa-calendar"></i> Established <%= c.established %></span><% } %>
+            </div>
+            <ul class="highlights-list">
+              <% c.highlights.forEach(h => { %>
+              <li><i class="fas fa-check-circle"></i> <%= h %></li>
+              <% }) %>
+            </ul>
+            <div class="campus-detail-actions">
+              <a href="http://<%= c.slug %>.ghs.ac.in" class="btn btn-primary">Visit Campus Site</a>
+              <a href="http://<%= c.slug %>.ghs.ac.in/admissions" class="btn btn-outline">Apply Now</a>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Compare</span>
+        <h2>Campus at a Glance</h2>
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)">
+          <thead>
+            <tr style="background:var(--navy);color:var(--white)">
+              <th style="padding:14px 18px;text-align:left;font-size:.84rem">Campus</th>
+              <th style="padding:14px 18px;text-align:left;font-size:.84rem">Board</th>
+              <th style="padding:14px 18px;text-align:left;font-size:.84rem">Type</th>
+              <th style="padding:14px 18px;text-align:left;font-size:.84rem">Classes</th>
+              <th style="padding:14px 18px;text-align:left;font-size:.84rem">Location</th>
+              <th style="padding:14px 18px;font-size:.84rem"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% campuses.forEach((c, i) => { %>
+            <tr style="border-bottom:1px solid var(--gray-light);background:<%= i % 2 === 0 ? 'var(--white)' : 'var(--off-white)' %>">
+              <td style="padding:14px 18px;font-weight:600;color:var(--navy);font-size:.88rem"><%= c.name %></td>
+              <td style="padding:14px 18px"><span style="background:<%= c.cbse ? 'rgba(0,102,58,.1)' : 'rgba(31,27,118,.08)' %>;color:<%= c.cbse ? 'var(--green)' : 'var(--navy)' %>;padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:700"><%= c.board %></span></td>
+              <td style="padding:14px 18px;font-size:.86rem;color:var(--gray)"><%= c.type %></td>
+              <td style="padding:14px 18px;font-size:.86rem;color:var(--gray)"><%= c.classes %></td>
+              <td style="padding:14px 18px;font-size:.86rem;color:var(--gray)"><%= c.address.split(',')[0] %></td>
+              <td style="padding:14px 18px"><a href="http://<%= c.slug %>.ghs.ac.in" class="btn btn-sm btn-outline">Visit</a></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Join the Greenwood Family?</h2>
+        <p>Choose your nearest campus and apply today. Admissions open for 2025–26.</p>
+        <div class="cta-actions">
+          <a href="/admissions" class="btn btn-white">Apply Online</a>
+          <a href="/contact" class="btn btn-outline-white">Talk to Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

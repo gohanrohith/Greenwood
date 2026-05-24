@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/campus.css">
+  <style>
+    :root{--campus-primary:<%= campus.theme.primary %>;--campus-accent:<%= campus.theme.accent %>;--campus-light:<%= campus.theme.light %>;}
+    .disclosure-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:1rem}
+    .disclosure-table th,.disclosure-table td{padding:.7rem 1rem;border:1px solid var(--gray-light);text-align:left;vertical-align:top}
+    .disclosure-table th{background:var(--campus-light);font-weight:700;color:var(--navy);width:35%}
+    .disclosure-table td{color:var(--gray-dark)}
+    .disclosure-section{margin-bottom:2.5rem}
+    .disclosure-section h2{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid var(--campus-light)}
+    .doc-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:20px}
+    .doc-badge.uploaded{background:#d1fae5;color:#065f46}
+    .doc-badge.pending{background:#fef3c7;color:#92400e}
+  </style>
+</head>
+<body class="site-campus campus-<%= campus.slug %>">
+<%- include('../partials/topbar-campus') %>
+<%- include('../partials/nav-campus') %>
+<main>
+
+  <section class="page-hero" style="background:linear-gradient(120deg,var(--campus-primary),var(--navy))">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <% if (campus.cbse) { %>
+      <h1>Mandatory Disclosure &amp; School Info</h1>
+      <p><%= campus.name %> — CBSE Affiliation</p>
+      <% } else { %>
+      <h1>School Info &amp; Disclosures</h1>
+      <p><%= campus.name %> — Telangana State Board</p>
+      <% } %>
+      <div class="breadcrumb"><a href="/">Home</a> / <%= campus.cbse ? 'Mandatory Disclosure' : 'School Info' %></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width:900px">
+
+      <% if (campus.cbse) { %>
+      <!-- CBSE MANDATORY DISCLOSURE -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
+        <div>
+          <h2 style="color:var(--navy);font-size:1.3rem;margin-bottom:.25rem">Mandatory Disclosure &amp; School Info</h2>
+          <p style="color:var(--gray);font-size:.88rem;margin:0">CBSE Affiliation Bye-Laws compliance — <%= campus.name %></p>
+        </div>
+        <a href="/downloads" class="btn btn-primary" style="flex-shrink:0"><i class="fas fa-file-alt" style="margin-right:.4rem"></i>Mandatory Disclosure</a>
+      </div>
+      <div style="background:var(--campus-light);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:2.5rem;display:flex;gap:1rem;align-items:flex-start">
+        <i class="fas fa-info-circle" style="color:var(--campus-primary);font-size:1.25rem;margin-top:.1rem;flex-shrink:0"></i>
+        <p style="font-size:.88rem;color:var(--gray-dark);line-height:1.65;margin:0">This page contains mandatory information as required by the Central Board of Secondary Education (CBSE) Affiliation Bye-Laws. All information is publicly disclosed in compliance with applicable regulations.</p>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>A. General Information</h2>
+        <table class="disclosure-table">
+          <tr><th>School Name</th><td><%= campus.name %></td></tr>
+          <tr><th>Affiliation Number</th><td><%= campus.affiliation || 'To be updated' %></td></tr>
+          <tr><th>School Code</th><td><%= campus.schoolCode || 'To be updated' %></td></tr>
+          <tr><th>Complete Address</th><td><%= campus.address %></td></tr>
+          <tr><th>Principal Name</th><td><%= campus.principal %></td></tr>
+          <tr><th>Contact Number</th><td><%= campus.phone %></td></tr>
+          <tr><th>Email</th><td><%= campus.email %></td></tr>
+          <tr><th>Year of Establishment</th><td><%= campus.established || 'To be updated' %></td></tr>
+          <tr><th>Board of Affiliation</th><td>CBSE — Central Board of Secondary Education, New Delhi</td></tr>
+          <tr><th>Medium of Instruction</th><td>English</td></tr>
+          <tr><th>Type of School</th><td><%= campus.type %></td></tr>
+          <tr><th>Classes Offered</th><td><%= campus.classes %></td></tr>
+        </table>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>B. Documents & Certificates</h2>
+        <% const mandatoryDocs = [
+          { key: 'cbse_affiliation', label: 'CBSE Affiliation Letter' },
+          { key: 'noc', label: 'NOC from State Government' },
+          { key: 'recognition', label: 'Recognition Certificate from State' },
+          { key: 'fire_safety', label: 'Fire Safety Certificate' },
+          { key: 'building_safety', label: 'Building Safety Certificate' },
+          { key: 'deo_certificate', label: 'DEO/SDMC Certificate' },
+          { key: 'land_certificate', label: 'Land / Building Certificate' },
+        ];
+        const cbseCoreKeys = mandatoryDocs.map(d => d.key).concat(['results','fee_structure']);
+        const cbseExtraKeys = Object.keys(docs).filter(k => !cbseCoreKeys.includes(k));
+        %>
+        <table class="disclosure-table">
+          <thead>
+            <tr>
+              <th style="width:50%">Document</th>
+              <th style="width:25%">Status</th>
+              <th style="width:25%">Download</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% mandatoryDocs.forEach(md => {
+             const dbDoc = docs[md.key] && docs[md.key][0];
+          %>
+          <tr>
+            <td><%= md.label %></td>
+            <td>
+              <% if (dbDoc) { %>
+              <span class="doc-badge uploaded"><i class="fas fa-check"></i> Available</span>
+              <% } else { %>
+              <span class="doc-badge pending"><i class="fas fa-clock"></i> Pending</span>
+              <% } %>
+            </td>
+            <td>
+              <% if (dbDoc) { %>
+              <a href="/uploads/compliance/<%= dbDoc.filename %>" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Download</a>
+              <% } else { %>
+              <span style="font-size:.78rem;color:var(--gray)">Not uploaded</span>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+          <% cbseExtraKeys.forEach(key => { docs[key].forEach(doc => { %>
+          <tr>
+            <td><%= doc.label || key %></td>
+            <td><span class="doc-badge uploaded"><i class="fas fa-check"></i> Available</span></td>
+            <td><a href="/uploads/compliance/<%= doc.filename %>" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Download</a></td>
+          </tr>
+          <% }) }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>C. Academic Results</h2>
+        <table class="disclosure-table">
+          <thead><tr><th style="width:20%">Year</th><th style="width:20%">Class</th><th>Appeared</th><th>Passed</th><th>Pass %</th></tr></thead>
+          <tbody>
+          <% if (docs['results'] && docs['results'].length > 0) { %>
+          <tr><td colspan="5"><a href="/uploads/compliance/<%= docs['results'][0].filename %>" target="_blank" class="btn btn-sm btn-outline">Download Results PDF</a></td></tr>
+          <% } else { %>
+          <tr><td>2024–25</td><td>X</td><td>—</td><td>—</td><td style="color:var(--gray)">To be updated</td></tr>
+          <% if (campus.slug === 'hasanparthy') { %><tr><td>2024–25</td><td>XII</td><td>—</td><td>—</td><td style="color:var(--gray)">To be updated</td></tr><% } %>
+          <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>D. Staff Information</h2>
+        <table class="disclosure-table">
+          <thead><tr><th>Category</th><th>Count</th><th>Qualification</th></tr></thead>
+          <tbody>
+            <tr><td>Principal</td><td>1</td><td>Post Graduate + B.Ed</td></tr>
+            <tr><td>PGT (Post Graduate Teachers)</td><td style="color:var(--gray)">To be updated</td><td>Post Graduate + B.Ed</td></tr>
+            <tr><td>TGT (Trained Graduate Teachers)</td><td style="color:var(--gray)">To be updated</td><td>Graduate + B.Ed</td></tr>
+            <tr><td>PRT (Primary Teachers)</td><td style="color:var(--gray)">To be updated</td><td>Graduate / D.El.Ed</td></tr>
+            <tr><td>Non-Teaching Staff</td><td style="color:var(--gray)">To be updated</td><td>Various</td></tr>
+          </tbody>
+        </table>
+        <a href="/faculty" class="btn btn-outline">View Faculty Profiles</a>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>E. Infrastructure</h2>
+        <table class="disclosure-table">
+          <tr><th>Campus Area</th><td style="color:var(--gray)">To be updated</td></tr>
+          <tr><th>Number of Classrooms</th><td style="color:var(--gray)">To be updated</td></tr>
+          <tr><th>Science Labs</th><td>Yes</td></tr>
+          <tr><th>Computer Lab</th><td>Yes</td></tr>
+          <tr><th>Library</th><td>Yes</td></tr>
+          <tr><th>Internet Facility</th><td>Yes</td></tr>
+          <tr><th>Playground / Sports Ground</th><td>Yes</td></tr>
+          <tr><th>Transport</th><td>Yes — GPS tracked</td></tr>
+          <tr><th>CCTV Surveillance</th><td>Yes — 24/7</td></tr>
+          <% if (campus.slug === 'hasanparthy') { %>
+          <tr><th>Hostel</th><td>Yes — Separate Boys & Girls Hostels</td></tr>
+          <% } %>
+        </table>
+        <a href="/facilities" class="btn btn-outline">View Full Facilities List</a>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>F. School Management Committee (SMC)</h2>
+        <table class="disclosure-table">
+          <thead><tr><th>Name</th><th>Designation</th><th>Role in SMC</th></tr></thead>
+          <tbody><tr><td colspan="3" style="color:var(--gray)">To be updated</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>G. Parent Teacher Association (PTA)</h2>
+        <table class="disclosure-table">
+          <thead><tr><th>Name</th><th>Designation</th></tr></thead>
+          <tbody><tr><td colspan="2" style="color:var(--gray)">To be updated</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>H. Fee Structure</h2>
+        <p style="font-size:.88rem;color:var(--gray);margin-bottom:.75rem">The complete class-wise fee structure is available for download:</p>
+        <% if (docs['fee_structure'] && docs['fee_structure'][0]) { %>
+        <a href="/uploads/compliance/<%= docs['fee_structure'][0].filename %>" target="_blank" class="btn btn-outline">Download Fee Structure (PDF)</a>
+        <% } else { %>
+        <a href="/downloads" class="btn btn-outline">View Downloads Section</a>
+        <% } %>
+      </div>
+
+      <% } else { %>
+      <!-- STATE BOARD PUBLIC INFORMATION -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
+        <div>
+          <h2 style="color:var(--navy);font-size:1.3rem;margin-bottom:.25rem">School Info &amp; Disclosures</h2>
+          <p style="color:var(--gray);font-size:.88rem;margin:0">Public information — <%= campus.name %></p>
+        </div>
+        <a href="/downloads" class="btn btn-primary" style="flex-shrink:0"><i class="fas fa-file-alt" style="margin-right:.4rem"></i>View Documents</a>
+      </div>
+      <div style="background:var(--campus-light);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-bottom:2.5rem;display:flex;gap:1rem;align-items:flex-start">
+        <i class="fas fa-info-circle" style="color:var(--campus-primary);font-size:1.25rem;margin-top:.1rem;flex-shrink:0"></i>
+        <p style="font-size:.88rem;color:var(--gray-dark);line-height:1.65;margin:0">This page contains public information about <%= campus.name %> as mandated under applicable State Board and Right to Education regulations.</p>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>A. School Information</h2>
+        <table class="disclosure-table">
+          <tr><th>School Name</th><td><%= campus.name %></td></tr>
+          <tr><th>Recognition Number</th><td style="color:var(--gray)">To be updated</td></tr>
+          <tr><th>Complete Address</th><td><%= campus.address %></td></tr>
+          <tr><th>Principal Name</th><td><%= campus.principal %></td></tr>
+          <tr><th>Contact Number</th><td><%= campus.phone %></td></tr>
+          <tr><th>Email</th><td><%= campus.email %></td></tr>
+          <tr><th>Year of Establishment</th><td><%= campus.established || 'To be updated' %></td></tr>
+          <tr><th>Board</th><td>Telangana State Board of Secondary Education</td></tr>
+          <tr><th>Medium of Instruction</th><td>English / Telugu</td></tr>
+          <tr><th>Type</th><td><%= campus.type %></td></tr>
+          <tr><th>Classes Offered</th><td><%= campus.classes %></td></tr>
+        </table>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>B. Documents</h2>
+        <% const stateMandatory = [
+          {key:'recognition', label:'School Recognition Certificate'},
+          {key:'noc', label:'NOC from District Authority'},
+          {key:'fire_safety', label:'Fire Safety Certificate'},
+          {key:'building_safety', label:'Building Safety Certificate'},
+        ];
+        const stateCoreKeys = stateMandatory.map(d => d.key);
+        const stateExtraKeys = Object.keys(docs).filter(k => !stateCoreKeys.includes(k));
+        %>
+        <table class="disclosure-table">
+          <thead><tr><th style="width:50%">Document</th><th style="width:25%">Status</th><th style="width:25%">Download</th></tr></thead>
+          <tbody>
+          <% stateMandatory.forEach(md => {
+            const dbDoc = docs[md.key] && docs[md.key][0];
+          %>
+          <tr>
+            <td><%= md.label %></td>
+            <td><% if (dbDoc) { %><span class="doc-badge uploaded"><i class="fas fa-check"></i> Available</span><% } else { %><span class="doc-badge pending"><i class="fas fa-clock"></i> Pending</span><% } %></td>
+            <td><% if (dbDoc) { %><a href="/uploads/compliance/<%= dbDoc.filename %>" target="_blank" class="btn btn-sm btn-outline">Download</a><% } else { %><span style="font-size:.78rem;color:var(--gray)">Not uploaded</span><% } %></td>
+          </tr>
+          <% }) %>
+          <% stateExtraKeys.forEach(key => { docs[key].forEach(doc => { %>
+          <tr>
+            <td><%= doc.label || key %></td>
+            <td><span class="doc-badge uploaded"><i class="fas fa-check"></i> Available</span></td>
+            <td><a href="/uploads/compliance/<%= doc.filename %>" target="_blank" class="btn btn-sm btn-outline">Download</a></td>
+          </tr>
+          <% }) }) %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>C. Staff Information</h2>
+        <table class="disclosure-table">
+          <thead><tr><th>Category</th><th>Count</th></tr></thead>
+          <tbody>
+            <tr><td>Head Master / Principal</td><td>1</td></tr>
+            <tr><td>School Assistants</td><td style="color:var(--gray)">To be updated</td></tr>
+            <tr><td>Secondary Grade Teachers</td><td style="color:var(--gray)">To be updated</td></tr>
+            <tr><td>Non-Teaching Staff</td><td style="color:var(--gray)">To be updated</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>D. Infrastructure</h2>
+        <table class="disclosure-table">
+          <tr><th>Campus Area</th><td style="color:var(--gray)">To be updated</td></tr>
+          <tr><th>Number of Classrooms</th><td style="color:var(--gray)">To be updated</td></tr>
+          <tr><th>Computer Lab</th><td>Yes</td></tr>
+          <tr><th>Library</th><td>Yes</td></tr>
+          <tr><th>Playground</th><td>Yes</td></tr>
+          <tr><th>Transport</th><td>Yes</td></tr>
+          <tr><th>CCTV</th><td>Yes</td></tr>
+        </table>
+      </div>
+
+      <div class="disclosure-section">
+        <h2>E. Academic Results</h2>
+        <table class="disclosure-table">
+          <thead><tr><th>Year</th><th>Class</th><th>Pass %</th></tr></thead>
+          <tbody><tr><td>2024–25</td><td>VII</td><td style="color:var(--gray)">To be updated</td></tr></tbody>
+        </table>
+      </div>
+      <% } %>
+
+      <div style="background:var(--campus-light);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-top:2rem;display:flex;gap:1rem;align-items:flex-start">
+        <i class="fas fa-download" style="color:var(--campus-primary);font-size:1.25rem;margin-top:.1rem;flex-shrink:0"></i>
+        <div>
+          <p style="font-weight:700;color:var(--navy);margin-bottom:.25rem">Need a document?</p>
+          <p style="font-size:.86rem;color:var(--gray);margin-bottom:.75rem">Additional certificates and forms are available in the Downloads section.</p>
+          <a href="/downloads" class="btn btn-outline">View Downloads</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-campus') %>
+<a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

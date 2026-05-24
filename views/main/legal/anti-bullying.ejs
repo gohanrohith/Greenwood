@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../../partials/topbar') %>
+<%- include('../../partials/nav-main') %>
+<main>
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Anti-Bullying Policy</h1>
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/compliance">Compliance</a> / Anti-Bullying</div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container" style="max-width:820px">
+      <div style="background:var(--white);border-radius:var(--radius-lg);padding:3rem;box-shadow:var(--shadow)">
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Our Stance</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">Greenwood High School has zero tolerance for bullying in any form. Every student has the right to learn in a safe, respectful environment free from intimidation, harassment, or harm by peers or any member of the school community.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">What is Bullying?</h2>
+        <p style="color:var(--gray);margin-bottom:.75rem;line-height:1.8">Bullying is defined as repeated, intentional behaviour intended to hurt, harm, or humiliate another person. It includes:</p>
+        <ul style="color:var(--gray);line-height:2;padding-left:1.5rem;margin-bottom:1.5rem">
+          <li><strong>Physical bullying</strong> — hitting, pushing, damaging property</li>
+          <li><strong>Verbal bullying</strong> — name-calling, threats, offensive remarks</li>
+          <li><strong>Social/relational bullying</strong> — exclusion, spreading rumours, manipulation</li>
+          <li><strong>Cyberbullying</strong> — harassment through digital means or social media</li>
+          <li><strong>Discriminatory bullying</strong> — based on caste, religion, gender, or disability</li>
+        </ul>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Prevention</h2>
+        <ul style="color:var(--gray);line-height:2;padding-left:1.5rem;margin-bottom:1.5rem">
+          <li>Class teachers conduct regular sessions on respect, empathy, and appropriate behaviour</li>
+          <li>School counsellors are available on every campus for student support</li>
+          <li>CCTV monitoring of common areas, playgrounds, and corridors</li>
+          <li>Anonymous reporting mechanisms available for students</li>
+        </ul>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Consequences</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">Substantiated bullying cases result in graduated consequences including counselling, parental involvement, suspension, and in severe cases, expulsion. The school follows due process and natural justice principles in all investigations.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Reporting</h2>
+        <p style="color:var(--gray);line-height:1.8">Students and parents can report bullying to any class teacher, the Campus Principal, or by emailing <a href="mailto:office@ghs.ac.in" style="color:var(--green)">office@ghs.ac.in</a>. All reports are taken seriously and investigated confidentially.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('../../partials/footer-main') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

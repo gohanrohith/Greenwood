@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <style>
+    .gallery-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:1rem}
+    .gallery-admin-item{position:relative;border-radius:8px;overflow:hidden;background:#f4f4f4;aspect-ratio:1}
+    .gallery-admin-item img{width:100%;height:100%;object-fit:cover;display:block}
+    .gallery-admin-item .item-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:opacity .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem}
+    .gallery-admin-item:hover .item-overlay{opacity:1}
+    .gallery-admin-item .item-caption{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:.7rem;padding:4px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  </style>
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="admin-page-header"><h1>Gallery</h1></div>
+
+      <div class="admin-card">
+        <h3>Upload Images</h3>
+        <form action="/gallery/upload?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="admin-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Caption</label>
+              <input type="text" name="caption" placeholder="e.g. Annual Sports Day 2025">
+            </div>
+            <div class="form-group">
+              <label>Campus</label>
+              <select name="campus">
+                <option value="hasanparthy">Hasanparthy</option>
+                <option value="hunterroad">Hunter Road</option>
+                <option value="naimnagar">Naimnagar</option>
+                <option value="mancherial">Mancherial</option>
+                <option value="gopalpur">Gopalpur</option>
+                <option value="main">Main Website</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Images * (JPG/PNG, up to 10 files, max 5MB each)</label>
+            <input type="file" name="images" multiple accept="image/*" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h3>Gallery Items (<%= typeof gallery !== 'undefined' && gallery ? gallery.length : 0 %>)</h3>
+        <% if (typeof gallery === 'undefined' || !gallery || gallery.length === 0) { %>
+        <div class="empty-state"><i class="fas fa-images"></i><p>No gallery items yet. Upload images above.</p></div>
+        <% } else { %>
+
+        <!-- Filter by campus -->
+        <div style="margin-bottom:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+          <span style="font-size:.82rem;color:var(--gray);align-self:center">Filter:</span>
+          <% const campuses = [...new Set(gallery.map(g => g.campus))]; %>
+          <% campuses.forEach(c => { %>
+          <button class="btn btn-sm btn-outline campus-filter-btn" data-campus="<%= c %>" style="font-size:.76rem"><%= c %></button>
+          <% }) %>
+          <button class="btn btn-sm btn-outline campus-filter-btn active" data-campus="all" style="font-size:.76rem">All</button>
+        </div>
+
+        <div class="gallery-admin-grid" id="galleryGrid">
+          <% gallery.forEach(item => { %>
+          <div class="gallery-admin-item" data-campus="<%= item.campus %>">
+            <img src="/uploads/gallery/<%= item.filename %>" alt="<%= item.caption || '' %>" loading="lazy">
+            <div class="item-overlay">
+              <form action="/gallery/<%= item.id %>/delete" method="POST" onsubmit="return confirm('Delete this image?')">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+              </form>
+            </div>
+            <% if (item.caption) { %><div class="item-caption"><%= item.caption %></div><% } %>
+          </div>
+          <% }) %>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+<script>
+  document.querySelectorAll('.campus-filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.campus-filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const campus = this.dataset.campus;
+      document.querySelectorAll('.gallery-admin-item').forEach(item => {
+        item.style.display = (campus === 'all' || item.dataset.campus === campus) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>

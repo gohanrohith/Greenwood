@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="admin-page-header">
+        <h1>Events</h1>
+        <p>Manage campus events and activities. GTimes-synced events are read-only.</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Add New Event</h3>
+        <form action="/events/create" method="POST" class="admin-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Title *</label>
+              <input type="text" name="title" required placeholder="Event title">
+            </div>
+            <div class="form-group">
+              <label>Campus</label>
+              <select name="campus">
+                <option value="all">All Campuses</option>
+                <option value="hasanparthy">Hasanparthy</option>
+                <option value="hunterroad">Hunter Road</option>
+                <option value="naimnagar">Naimnagar</option>
+                <option value="mancherial">Mancherial</option>
+                <option value="gopalpur">Gopalpur</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Event Date</label>
+              <input type="date" name="event_date">
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select name="category">
+                <option value="">Select Category</option>
+                <option>Academic</option>
+                <option>Sports</option>
+                <option>Cultural</option>
+                <option>Achievement</option>
+                <option>Annual Day</option>
+                <option>Workshop</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" rows="3" placeholder="Event details..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Event</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h3>All Events (<%= events ? events.length : 0 %>)</h3>
+        <% if (!events || events.length === 0) { %>
+        <div class="empty-state"><i class="fas fa-calendar-alt"></i><p>No events yet. Add one above or sync from GTimes.</p></div>
+        <% } else { %>
+        <table class="admin-table">
+          <thead>
+            <tr><th>Title</th><th>Campus</th><th>Date</th><th>Category</th><th>Source</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <% events.forEach(ev => { %>
+            <tr>
+              <td><strong><%= ev.title.substring(0,60) %><%= ev.title.length>60?'...':'' %></strong></td>
+              <td><span class="badge"><%= ev.campus %></span></td>
+              <td><%= ev.event_date ? new Date(ev.event_date).toLocaleDateString('en-IN') : '—' %></td>
+              <td><%= ev.category || '—' %></td>
+              <td>
+                <% if (ev.source === 'gtimes') { %>
+                <span class="badge badge-info">GTimes</span>
+                <% } else { %>
+                <span class="badge badge-success">Local</span>
+                <% } %>
+              </td>
+              <td>
+                <% if (ev.source !== 'gtimes') { %>
+                <form action="/events/<%= ev.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this event?')">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+                <% } else { %>
+                <% if (ev.gtimes_url) { %><a href="<%= ev.gtimes_url %>" target="_blank" class="btn btn-sm btn-outline">View</a><% } %>
+                <% } %>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
+      </div>
+
+      <div class="admin-card">
+        <h3><i class="fas fa-sync" style="margin-right:.4rem"></i> GTimes Sync Info</h3>
+        <p style="font-size:.86rem;color:var(--gray);margin-bottom:.5rem">Events published on GTimes are automatically synced here via webhook. GTimes events cannot be deleted from this panel — manage them on GTimes.</p>
+        <p style="font-size:.82rem;color:var(--gray)">Webhook endpoint: <code style="background:var(--gray-light);padding:2px 6px;border-radius:4px">POST /api/gtimes/sync</code></p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/campus.css">
+  <style>
+    :root{--campus-primary:<%= campus.theme.primary %>;--campus-accent:<%= campus.theme.accent %>;--campus-light:<%= campus.theme.light %>;}
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+    .gallery-item { position: relative; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 1; background: var(--campus-light); cursor: pointer; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; display: block; }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.45); opacity: 0; transition: opacity .3s; display: flex; align-items: center; justify-content: center; }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 9999; align-items: center; justify-content: center; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 88vh; border-radius: var(--radius-lg); object-fit: contain; }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: var(--white); font-size: 2rem; cursor: pointer; }
+  </style>
+</head>
+<body class="site-campus campus-<%= campus.slug %>">
+<%- include('../partials/topbar-campus') %>
+<%- include('../partials/nav-campus') %>
+<main>
+
+  <section class="page-hero" style="background:linear-gradient(120deg,var(--campus-primary),var(--navy))">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Gallery</h1>
+      <p>Life at <%= campus.name %></p>
+      <div class="breadcrumb"><a href="/">Home</a> / Gallery</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <% if (gallery && gallery.length > 0) { %>
+      <div class="gallery-grid">
+        <% gallery.forEach(item => { %>
+        <div class="gallery-item" onclick="openLightbox('<%= item.filename %>', '<%= (item.caption||'').replace(/'/g,'') %>')">
+          <img src="/uploads/gallery/<%= item.filename %>" alt="<%= item.caption || campus.name %>" loading="lazy">
+          <div class="gallery-item-overlay"><i class="fas fa-expand" style="color:var(--white);font-size:1.25rem"></i></div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <div style="text-align:center;padding:5rem;color:var(--gray)">
+        <i class="fas fa-images" style="font-size:3.5rem;opacity:.2;margin-bottom:1.5rem;display:block"></i>
+        <p>Gallery coming soon. Check back after events.</p>
+      </div>
+      <% } %>
+    </div>
+  </section>
+
+</main>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<%- include('../partials/footer-campus') %>
+<a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+<script>
+  function openLightbox(filename, caption) {
+    document.getElementById('lightboxImg').src = '/uploads/gallery/' + filename;
+    document.getElementById('lightboxImg').alt = caption;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>

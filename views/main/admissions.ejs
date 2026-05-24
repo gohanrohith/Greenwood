@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Apply for admissions at Greenwood High School Warangal — CBSE and State Board programs across 5 campuses for the 2025-26 academic year.">
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Greenwood High School">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="Apply for admissions at Greenwood High School Warangal — CBSE and State Board programs across 5 campuses for the 2025-26 academic year.">
+  <meta property="og:url" content="<%= canonicalUrl %>">
+  <meta property="og:image" content="https://ghs.ac.in/images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= title %>">
+  <meta name="twitter:description" content="Apply for admissions at Greenwood High School Warangal — CBSE and State Board programs across 5 campuses for the 2025-26 academic year.">
+  <meta name="twitter:image" content="https://ghs.ac.in/images/og-image.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Admissions <%= admissionYear %></h1>
+      <% if (admissionsOpen) { %>
+      <p><span style="background:var(--lime);color:var(--navy);padding:3px 12px;border-radius:20px;font-size:.8rem;font-weight:700;margin-right:.75rem">OPEN</span> Admissions are currently open. Limited seats available.</p>
+      <% } else { %>
+      <p>Admissions are currently closed. Please check back soon or contact us for details.</p>
+      <% } %>
+      <div class="breadcrumb"><a href="/">Home</a> / Admissions</div>
+    </div>
+  </section>
+
+  <% if (success) { %>
+  <div style="background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;padding:1.25rem;text-align:center;font-weight:600">
+    <i class="fas fa-check-circle"></i> Your enquiry has been submitted! We'll contact you within 24 hours.
+  </div>
+  <% } %>
+  <% if (error) { %>
+  <div style="background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:1.25rem;text-align:center;font-weight:600">
+    <i class="fas fa-exclamation-circle"></i> Please fill in all required fields and try again.
+  </div>
+  <% } %>
+
+  <!-- PROCESS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">How to Apply</span>
+        <h2>Simple Admission Process</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;max-width:900px;margin:0 auto">
+        <% [
+          {step:'1', icon:'fas fa-edit', title:'Submit Enquiry', desc:'Fill the form below with parent and student details.'},
+          {step:'2', icon:'fas fa-phone', title:'Our Call', desc:'Our admissions team will call you within 24 hours.'},
+          {step:'3', icon:'fas fa-school', title:'Campus Visit', desc:'Visit the campus to meet the team and see facilities.'},
+          {step:'4', icon:'fas fa-file-alt', title:'Documents & Enrollment', desc:'Submit required documents and complete enrollment formalities.'},
+        ].forEach(s => { %>
+        <div style="text-align:center;padding:2rem 1.5rem;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);position:relative">
+          <div style="width:44px;height:44px;background:var(--navy);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;margin:0 auto 1rem"><%= s.step %></div>
+          <div style="width:52px;height:52px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;font-size:1.2rem;color:var(--green)"><i class="<%= s.icon %>"></i></div>
+          <h3 style="color:var(--navy);font-size:.97rem;margin-bottom:.5rem"><%= s.title %></h3>
+          <p style="color:var(--gray);font-size:.84rem;line-height:1.6"><%= s.desc %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM + CAMPUS INFO -->
+  <section class="section bg-light">
+    <div class="container admissions-grid">
+      <div>
+        <span class="section-tag">Enquiry Form</span>
+        <h2 style="margin:.75rem 0 .5rem;color:var(--navy)">Submit Your Admission Enquiry</h2>
+        <p style="color:var(--gray);margin-bottom:2rem;font-size:.92rem">Our team will get back to you within 24 hours. Fields marked * are required.</p>
+
+        <form action="/admissions/enquiry" method="POST" class="enquiry-form">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Parent / Guardian Name *</label>
+              <input type="text" name="name" required placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label>Phone Number *</label>
+              <input type="tel" name="phone" required placeholder="+91 XXXXXXXXXX">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label>Student Name</label>
+              <input type="text" name="student_name" placeholder="Child's name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Class Seeking Admission</label>
+              <select name="class">
+                <option value="">Select Class</option>
+                <option>Pre-KG</option><option>LKG</option><option>UKG</option>
+                <% for(let i=1;i<=12;i++) { %><option>Class <%= i %></option><% } %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Preferred Campus</label>
+              <select name="campus">
+                <option value="">Select Campus</option>
+                <% campuses.forEach(c => { %>
+                <option value="<%= c.slug %>"><%= c.name %> (<%= c.board %>)</option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Message / Questions</label>
+            <textarea name="message" rows="4" placeholder="Any specific questions or requirements..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;padding:14px 36px">
+            <i class="fas fa-paper-plane" style="margin-right:.5rem"></i> Submit Enquiry
+          </button>
+        </form>
+      </div>
+
+      <div>
+        <span class="section-tag">Documents Required</span>
+        <h2 style="margin:.75rem 0 1.5rem;color:var(--navy)">What to Bring for Enrollment</h2>
+        <div style="display:flex;flex-direction:column;gap:.75rem;margin-bottom:2.5rem">
+          <% [
+            'Birth Certificate (original + photocopy)',
+            'Previous School Transfer Certificate (TC)',
+            'Report Card / Mark Sheet of last class',
+            'Aadhar Card of student and parent',
+            '4 recent passport-size photographs',
+            'Residence proof (Ration card / Utility bill)',
+            'Caste Certificate (if applicable for fee concession)',
+          ].forEach(d => { %>
+          <div style="display:flex;align-items:flex-start;gap:.75rem;background:var(--white);padding:1rem;border-radius:var(--radius);box-shadow:0 1px 6px rgba(0,0,0,.04)">
+            <i class="fas fa-file-alt" style="color:var(--green);margin-top:.15rem;flex-shrink:0"></i>
+            <span style="font-size:.88rem;color:var(--gray-dark)"><%= d %></span>
+          </div>
+          <% }) %>
+        </div>
+
+        <span class="section-tag" style="background:var(--navy);color:var(--white)">Campus Contacts</span>
+        <h3 style="margin:.75rem 0 1.25rem;color:var(--navy)">Reach the Admissions Office</h3>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <% campuses.forEach(c => { %>
+          <div style="background:var(--white);border-radius:var(--radius);padding:1rem 1.25rem;box-shadow:0 1px 6px rgba(0,0,0,.04);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+            <div>
+              <strong style="font-size:.9rem;color:var(--navy)"><%= c.shortName %></strong>
+              <span style="font-size:.75rem;color:var(--gray);margin-left:.5rem"><%= c.board %></span>
+            </div>
+            <a href="http://<%= c.slug %>.ghs.ac.in/admissions" style="font-size:.8rem;color:var(--green);font-weight:600">Apply →</a>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

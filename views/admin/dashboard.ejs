@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="dashboard-header">
+        <h1>Dashboard</h1>
+        <p>Welcome back, <strong><%= adminName %></strong>! Here's what's happening today.</p>
+      </div>
+
+      <div class="dashboard-cards">
+        <div class="dash-card">
+          <div class="dash-card-icon" style="background:#1F1B76"><i class="fas fa-user-graduate"></i></div>
+          <div class="dash-card-info">
+            <span class="dash-num"><%= stats.enquiries %></span>
+            <span class="dash-label">Admission Enquiries</span>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon" style="background:#00663A"><i class="fas fa-bell"></i></div>
+          <div class="dash-card-info">
+            <span class="dash-num"><%= stats.notices %></span>
+            <span class="dash-label">Active Notices</span>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon" style="background:#B5D236;color:#1F1B76"><i class="fas fa-images"></i></div>
+          <div class="dash-card-info">
+            <span class="dash-num"><%= stats.gallery %></span>
+            <span class="dash-label">Gallery Items</span>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon" style="background:#EE141F"><i class="fas fa-school"></i></div>
+          <div class="dash-card-info">
+            <span class="dash-num">5</span>
+            <span class="dash-label">Campuses Active</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-sections">
+        <div class="dash-section">
+          <h3>Quick Actions</h3>
+          <div class="quick-actions">
+            <a href="/notices" class="quick-action"><i class="fas fa-plus"></i> Add Notice</a>
+            <a href="/events" class="quick-action"><i class="fas fa-calendar-plus"></i> Add Event</a>
+            <a href="/gallery" class="quick-action"><i class="fas fa-upload"></i> Upload Gallery</a>
+            <a href="/faculty" class="quick-action"><i class="fas fa-user-plus"></i> Add Faculty</a>
+            <a href="/compliance" class="quick-action"><i class="fas fa-file-upload"></i> Upload Compliance</a>
+            <a href="/downloads" class="quick-action"><i class="fas fa-download"></i> Add Download</a>
+            <a href="/admissions" class="quick-action"><i class="fas fa-eye"></i> View Enquiries</a>
+            <a href="/settings" class="quick-action"><i class="fas fa-cog"></i> Settings</a>
+          </div>
+        </div>
+
+        <% if (typeof recentEnquiries !== 'undefined' && recentEnquiries && recentEnquiries.length > 0) { %>
+        <div class="dash-section">
+          <h3>Recent Admission Enquiries</h3>
+          <table class="admin-table">
+            <thead><tr><th>Name</th><th>Phone</th><th>Campus</th><th>Class</th><th>Date</th><th></th></tr></thead>
+            <tbody>
+              <% recentEnquiries.slice(0,5).forEach(e => { %>
+              <tr>
+                <td><strong><%= e.parent_name %></strong></td>
+                <td><%= e.phone %></td>
+                <td><span class="badge"><%= e.campus %></span></td>
+                <td><%= e.class_seeking || '—' %></td>
+                <td><%= new Date(e.created_at).toLocaleDateString('en-IN') %></td>
+                <td><a href="/admissions/<%= e.id %>" class="btn btn-sm btn-outline">View</a></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          <a href="/admissions" style="font-size:.83rem;color:var(--navy);font-weight:600;display:inline-block;margin-top:.75rem">View all enquiries →</a>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+</body>
+</html>

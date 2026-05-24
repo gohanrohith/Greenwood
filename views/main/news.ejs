@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Latest news, events, and announcements from Greenwood High School — all campuses.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>News & Events</h1>
+      <p>Latest happenings across all Greenwood campuses</p>
+      <div class="breadcrumb"><a href="/">Home</a> / News & Events</div>
+    </div>
+  </section>
+
+  <!-- UPCOMING EVENTS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Events</span>
+        <h2>Upcoming & Recent Events</h2>
+        <p>School events, celebrations, competitions, and campus activities</p>
+      </div>
+      <% if (events && events.length > 0) { %>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px">
+        <% events.forEach(ev => { %>
+        <div style="background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+          <% if (ev.image) { %>
+          <img src="/uploads/gallery/<%= ev.image %>" alt="<%= ev.title %>" style="width:100%;height:180px;object-fit:cover">
+          <% } else { %>
+          <div style="height:80px;background:linear-gradient(120deg,var(--navy),var(--green));display:flex;align-items:center;justify-content:center">
+            <i class="fas fa-calendar-alt" style="font-size:1.8rem;color:var(--lime)"></i>
+          </div>
+          <% } %>
+          <div style="padding:1.25rem">
+            <% if (ev.event_date) { %>
+            <div style="font-size:.75rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem">
+              <i class="fas fa-calendar"></i> <%= new Date(ev.event_date).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'}) %>
+            </div>
+            <% } %>
+            <% if (ev.campus !== 'all') { %><span style="font-size:.7rem;background:var(--lime);color:var(--navy);padding:2px 9px;border-radius:10px;font-weight:700;margin-bottom:.6rem;display:inline-block"><%= ev.campus %></span><% } %>
+            <h3 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;line-height:1.4"><%= ev.title %></h3>
+            <% if (ev.description) { %><p style="font-size:.85rem;color:var(--gray);line-height:1.65"><%= ev.description.substring(0,100) %><%= ev.description.length>100?'...':'' %></p><% } %>
+            <% if (ev.source === 'gtimes' && ev.gtimes_url) { %>
+            <a href="<%= ev.gtimes_url %>" target="_blank" rel="noopener" style="font-size:.8rem;color:var(--green);font-weight:600;display:inline-flex;align-items:center;gap:.35rem;margin-top:.75rem">Read on GTimes <i class="fas fa-external-link-alt"></i></a>
+            <% } %>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <div style="text-align:center;padding:4rem;color:var(--gray)">
+        <i class="fas fa-calendar-alt" style="font-size:3rem;margin-bottom:1rem;opacity:.3"></i>
+        <p>No events posted yet. Check back soon or follow us on GTimes.</p>
+        <a href="http://gtimes.in" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:1rem">Visit GTimes <i class="fas fa-external-link-alt"></i></a>
+      </div>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- NEWS / ARTICLES -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Latest News</span>
+        <h2>News & Articles</h2>
+        <p>Stories, updates, and announcements from the Greenwood community</p>
+      </div>
+      <% if (articles && articles.length > 0) { %>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px">
+        <% articles.forEach(a => { %>
+        <div style="background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+          <% if (a.image) { %>
+          <img src="/uploads/gallery/<%= a.image %>" alt="<%= a.title %>" style="width:100%;height:180px;object-fit:cover">
+          <% } else { %>
+          <div style="height:80px;background:linear-gradient(120deg,var(--green),var(--lime));display:flex;align-items:center;justify-content:center">
+            <i class="fas fa-newspaper" style="font-size:1.8rem;color:var(--navy)"></i>
+          </div>
+          <% } %>
+          <div style="padding:1.25rem">
+            <div style="font-size:.75rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem">
+              <i class="fas fa-clock"></i> <%= new Date(a.published_at).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'}) %>
+              <% if (a.author) { %> · <%= a.author %><% } %>
+            </div>
+            <% if (a.category) { %><span style="font-size:.7rem;background:rgba(31,27,118,.08);color:var(--navy);padding:2px 9px;border-radius:10px;font-weight:700;margin-bottom:.6rem;display:inline-block;text-transform:capitalize"><%= a.category %></span><% } %>
+            <h3 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;line-height:1.4"><%= a.title %></h3>
+            <% if (a.excerpt) { %><p style="font-size:.85rem;color:var(--gray);line-height:1.65"><%= a.excerpt.substring(0,110) %><%= a.excerpt.length>110?'...':'' %></p><% } %>
+            <% if (a.source === 'gtimes' && a.gtimes_url) { %>
+            <a href="<%= a.gtimes_url %>" target="_blank" rel="noopener" style="font-size:.8rem;color:var(--green);font-weight:600;display:inline-flex;align-items:center;gap:.35rem;margin-top:.75rem">Read full story on GTimes <i class="fas fa-external-link-alt"></i></a>
+            <% } %>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem">
+        <a href="http://gtimes.in" target="_blank" rel="noopener" class="btn btn-outline">
+          More stories on GTimes &nbsp;<i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+      <% } else { %>
+      <div style="text-align:center;padding:4rem;color:var(--gray)">
+        <i class="fas fa-newspaper" style="font-size:3rem;margin-bottom:1rem;opacity:.3"></i>
+        <p>No articles yet. Read our full coverage on GTimes.</p>
+        <a href="http://gtimes.in" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:1rem">Visit GTimes</a>
+      </div>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- NOTICES -->
+  <% if (notices && notices.length > 0) { %>
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Notices</span>
+        <h2>Official Notices & Circulars</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.75rem;max-width:800px;margin:0 auto">
+        <% notices.forEach(n => { %>
+        <div style="background:var(--white);border-radius:var(--radius);padding:1.25rem 1.5rem;box-shadow:var(--shadow);border-left:4px solid var(--lime);display:flex;align-items:flex-start;gap:1rem">
+          <div style="flex-shrink:0;width:40px;height:40px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--green)">
+            <i class="fas fa-bell" style="font-size:.85rem"></i>
+          </div>
+          <div>
+            <h4 style="color:var(--navy);font-size:.95rem;margin-bottom:.25rem"><%= n.title %></h4>
+            <p style="color:var(--gray);font-size:.84rem;line-height:1.6"><%= n.content %></p>
+            <div style="display:flex;gap:1rem;margin-top:.5rem;font-size:.74rem;color:var(--gray)">
+              <span><i class="fas fa-calendar" style="margin-right:.3rem"></i><%= new Date(n.created_at).toLocaleDateString('en-IN') %></span>
+              <span><i class="fas fa-map-marker-alt" style="margin-right:.3rem"></i><%= n.campus === 'all' ? 'All Campuses' : n.campus %></span>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+  <!-- GTIMES CTA -->
+  <section style="background:var(--navy);padding:60px 0;text-align:center;color:var(--white)">
+    <div class="container">
+      <h2 style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:.75rem">Stay Updated with GTimes</h2>
+      <p style="opacity:.85;margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto">GTimes is Greenwood's dedicated media platform — news, events, student achievements, and campus stories all in one place.</p>
+      <a href="http://gtimes.in" target="_blank" rel="noopener" class="btn btn-lime">
+        Visit GTimes &nbsp;<i class="fas fa-external-link-alt"></i>
+      </a>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

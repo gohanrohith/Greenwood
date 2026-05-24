@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/campus.css">
+  <style>:root{--campus-primary:<%= campus.theme.primary %>;--campus-accent:<%= campus.theme.accent %>;--campus-light:<%= campus.theme.light %>;}</style>
+</head>
+<body class="site-campus campus-<%= campus.slug %>">
+<%- include('../partials/topbar-campus') %>
+<%- include('../partials/nav-campus') %>
+<main>
+
+  <section class="page-hero" style="background:linear-gradient(120deg,var(--campus-primary),var(--navy))">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Our Faculty</h1>
+      <p>Experienced, dedicated educators at <%= campus.name %></p>
+      <div class="breadcrumb"><a href="/">Home</a> / Faculty</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <% if (faculty && faculty.length > 0) { %>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px">
+        <% faculty.forEach(f => { %>
+        <div style="background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;text-align:center;transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+          <div style="height:160px;background:var(--campus-light);position:relative;overflow:hidden">
+            <% if (f.photo) { %>
+            <img src="/uploads/faculty/<%= f.photo %>" alt="<%= f.name %>" style="width:100%;height:100%;object-fit:cover">
+            <% } else { %>
+            <div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;color:var(--campus-primary);opacity:.3">
+              <i class="fas fa-user-tie"></i>
+            </div>
+            <% } %>
+          </div>
+          <div style="padding:1.25rem">
+            <h3 style="font-size:.97rem;font-weight:700;color:var(--navy);margin-bottom:.25rem"><%= f.name %></h3>
+            <p style="font-size:.8rem;font-weight:600;color:var(--campus-primary);margin-bottom:.2rem"><%= f.designation %></p>
+            <% if (f.subject) { %><p style="font-size:.78rem;color:var(--gray)"><i class="fas fa-book" style="margin-right:.35rem"></i><%= f.subject %></p><% } %>
+            <% if (f.qualification) { %><p style="font-size:.76rem;color:var(--gray);margin-top:.2rem"><%= f.qualification %></p><% } %>
+            <% if (f.experience) { %><p style="font-size:.76rem;color:var(--gray)"><i class="fas fa-clock" style="margin-right:.35rem"></i><%= f.experience %> experience</p><% } %>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <div style="text-align:center;padding:5rem;color:var(--gray)">
+        <i class="fas fa-chalkboard-teacher" style="font-size:3.5rem;opacity:.2;margin-bottom:1.5rem;display:block"></i>
+        <h3 style="font-size:1.05rem;margin-bottom:.5rem">Faculty profiles coming soon</h3>
+        <p>Our team of dedicated educators will be listed here shortly.</p>
+        <a href="/contact" class="btn btn-outline" style="margin-top:1.25rem">Contact Us to Know More</a>
+      </div>
+      <% } %>
+    </div>
+  </section>
+
+  <section class="section bg-light">
+    <div class="container" style="text-align:center">
+      <span class="section-tag">Join Our Team</span>
+      <h2 style="color:var(--navy);margin:.75rem 0 .5rem">Passionate About Teaching?</h2>
+      <p style="color:var(--gray);max-width:480px;margin:0 auto 1.75rem;font-size:.93rem">We're always looking for talented, dedicated educators to join Greenwood. If you love teaching and want to make a difference, we'd love to hear from you.</p>
+      <a href="http://ghs.ac.in/careers" class="btn btn-primary">View Careers</a>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-campus') %>
+<a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

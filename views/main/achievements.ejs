@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Greenwood High School achievements — board toppers, Olympiad winners, sports champions, and cultural excellence across all campuses.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Achievements</h1>
+      <p>Two decades of excellence — in the classroom and beyond</p>
+      <div class="breadcrumb"><a href="/">Home</a> / Achievements</div>
+    </div>
+  </section>
+
+  <section class="stats-bar">
+    <div class="container stats-grid">
+      <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Board Pass Record</span></div>
+      <div class="stat-item"><span class="stat-number">50+</span><span class="stat-label">Board Rank Holders</span></div>
+      <div class="stat-item"><span class="stat-number">200+</span><span class="stat-label">Olympiad Qualifiers</span></div>
+      <div class="stat-item"><span class="stat-number">30+</span><span class="stat-label">State Sports Awards</span></div>
+      <div class="stat-item"><span class="stat-number">20+</span><span class="stat-label">Years of Excellence</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Academic Excellence</span>
+        <h2>Board Results & Academic Toppers</h2>
+      </div>
+      <div class="achievements-full-grid">
+        <% [
+          {icon:'fas fa-trophy', title:'CBSE Board Toppers', desc:'Greenwood students consistently feature among district and state rank holders in CBSE Class X and XII examinations. Our residential Hasanparthy campus has produced multiple district toppers.'},
+          {icon:'fas fa-graduation-cap', title:'100% Pass Rate', desc:'All three CBSE campuses have maintained a 100% board pass record across Class X and XII over consecutive years — a testament to our thorough preparation and faculty dedication.'},
+          {icon:'fas fa-star', title:'State Board Excellence', desc:'Naimnagar and Gopalpur campuses achieve consistently strong SSC results, with students scoring A grades across core subjects and earning merit certificates.'},
+          {icon:'fas fa-medal', title:'JEE / NEET Foundation', desc:'Senior students at Hasanparthy receive structured JEE and NEET foundation coaching alongside their board preparation, with alumni securing admissions in top engineering and medical colleges.'},
+        ].forEach(a => { %>
+        <div class="achievement-full-card">
+          <i class="<%= a.icon %>"></i>
+          <h3><%= a.title %></h3>
+          <p><%= a.desc %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Competitions & Olympiads</span>
+        <h2>National & International Recognition</h2>
+      </div>
+      <div class="achievements-full-grid">
+        <% [
+          {icon:'fas fa-atom', title:'Science Olympiad (NSO)', desc:'Greenwood students participate and qualify in the National Science Olympiad every year, with several students reaching the second level and earning merit certificates.'},
+          {icon:'fas fa-calculator', title:'Math Olympiad (IMO)', desc:'Our Math program produces consistent IMO qualifiers. Special preparation batches run during the academic year to identify and nurture mathematically gifted students.'},
+          {icon:'fas fa-language', title:'English Olympiad (IEO)', desc:'Participation in IEO at state level with medal winners from Hunter Road and Hasanparthy campuses in recent years. Communication skills are core to Greenwood\'s program.'},
+          {icon:'fas fa-microscope', title:'Science Fairs & Exhibitions', desc:'Campus-level science fairs send winning projects to district and state exhibitions. Greenwood projects have won recognition at the district level in Warangal and Mancherial.'},
+        ].forEach(a => { %>
+        <div class="achievement-full-card">
+          <i class="<%= a.icon %>"></i>
+          <h3><%= a.title %></h3>
+          <p><%= a.desc %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Sports</span>
+        <h2>Champions on the Field</h2>
+      </div>
+      <div class="achievements-full-grid">
+        <% [
+          {icon:'fas fa-volleyball-ball', title:'Volleyball', desc:'District-level champions in volleyball for multiple years running. Players from Greenwood have been selected for Warangal district tournaments.'},
+          {icon:'fas fa-running', title:'Athletics', desc:'State-level participation in track and field events including 100m, 400m, relay, long jump, and shot put. Multiple district medalists across campuses.'},
+          {icon:'fas fa-cricket', title:'Cricket', desc:'Strong inter-school cricket record with tournament wins at city and district levels. The Hasanparthy residential campus hosts regular coaching camps.'},
+          {icon:'fas fa-trophy', title:'Kabaddi & Kho-Kho', desc:'Traditional sports are actively promoted. Greenwood teams have represented at district-level Kabaddi and Kho-Kho tournaments with podium finishes.'},
+        ].forEach(a => { %>
+        <div class="achievement-full-card">
+          <i class="<%= a.icon %>"></i>
+          <h3><%= a.title %></h3>
+          <p><%= a.desc %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Cultural & Creative</span>
+        <h2>Stars Beyond the Classroom</h2>
+      </div>
+      <div class="achievements-full-grid">
+        <% [
+          {icon:'fas fa-microphone', title:'Debate & Public Speaking', desc:'District-level winners in inter-school debate competitions. Greenwood\'s structured English communication program builds confident public speakers from an early age.'},
+          {icon:'fas fa-palette', title:'Art & Craft', desc:'National Children\'s Science Congress and state-level art competitions have seen Greenwood student entries shortlisted and awarded at the district level.'},
+          {icon:'fas fa-music', title:'Cultural Events', desc:'Annual Day performances, skit competitions, and cultural fests showcase exceptional talent in music, dance, and drama from students across all grade levels.'},
+          {icon:'fas fa-award', title:'Republic Day & Independence Day', desc:'Greenwood has represented in district-level cultural tableaux and parade events, with students earning recognition from local government authorities.'},
+        ].forEach(a => { %>
+        <div class="achievement-full-card">
+          <i class="<%= a.icon %>"></i>
+          <h3><%= a.title %></h3>
+          <p><%= a.desc %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Help Your Child Write the Next Chapter</h2>
+        <p>Join Greenwood and give your child the environment to discover, excel, and achieve.</p>
+        <div class="cta-actions">
+          <a href="/admissions" class="btn btn-white">Apply Now</a>
+          <a href="/gallery" class="btn btn-outline-white">View Gallery</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

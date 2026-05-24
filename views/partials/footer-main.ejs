@@ -1,0 +1,118 @@
+﻿<footer class="footer-main">
+  <div class="footer-top">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand">
+          <span class="footer-logo-text">Greenwood High School</span>
+          <p>Nurturing excellence across Warangal & Telangana since 2005. Five campuses. One vision.</p>
+        </div>
+        <% if (school && (school.social.facebook || school.social.instagram || school.social.youtube || school.social.twitter)) { %>
+        <div class="footer-social">
+          <% if (school.social.facebook)  { %><a href="<%= school.social.facebook %>"  target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a><% } %>
+          <% if (school.social.instagram) { %><a href="<%= school.social.instagram %>" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a><% } %>
+          <% if (school.social.youtube)   { %><a href="<%= school.social.youtube %>"   target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a><% } %>
+          <% if (school.social.twitter)   { %><a href="<%= school.social.twitter %>"   target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a><% } %>
+        </div>
+        <% } %>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/academics">Academics</a></li>
+          <li><a href="/facilities">Facilities</a></li>
+          <li><a href="/achievements">Achievements</a></li>
+          <li><a href="/news">News & Events</a></li>
+          <li><a href="/gallery">Gallery</a></li>
+          <li><a href="/careers">Careers</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Our Campuses</h4>
+        <ul>
+          <li><a href="https://hasanparthy.ghs.ac.in">Hasanparthy (CBSE Residential)</a></li>
+          <li><a href="https://hunterroad.ghs.ac.in">Hunter Road (CBSE)</a></li>
+          <li><a href="https://mancherial.ghs.ac.in">Mancherial (CBSE)</a></li>
+          <li><a href="https://naimnagar.ghs.ac.in">Naimnagar (State Board)</a></li>
+          <li><a href="https://gopalpur.ghs.ac.in">Gopalpur (State Board)</a></li>
+        </ul>
+        <h4 style="margin-top:1.5rem">Compliance</h4>
+        <ul>
+          <li><a href="/compliance">Transparency & Policies</a></li>
+          <li><a href="https://hasanparthy.ghs.ac.in/disclosure">Hasanparthy Disclosure</a></li>
+          <li><a href="https://hunterroad.ghs.ac.in/disclosure">Hunter Road Disclosure</a></li>
+          <li><a href="https://mancherial.ghs.ac.in/disclosure">Mancherial Disclosure</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <p style="font-size:.82rem;color:#aaa;line-height:1.6;margin-bottom:.75rem">Stay updated with school news, events, and circulars.</p>
+        <% if (typeof newsletterSuccess !== 'undefined' && newsletterSuccess) { %>
+        <p style="color:#B5D236;font-size:.85rem"><i class="fas fa-check-circle"></i> Subscribed! Thank you.</p>
+        <% } else { %>
+        <form action="/newsletter/subscribe" method="POST" style="display:flex;flex-direction:column;gap:.5rem">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="text" name="name" placeholder="Your name" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #333;background:#1a1a1a;color:#fff;font-family:inherit;font-size:.82rem">
+          <input type="email" name="email" required placeholder="your@email.com" style="padding:.5rem .75rem;border-radius:6px;border:1px solid #333;background:#1a1a1a;color:#fff;font-family:inherit;font-size:.82rem">
+          <button type="submit" style="padding:.5rem;background:var(--green,#00663A);color:#fff;border:none;border-radius:6px;font-family:inherit;font-size:.82rem;font-weight:600;cursor:pointer"><i class="fas fa-paper-plane"></i> Subscribe</button>
+        </form>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <%= currentYear %> Greenwood High School Warangal. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms">Terms &amp; Conditions</a>
+        <a href="/child-protection">Child Protection</a>
+        <a href="/refund-policy">Refund Policy</a>
+        <a href="/search"><i class="fas fa-search"></i> Search</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp float (all main site pages) -->
+<a href="https://wa.me/919866514515" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Cookie consent banner -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;color:#ddd;z-index:9999;padding:.9rem 0;border-top:3px solid #00663A">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+    <p style="margin:0;font-size:.82rem;line-height:1.5">
+      We use cookies to improve your experience.
+      <a href="/cookie-policy" style="color:#B5D236">Learn more</a>
+    </p>
+    <div style="display:flex;gap:.5rem;flex-shrink:0">
+      <button onclick="acceptCookies()" style="padding:.35rem 1rem;border-radius:20px;background:#00663A;color:#fff;border:none;font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer">Accept</button>
+      <button onclick="declineCookies()" style="padding:.35rem 1rem;border-radius:20px;background:transparent;color:#aaa;border:1px solid #444;font-family:inherit;font-size:.8rem;cursor:pointer">Decline</button>
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  if (!localStorage.getItem('ghs_cookie_consent')) {
+    document.addEventListener('DOMContentLoaded', () => {
+      const b = document.getElementById('cookieBanner');
+      if (b) b.style.display = 'block';
+    });
+  }
+})();
+function acceptCookies() {
+  localStorage.setItem('ghs_cookie_consent','accepted');
+  document.getElementById('cookieBanner').style.display='none';
+}
+function declineCookies() {
+  localStorage.setItem('ghs_cookie_consent','declined');
+  document.getElementById('cookieBanner').style.display='none';
+}
+</script>
+

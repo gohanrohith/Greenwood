@@ -1,0 +1,43 @@
+{
+  "slug": "gopalpur",
+  "name": "Gopalpur Campus",
+  "shortName": "Gopalpur",
+  "board": "Telangana State Board",
+  "type": "Day Scholar",
+  "cbse": false,
+  "affiliation": "",
+  "schoolCode": "",
+  "established": "2023",
+  "directorCount": 2,
+  "principal": "Thatiparthry Shiloh",
+  "address": "Gopalpur, Hanumakonda, Telangana",
+  "phone": "+91 9346289359",
+  "email": "gopalpur@ghs.ac.in",
+  "mapEmbed": "",
+  "whatsapp": "+91 9866514516",
+  "classes": "Class I to Class VII",
+  "strength": "",
+  "tagline": "Building Bright Futures from the Start",
+  "description": "Greenwood Gopalpur campus offers Telangana State Board education from Class I to Class VII, nurturing young minds with quality teaching, a caring environment, and strong foundational learning in the heart of Hanumakonda.",
+  "theme": {
+    "primary": "#d35400",
+    "accent": "#f39c12",
+    "light": "#fef5ec"
+  },
+  "highlights": [
+    "Telangana State Board",
+    "Classes I to VII",
+    "Activity-based learning",
+    "Nurturing environment for young learners",
+    "Experienced faculty",
+    "Safe, child-friendly campus"
+  ],
+  "facilities": [
+    "Smart Classrooms",
+    "Computer Lab",
+    "Library",
+    "Sports Ground",
+    "Transport",
+    "CCTV Surveillance"
+  ]
+}

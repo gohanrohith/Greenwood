@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="admin-page-header"><h1>Admission Enquiries</h1></div>
+      <div class="admin-card">
+        <% if (!enquiries || enquiries.length === 0) { %>
+          <div class="empty-state"><i class="fas fa-user-graduate"></i><p>No enquiries yet. They'll appear here when submitted via the website.</p></div>
+        <% } else { %>
+          <table class="admin-table">
+            <thead><tr><th>Parent</th><th>Phone</th><th>Campus</th><th>Class</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+            <tbody>
+              <% enquiries.forEach(e => { %>
+              <tr>
+                <td><strong><%= e.parent_name %></strong><br><small style="color:#aaa"><%= e.student_name || '—' %></small></td>
+                <td><%= e.phone %></td>
+                <td><span class="badge"><%= e.campus %></span></td>
+                <td><%= e.class_seeking || '—' %></td>
+                <td>
+                  <form action="/admissions/<%= e.id %>/status" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <select name="status" onchange="this.form.submit()" class="status-select status-<%= e.status %>">
+                      <option value="new"       <%= e.status==='new'       ? 'selected':'' %>>New</option>
+                      <option value="contacted" <%= e.status==='contacted' ? 'selected':'' %>>Contacted</option>
+                      <option value="enrolled"  <%= e.status==='enrolled'  ? 'selected':'' %>>Enrolled</option>
+                      <option value="closed"    <%= e.status==='closed'    ? 'selected':'' %>>Closed</option>
+                    </select>
+                  </form>
+                </td>
+                <td><%= new Date(e.created_at).toLocaleDateString('en-IN') %></td>
+                <td><a href="/admissions/<%= e.id %>" class="btn btn-sm btn-outline">View</a></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+</body>
+</html>
+

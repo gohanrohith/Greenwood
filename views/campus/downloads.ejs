@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/campus.css">
+  <style>
+    :root{--campus-primary:<%= campus.theme.primary %>;--campus-accent:<%= campus.theme.accent %>;--campus-light:<%= campus.theme.light %>;}
+    .download-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-light);transition:border-color .2s,box-shadow .2s}
+    .download-item:hover{border-color:var(--campus-primary);box-shadow:0 2px 12px rgba(0,0,0,.07)}
+    .download-icon{width:42px;height:42px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
+    .download-meta{flex:1;min-width:0}
+    .download-meta h4{font-size:.93rem;font-weight:700;color:var(--navy);margin-bottom:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .download-meta p{font-size:.78rem;color:var(--gray)}
+    .category-section{margin-bottom:2.5rem}
+    .category-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid var(--campus-light);display:flex;align-items:center;gap:.6rem}
+  </style>
+</head>
+<body class="site-campus campus-<%= campus.slug %>">
+<%- include('../partials/topbar-campus') %>
+<%- include('../partials/nav-campus') %>
+<main>
+
+  <section class="page-hero" style="background:linear-gradient(120deg,var(--campus-primary),var(--navy))">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Downloads</h1>
+      <p>Forms, calendars &amp; documents — <%= campus.name %></p>
+      <div class="breadcrumb"><a href="/">Home</a> / Downloads</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <% const categoryIcons = {
+        'admission': 'fas fa-file-signature',
+        'academic': 'fas fa-graduation-cap',
+        'calendar': 'fas fa-calendar-alt',
+        'circular': 'fas fa-bell',
+        'result': 'fas fa-chart-bar',
+        'form': 'fas fa-file-alt',
+        'other': 'fas fa-file',
+      };
+      const categoryLabels = {
+        'admission': 'Admission Forms',
+        'academic': 'Academic Documents',
+        'calendar': 'Academic Calendar',
+        'circular': 'Circulars',
+        'result': 'Results',
+        'form': 'General Forms',
+        'other': 'Other Documents',
+      }; %>
+
+      <% const hasDownloads = downloads && Object.keys(downloads).length > 0; %>
+
+      <% if (hasDownloads) { %>
+        <% Object.keys(downloads).forEach(cat => { %>
+        <div class="category-section">
+          <h2 class="category-title">
+            <i class="<%= categoryIcons[cat] || 'fas fa-folder' %>" style="color:var(--campus-primary)"></i>
+            <%= categoryLabels[cat] || cat %>
+          </h2>
+          <div style="display:flex;flex-direction:column;gap:.6rem">
+            <% downloads[cat].forEach(dl => { %>
+            <div class="download-item">
+              <div class="download-icon" style="background:var(--campus-light);color:var(--campus-primary)">
+                <i class="fas fa-file-pdf"></i>
+              </div>
+              <div class="download-meta">
+                <h4><%= dl.label %></h4>
+              </div>
+              <a href="/uploads/downloads/<%= dl.filename %>" target="_blank" rel="noopener"
+                 class="btn btn-sm btn-outline" style="flex-shrink:0;border-color:var(--campus-primary);color:var(--campus-primary)">
+                <i class="fas fa-download" style="margin-right:.35rem"></i> Download
+              </a>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+        <% }) %>
+
+      <% } else { %>
+      <!-- Static placeholders shown until admin uploads files -->
+      <div style="margin-bottom:2.5rem">
+        <h2 class="category-title">
+          <i class="fas fa-file-signature" style="color:var(--campus-primary)"></i> Admission Forms
+        </h2>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <div class="download-item">
+            <div class="download-icon" style="background:var(--campus-light);color:var(--campus-primary)"><i class="fas fa-file-pdf"></i></div>
+            <div class="download-meta">
+              <h4>Admission Application Form 2025–26</h4>
+              <p>New student admission application form</p>
+            </div>
+            <span class="btn btn-sm" style="background:var(--gray-light);color:var(--gray);flex-shrink:0;cursor:default">Coming Soon</span>
+          </div>
+          <div class="download-item">
+            <div class="download-icon" style="background:var(--campus-light);color:var(--campus-primary)"><i class="fas fa-file-pdf"></i></div>
+            <div class="download-meta">
+              <h4>Transfer Certificate (TC) Application</h4>
+              <p>Form for requesting Transfer Certificate</p>
+            </div>
+            <span class="btn btn-sm" style="background:var(--gray-light);color:var(--gray);flex-shrink:0;cursor:default">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:2.5rem">
+        <h2 class="category-title">
+          <i class="fas fa-calendar-alt" style="color:var(--campus-primary)"></i> Academic Calendar
+        </h2>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <div class="download-item">
+            <div class="download-icon" style="background:var(--campus-light);color:var(--campus-primary)"><i class="fas fa-file-pdf"></i></div>
+            <div class="download-meta">
+              <h4>Academic Calendar 2025–26</h4>
+              <p>Full academic calendar with holidays, exams, and events</p>
+            </div>
+            <span class="btn btn-sm" style="background:var(--gray-light);color:var(--gray);flex-shrink:0;cursor:default">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:2.5rem">
+        <h2 class="category-title">
+          <i class="fas fa-file-invoice-rupee" style="color:var(--campus-primary)"></i> Fee Structure
+        </h2>
+        <div style="display:flex;flex-direction:column;gap:.6rem">
+          <div class="download-item">
+            <div class="download-icon" style="background:var(--campus-light);color:var(--campus-primary)"><i class="fas fa-file-pdf"></i></div>
+            <div class="download-meta">
+              <h4>Fee Structure 2025–26</h4>
+              <p>Class-wise fee structure for the academic year</p>
+            </div>
+            <span class="btn btn-sm" style="background:var(--gray-light);color:var(--gray);flex-shrink:0;cursor:default">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:2rem;background:var(--campus-light);border-radius:var(--radius-lg)">
+        <i class="fas fa-info-circle" style="color:var(--campus-primary);margin-right:.4rem"></i>
+        <span style="font-size:.88rem;color:var(--gray-dark)">Documents will be available for download shortly. Contact us for immediate assistance.</span>
+      </div>
+      <% } %>
+
+      <div style="background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius-lg);padding:1.5rem;margin-top:3rem;display:flex;gap:1.25rem;align-items:center;flex-wrap:wrap">
+        <i class="fas fa-question-circle" style="font-size:1.75rem;color:var(--campus-primary);flex-shrink:0"></i>
+        <div style="flex:1">
+          <p style="font-weight:700;color:var(--navy);margin-bottom:.15rem">Need a specific document?</p>
+          <p style="font-size:.86rem;color:var(--gray)">Contact our office and we'll send it to you directly.</p>
+        </div>
+        <a href="/contact" class="btn btn-primary" style="background:var(--campus-primary);border-color:var(--campus-primary);flex-shrink:0">Contact Us</a>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-campus') %>
+<a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

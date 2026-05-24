@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="admin-page-header">
+        <h1>Faculty</h1>
+        <p>Manage staff profiles shown on campus faculty pages.</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Add Faculty Member</h3>
+        <form action="/faculty/create?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="admin-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name *</label>
+              <input type="text" name="name" required placeholder="Full name with title">
+            </div>
+            <div class="form-group">
+              <label>Campus *</label>
+              <select name="campus" required>
+                <option value="">Select Campus</option>
+                <option value="hasanparthy">Hasanparthy</option>
+                <option value="hunterroad">Hunter Road</option>
+                <option value="naimnagar">Naimnagar</option>
+                <option value="mancherial">Mancherial</option>
+                <option value="gopalpur">Gopalpur</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Designation *</label>
+              <input type="text" name="designation" required placeholder="e.g. Principal, Senior Science Teacher">
+            </div>
+            <div class="form-group">
+              <label>Subject</label>
+              <input type="text" name="subject" placeholder="e.g. Physics, Mathematics">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Qualification</label>
+              <input type="text" name="qualification" placeholder="e.g. M.Sc, B.Ed">
+            </div>
+            <div class="form-group">
+              <label>Experience</label>
+              <input type="text" name="experience" placeholder="e.g. 12 years">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Photo</label>
+              <input type="file" name="images" accept="image/*">
+              <small style="color:var(--gray);font-size:.78rem">JPG/PNG, max 2MB. Ideal: square crop 400×400.</small>
+            </div>
+            <div class="form-group">
+              <label>Sort Order</label>
+              <input type="number" name="sort_order" placeholder="0" min="0" value="0">
+              <small style="color:var(--gray);font-size:.78rem">Lower numbers appear first.</small>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Faculty Member</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h3>Faculty Members (<%= faculty ? faculty.length : 0 %>)</h3>
+        <% if (!faculty || faculty.length === 0) { %>
+        <div class="empty-state"><i class="fas fa-chalkboard-teacher"></i><p>No faculty profiles yet. Add one above.</p></div>
+        <% } else { %>
+        <table class="admin-table">
+          <thead>
+            <tr><th style="width:50px">Photo</th><th>Name</th><th>Campus</th><th>Designation</th><th>Subject</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <% faculty.forEach(f => { %>
+            <tr>
+              <td>
+                <% if (f.photo) { %>
+                <img src="/uploads/faculty/<%= f.photo %>" alt="<%= f.name %>" style="width:40px;height:40px;border-radius:50%;object-fit:cover">
+                <% } else { %>
+                <div style="width:40px;height:40px;border-radius:50%;background:var(--gray-light);display:flex;align-items:center;justify-content:center;color:var(--gray)"><i class="fas fa-user"></i></div>
+                <% } %>
+              </td>
+              <td><strong><%= f.name %></strong></td>
+              <td><span class="badge"><%= f.campus %></span></td>
+              <td><%= f.designation %></td>
+              <td><%= f.subject || '—' %></td>
+              <td>
+                <form action="/faculty/<%= f.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this faculty profile?')">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+</body>
+</html>

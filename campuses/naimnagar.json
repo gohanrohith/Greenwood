@@ -1,0 +1,48 @@
+{
+  "slug": "naimnagar",
+  "name": "Naimnagar Campus",
+  "shortName": "Naimnagar",
+  "board": "Telangana State Board",
+  "type": "Day Scholar",
+  "cbse": false,
+  "affiliation": "",
+  "schoolCode": "",
+  "established": "2025",
+  "directorCount": 2,
+  "principal": "Thatiparthry Shiloh (M.A., M.Ed)",
+  "address": "Srinagar Colony, Rd Number 2, Hanuman Nagar, Hanamkonda, Telangana 506009",
+  "phone": "+91 9246898693",
+  "email": "naimnagar@ghs.ac.in",
+  "mapEmbed": "",
+  "whatsapp": "+91 9989149818",
+  "classes": "Class I to Class X",
+  "strength": "",
+  "tagline": "Rooted in Telugu, Rising to Excellence",
+  "description": "Greenwood Naimnagar campus provides quality Telangana State Board education with a focus on holistic development and community values. Managed by the Akarshmanasa Educational Society, the campus shapes young minds in Hanamkonda with modern teaching methods and a nurturing environment.",
+  "theme": {
+    "primary": "#6c3483",
+    "accent": "#f39c12",
+    "light": "#f5eef8"
+  },
+  "highlights": [
+    "Telangana State Board",
+    "Classes I to X",
+    "English medium instruction",
+    "Activity-based learning",
+    "Textile Skill Lab & STEM Centre",
+    "Digital Library & reading room",
+    "Composite Science Laboratory",
+    "Recognised by Govt. of Telangana"
+  ],
+  "facilities": [
+    "Composite Science Lab",
+    "Computer Lab",
+    "Digital Library",
+    "Math Excellence Centre",
+    "Textile Skill Lab",
+    "Smart Classrooms",
+    "Sports Ground",
+    "Transport",
+    "CCTV Surveillance"
+  ]
+}

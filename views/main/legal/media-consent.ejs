@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../../partials/topbar') %>
+<%- include('../../partials/nav-main') %>
+<main>
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Media Consent Policy</h1>
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/compliance">Compliance</a> / Media Consent</div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container" style="max-width:820px">
+      <div style="background:var(--white);border-radius:var(--radius-lg);padding:3rem;box-shadow:var(--shadow)">
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Purpose</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">This policy governs the capture, use, and publication of photographs, videos, and other media involving students of Greenwood High School, on our website (ghs.ac.in), campus sites, and our media platform GTimes (gtimes.in).</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Consent at Enrollment</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">At the time of enrollment, parents and guardians are requested to provide written media consent as part of the enrollment documentation. This consent covers the use of student photographs and video in school-approved publications, website, and social media channels.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">How Media Is Used</h2>
+        <ul style="color:var(--gray);line-height:2;padding-left:1.5rem;margin-bottom:1.5rem">
+          <li>School website and campus websites — event galleries, achievements</li>
+          <li>GTimes media platform — event coverage, student achievement stories</li>
+          <li>Official school social media channels (Facebook, Instagram, YouTube)</li>
+          <li>Print materials — prospectus, newsletters, banners</li>
+        </ul>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">What We Do Not Do</h2>
+        <ul style="color:var(--gray);line-height:2;padding-left:1.5rem;margin-bottom:1.5rem">
+          <li>We do not sell or license student photographs to third parties</li>
+          <li>We do not publish media that identifies a student's home address or personal details</li>
+          <li>We do not share student media with commercial entities without explicit consent</li>
+        </ul>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Withdrawing Consent</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">Parents may withdraw media consent at any time by submitting a written request to the Campus Principal. Previously published media will be removed from school channels within 30 days of confirmed request.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">External Photography at School Events</h2>
+        <p style="color:var(--gray);line-height:1.8">Members of the public, press, or external photographers attending school events must obtain prior approval from the Campus Principal before photographing or filming students. Unauthorised photography or filming is not permitted on school premises.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('../../partials/footer-main') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

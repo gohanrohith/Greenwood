@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/campus.css">
+  <style>:root{--campus-primary:<%= campus.theme.primary %>;--campus-accent:<%= campus.theme.accent %>;--campus-light:<%= campus.theme.light %>;}</style>
+</head>
+<body class="site-campus campus-<%= campus.slug %>">
+<%- include('../partials/topbar-campus') %>
+<%- include('../partials/nav-campus') %>
+<main>
+
+  <section class="page-hero" style="background:linear-gradient(120deg,var(--campus-primary),var(--navy))">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Notices & Circulars</h1>
+      <p>Latest updates from <%= campus.name %></p>
+      <div class="breadcrumb"><a href="/">Home</a> / Notices</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width:820px">
+      <% if (notices && notices.length > 0) { %>
+        <div style="display:flex;flex-direction:column;gap:1rem">
+          <% notices.forEach(n => { %>
+          <div style="background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:1.5rem;border-left:4px solid var(--campus-primary);display:flex;gap:1.25rem;align-items:flex-start">
+            <div style="background:var(--campus-light);color:var(--campus-primary);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem">
+              <i class="fas fa-bell"></i>
+            </div>
+            <div style="flex:1">
+              <% if (n.category) { %>
+              <span style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--campus-primary);background:var(--campus-light);padding:2px 9px;border-radius:10px;display:inline-block;margin-bottom:.4rem"><%= n.category %></span>
+              <% } %>
+              <h3 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.35rem;line-height:1.4"><%= n.title %></h3>
+              <% if (n.content) { %>
+              <p style="font-size:.88rem;color:var(--gray);line-height:1.65;margin-bottom:.6rem"><%= n.content %></p>
+              <% } %>
+              <% if (n.file_url) { %>
+              <a href="<%= n.file_url %>" target="_blank" rel="noopener" style="font-size:.82rem;color:var(--campus-primary);font-weight:600;display:inline-flex;align-items:center;gap:.35rem">
+                <i class="fas fa-download"></i> Download Attachment
+              </a>
+              <% } %>
+              <div style="font-size:.76rem;color:var(--gray);margin-top:.5rem">
+                <i class="fas fa-clock" style="margin-right:.35rem"></i>
+                <%= new Date(n.created_at).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'}) %>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+      <div style="text-align:center;padding:5rem;color:var(--gray)">
+        <i class="fas fa-bell-slash" style="font-size:3.5rem;opacity:.2;margin-bottom:1.5rem;display:block"></i>
+        <h3 style="font-size:1.05rem;margin-bottom:.5rem">No notices at this time</h3>
+        <p>Check back soon for updates, circulars, and announcements from <%= campus.name %>.</p>
+      </div>
+      <% } %>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-campus') %>
+<a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

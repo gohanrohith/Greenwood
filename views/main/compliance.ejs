@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Greenwood High School transparency and compliance — CBSE mandatory disclosures, policies, and legal information.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Transparency & Compliance</h1>
+      <p>Our commitment to openness, accountability, and regulatory compliance</p>
+      <div class="breadcrumb"><a href="/">Home</a> / Compliance</div>
+    </div>
+  </section>
+
+  <!-- CBSE DISCLOSURE -->
+  <section class="section" id="cbse">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">CBSE</span>
+        <h2>Mandatory Public Disclosure</h2>
+        <p>CBSE affiliation regulations require all affiliated schools to maintain public disclosure pages. Access the disclosure for each CBSE campus below.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:900px;margin:0 auto">
+        <% [
+          {slug:'hasanparthy', name:'Hasanparthy Campus', type:'Residential'},
+          {slug:'hunterroad', name:'Hunter Road Campus', type:'Day Scholar'},
+          {slug:'mancherial', name:'Mancherial Campus', type:'Day Scholar'},
+        ].forEach(c => { %>
+        <a href="http://<%= c.slug %>.ghs.ac.in/disclosure" style="background:var(--white);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow);text-decoration:none;border:2px solid transparent;transition:border-color .2s;display:block" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='transparent'">
+          <div style="width:52px;height:52px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.2rem;color:var(--green)"><i class="fas fa-file-certificate"></i></div>
+          <h3 style="color:var(--navy);font-size:1rem;margin-bottom:.25rem"><%= c.name %></h3>
+          <p style="font-size:.8rem;color:var(--gray);margin-bottom:1rem">CBSE · <%= c.type %></p>
+          <span style="font-size:.82rem;color:var(--green);font-weight:700">View Disclosure <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATE BOARD -->
+  <section class="section bg-light" id="state">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">State Board</span>
+        <h2>Public Information</h2>
+        <p>State Board campuses maintain public information as required by the Telangana government.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:640px;margin:0 auto">
+        <% [
+          {slug:'naimnagar', name:'Naimnagar Campus'},
+          {slug:'gopalpur', name:'Gopalpur Campus'},
+        ].forEach(c => { %>
+        <a href="http://<%= c.slug %>.ghs.ac.in/disclosure" style="background:var(--white);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow);text-decoration:none;border:2px solid transparent;transition:border-color .2s;display:block" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='transparent'">
+          <div style="width:52px;height:52px;background:rgba(31,27,118,.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.2rem;color:var(--navy)"><i class="fas fa-file-alt"></i></div>
+          <h3 style="color:var(--navy);font-size:1rem;margin-bottom:.25rem"><%= c.name %></h3>
+          <p style="font-size:.8rem;color:var(--gray);margin-bottom:1rem">Telangana State Board</p>
+          <span style="font-size:.82rem;color:var(--navy);font-weight:700">View Information <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- POLICIES -->
+  <section class="section" id="privacy">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Policies</span>
+        <h2>School Policies & Legal Documents</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto">
+        <% [
+          {href:'/privacy-policy', icon:'fas fa-shield-alt', title:'Privacy Policy'},
+          {href:'/terms', icon:'fas fa-file-contract', title:'Terms & Conditions'},
+          {href:'/child-protection', icon:'fas fa-child', title:'Child Protection Policy'},
+          {href:'/anti-bullying', icon:'fas fa-hand-paper', title:'Anti-Bullying Policy'},
+          {href:'/posh', icon:'fas fa-female', title:'POSH Policy'},
+          {href:'/refund-policy', icon:'fas fa-undo', title:'Refund Policy'},
+          {href:'/cookie-policy', icon:'fas fa-cookie', title:'Cookie Policy'},
+          {href:'/media-consent', icon:'fas fa-camera', title:'Media Consent Policy'},
+        ].forEach(p => { %>
+        <a href="<%= p.href %>" style="background:var(--white);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow);text-decoration:none;display:flex;align-items:center;gap:1rem;border:1px solid var(--gray-light);transition:border-color .2s" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--gray-light)'">
+          <div style="width:40px;height:40px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--green);font-size:.95rem"><i class="<%= p.icon %>"></i></div>
+          <span style="font-size:.88rem;font-weight:600;color:var(--navy)"><%= p.title %></span>
+        </a>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section bg-light">
+    <div class="container" style="text-align:center">
+      <h2 style="color:var(--navy);margin-bottom:.75rem">Questions about Compliance?</h2>
+      <p style="color:var(--gray);max-width:500px;margin:0 auto 1.75rem;font-size:.94rem">For any compliance-related queries, document requests, or policy clarifications, please contact our administrative office.</p>
+      <a href="/contact" class="btn btn-primary">Contact Us</a>
+      <a href="mailto:office@ghs.ac.in" class="btn btn-outline" style="margin-left:.75rem">Email Admin Office</a>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "slug": "mancherial",
+  "name": "Mancherial Campus",
+  "shortName": "Mancherial",
+  "board": "CBSE",
+  "type": "Day Scholar",
+  "cbse": true,
+  "affiliation": "3630559",
+  "schoolCode": "57308",
+  "established": "2022",
+  "directorCount": 1,
+  "principal": "R. Chandramohan & Mrs. Christina M",
+  "address": "Mancherial, Telangana",
+  "phone": "+91 7981864817",
+  "email": "mancherial@ghs.ac.in",
+  "mapEmbed": "",
+  "whatsapp": "+91 XXXXXXXXXX",
+  "classes": "Pre-Primary to Class X",
+  "strength": "",
+  "tagline": "Greenwood Quality, Closer to Home",
+  "description": "Bringing Greenwood's signature CBSE education to Mancherial district, the campus empowers local students with quality schooling, smart infrastructure, and a nurturing environment — without the distance to Warangal.",
+  "theme": {
+    "primary": "#1a5276",
+    "accent": "#e74c3c",
+    "light": "#eaf0fb"
+  },
+  "highlights": [
+    "CBSE curriculum",
+    "Smart classrooms",
+    "Trained faculty",
+    "Safe, secure environment",
+    "Transport facility",
+    "Regular parent communication"
+  ],
+  "facilities": [
+    "Science Lab",
+    "Computer Lab",
+    "Library",
+    "Smart Classrooms",
+    "Sports Ground",
+    "Transport",
+    "CCTV Surveillance"
+  ]
+}

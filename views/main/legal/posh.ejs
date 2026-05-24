@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../../partials/topbar') %>
+<%- include('../../partials/nav-main') %>
+<main>
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>POSH Policy</h1>
+      <p>Prevention of Sexual Harassment at Workplace</p>
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/compliance">Compliance</a> / POSH</div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container" style="max-width:820px">
+      <div style="background:var(--white);border-radius:var(--radius-lg);padding:3rem;box-shadow:var(--shadow)">
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Legal Basis</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">Greenwood High School complies with The Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013 (POSH Act). This policy applies to all employees across all five campuses.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Internal Complaints Committee (ICC)</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">Greenwood has constituted an Internal Complaints Committee (ICC) at each campus as required by law. The ICC includes a presiding officer (senior female employee), two staff members, and an external member from an NGO or legal background. ICC details are displayed on campus notice boards.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Prohibited Conduct</h2>
+        <p style="color:var(--gray);margin-bottom:.75rem;line-height:1.8">Sexual harassment includes but is not limited to:</p>
+        <ul style="color:var(--gray);line-height:2;padding-left:1.5rem;margin-bottom:1.5rem">
+          <li>Physical contact or advances of a sexual nature</li>
+          <li>Demand or request for sexual favours</li>
+          <li>Sexually coloured remarks, jokes, or gestures</li>
+          <li>Showing pornography or offensive material</li>
+          <li>Any unwelcome physical, verbal, or non-verbal conduct of a sexual nature</li>
+        </ul>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">How to File a Complaint</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">Any employee who experiences or witnesses sexual harassment may file a written complaint with the ICC Presiding Officer within 3 months of the incident. Complaints may also be submitted by email to <a href="mailto:office@ghs.ac.in" style="color:var(--green)">office@ghs.ac.in</a> marked "Confidential – POSH Complaint."</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Confidentiality & Non-Retaliation</h2>
+        <p style="color:var(--gray);line-height:1.8">All complaints and proceedings are strictly confidential. Retaliation against any complainant or witness is strictly prohibited and treated as a separate disciplinary matter. Malicious false complaints will also result in disciplinary action.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('../../partials/footer-main') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

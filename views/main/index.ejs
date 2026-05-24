@@ -1,0 +1,321 @@
+﻿<%
+  layout = '../layouts/main';
+  body = '';
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Greenwood High School Warangal — Quality CBSE and State Board education across 5 campuses in Telangana.">
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Greenwood High School">
+  <meta property="og:title" content="Greenwood High School Warangal | Official Website">
+  <meta property="og:description" content="Quality CBSE and State Board education across 5 campuses in Warangal, Telangana. Pre-KG to Class XII.">
+  <meta property="og:url" content="<%= canonicalUrl %>">
+  <meta property="og:image" content="https://ghs.ac.in/images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Greenwood High School Warangal | Official Website">
+  <meta name="twitter:description" content="Quality CBSE and State Board education across 5 campuses in Warangal, Telangana. Pre-KG to Class XII.">
+  <meta name="twitter:image" content="https://ghs.ac.in/images/og-image.jpg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "School",
+    "name": "Greenwood High School",
+    "alternateName": "GHS Warangal",
+    "url": "https://ghs.ac.in",
+    "logo": "https://ghs.ac.in/images/logo.png",
+    "image": "https://ghs.ac.in/images/og-image.jpg",
+    "description": "Quality CBSE and State Board education across 5 campuses in Warangal, Telangana.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Hasanparthy",
+      "addressLocality": "Warangal",
+      "addressRegion": "Telangana",
+      "postalCode": "506015",
+      "addressCountry": "IN"
+    },
+    "telephone": "+91-9866514515",
+    "email": "office@ghs.ac.in",
+    "foundingDate": "2003",
+    "sameAs": []
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-slides">
+      <div class="hero-slide active" style="background-image:url('/images/hero-1.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('/images/hero-2.jpg')"></div>
+      <div class="hero-slide" style="background-image:url('/images/hero-3.jpg')"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <p class="hero-sub">Welcome to Greenwood High School</p>
+      <h1 class="hero-title">Shaping Futures,<br>Building Leaders</h1>
+      <p class="hero-desc">Five campuses. Two boards. One mission — excellence in education across Warangal & Telangana.</p>
+      <div class="hero-actions">
+        <a href="/admissions" class="btn btn-primary">Apply for Admissions</a>
+        <a href="/campuses" class="btn btn-outline-white">Explore Campuses</a>
+      </div>
+    </div>
+    <div class="hero-dots">
+      <span class="dot active" data-slide="0"></span>
+      <span class="dot" data-slide="1"></span>
+      <span class="dot" data-slide="2"></span>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <section class="stats-bar">
+    <div class="container stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Campuses</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">2</span>
+        <span class="stat-label">Boards (CBSE & State)</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">5000+</span>
+        <span class="stat-label">Students</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">200+</span>
+        <span class="stat-label">Experienced Faculty</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">20+</span>
+        <span class="stat-label">Years of Excellence</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SNIPPET -->
+  <section class="section about-snippet">
+    <div class="container about-grid">
+      <div class="about-image">
+        <img src="/images/about-home.jpg" alt="Greenwood High School" onerror="this.style.background='#e8f4fd';this.style.height='300px'">
+      </div>
+      <div class="about-text">
+        <span class="section-tag">About Greenwood</span>
+        <h2>Excellence in Education Since 2005</h2>
+        <p>Greenwood High School is one of Warangal's most trusted educational institutions, committed to developing well-rounded students through academic rigour, discipline, and holistic growth.</p>
+        <p>With campuses spanning Hasanparthy, Hunter Road, Naimnagar, Mancherial, and Gopalpur, we bring quality education closer to every family in Telangana.</p>
+        <div class="about-features">
+          <div class="about-feature"><i class="fas fa-check-circle"></i> CBSE & State Board</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Experienced Faculty</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Smart Infrastructure</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Safe & Secure Campus</div>
+        </div>
+        <a href="/about" class="btn btn-primary">Learn More About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPUSES -->
+  <section class="section campuses-section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Our Network</span>
+        <h2>Four Campuses, One Greenwood</h2>
+        <p>Each campus offers a unique learning environment tailored to your child's needs.</p>
+      </div>
+      <div class="campus-cards">
+        <% campuses.forEach(c => { %>
+        <div class="campus-card" style="--card-color: <%= c.theme.primary %>">
+          <div class="campus-card-image">
+            <img src="/images/campuses/<%= c.slug %>.jpg" alt="<%= c.name %>" onerror="this.style.background='<%= c.theme.light %>'; this.style.display='block'">
+            <div class="campus-card-badge"><%= c.board %></div>
+          </div>
+          <div class="campus-card-body">
+            <h3><%= c.name %></h3>
+            <p class="campus-type"><i class="fas fa-<%= c.type === 'Residential' ? 'home' : 'sun' %>"></i> <%= c.type %></p>
+            <p><%= c.description.substring(0, 100) %>...</p>
+            <ul class="campus-highlights">
+              <% c.highlights.slice(0,3).forEach(h => { %>
+              <li><i class="fas fa-check"></i> <%= h %></li>
+              <% }) %>
+            </ul>
+            <a href="http://<%= c.slug %>.ghs.ac.in" class="btn btn-campus">Visit Campus Site</a>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY GREENWOOD -->
+  <section class="section why-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Why Choose Us</span>
+        <h2>The Greenwood Difference</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-award"></i></div>
+          <h3>Academic Excellence</h3>
+          <p>Consistently strong board results with toppers across CBSE and State Board examinations.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+          <h3>Experienced Faculty</h3>
+          <p>200+ trained and dedicated teachers with subject expertise and student-centric teaching.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-laptop"></i></div>
+          <h3>Smart Infrastructure</h3>
+          <p>Digital classrooms, modern labs, libraries, and sports facilities across all campuses.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Safe Environment</h3>
+          <p>24/7 CCTV, trained security, medical rooms, and child safety policies on every campus.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-users"></i></div>
+          <h3>Holistic Development</h3>
+          <p>Sports, arts, music, clubs, and competitions nurture every dimension of student growth.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon"><i class="fas fa-bus"></i></div>
+          <h3>Transport Network</h3>
+          <p>Safe, GPS-tracked school transport covering major routes across Warangal district.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADMISSIONS CTA -->
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Admissions Open for 2025–26</h2>
+        <p>Secure your child's future at Greenwood. Limited seats across all campuses.</p>
+        <div class="cta-actions">
+          <a href="/admissions" class="btn btn-white">Apply Online</a>
+          <a href="/contact" class="btn btn-outline-white">Schedule a Visit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS PREVIEW -->
+  <section class="section achievements-preview">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Achievements</span>
+        <h2>Our Pride & Glory</h2>
+      </div>
+      <div class="achievements-grid">
+        <div class="achievement-card">
+          <i class="fas fa-trophy"></i>
+          <h3>Board Toppers</h3>
+          <p>Consistently producing district and state rank holders in CBSE & State Board exams.</p>
+        </div>
+        <div class="achievement-card">
+          <i class="fas fa-atom"></i>
+          <h3>Olympiads</h3>
+          <p>National and international level participation in Science, Math, and English Olympiads.</p>
+        </div>
+        <div class="achievement-card">
+          <i class="fas fa-running"></i>
+          <h3>Sports Champions</h3>
+          <p>District and state level sports achievements in cricket, volleyball, athletics, and more.</p>
+        </div>
+        <div class="achievement-card">
+          <i class="fas fa-star"></i>
+          <h3>Cultural Events</h3>
+          <p>Award-winning performances in inter-school competitions, debates, and cultural fests.</p>
+        </div>
+      </div>
+      <div class="section-cta">
+        <a href="/achievements" class="btn btn-primary">View All Achievements</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <% const displayTestimonials = (testimonials && testimonials.length > 0) ? testimonials : [
+    { quote: 'Greenwood has transformed my child completely. The teachers are dedicated and the environment is excellent.', name: 'Parent', role: 'Parent — Hasanparthy Campus' },
+    { quote: 'Best decision we made was enrolling our daughter here. The CBSE curriculum and faculty are top class.', name: 'Parent', role: 'Parent — Hunter Road Campus' },
+    { quote: 'Affordable quality education with genuine care for every child. Truly a school that makes a difference.', name: 'Parent', role: 'Parent — Naimnagar Campus' },
+  ]; %>
+  <section class="section testimonials-section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Testimonials</span>
+        <h2>What Parents Say</h2>
+      </div>
+      <div class="testimonials-grid">
+        <% displayTestimonials.forEach(t => { %>
+        <div class="testimonial-card">
+          <p>"<%= t.quote %>"</p>
+          <div class="testimonial-author">
+            <strong><%= t.name %><%= t.role && t.role !== t.name ? ' — ' + t.role : '' %></strong>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT PREVIEW -->
+  <section class="section contact-preview">
+    <div class="container contact-preview-grid">
+      <div>
+        <h2>Get in Touch</h2>
+        <p>Have questions about admissions, fees, or campus visits? We're here to help.</p>
+        <ul class="contact-list">
+          <li><i class="fas fa-phone"></i> +91 XXXXXXXXXX</li>
+          <li><i class="fas fa-envelope"></i> office@ghs.ac.in</li>
+          <li><i class="fas fa-map-marker-alt"></i> Warangal, Telangana, India</li>
+        </ul>
+        <a href="/contact" class="btn btn-primary">Contact Us</a>
+      </div>
+      <div class="contact-form-mini">
+        <h3>Quick Enquiry</h3>
+        <form action="/admissions/enquiry" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="text" name="name" placeholder="Parent Name" required>
+          <input type="tel" name="phone" placeholder="Phone Number" required>
+          <select name="campus">
+            <option value="">Select Campus</option>
+            <% campuses.forEach(c => { %>
+            <option value="<%= c.slug %>"><%= c.name %></option>
+            <% }) %>
+          </select>
+          <input type="text" name="class" placeholder="Class Seeking Admission">
+          <button type="submit" class="btn btn-primary">Send Enquiry</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<%- include('../partials/footer-main') %>
+<script src="/js/main.js"></script>
+</body>
+</html>
+
+

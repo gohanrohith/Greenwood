@@ -1,0 +1,49 @@
+{
+  "slug": "hasanparthy",
+  "name": "Hasanparthy Campus",
+  "shortName": "Hasanparthy",
+  "board": "CBSE",
+  "type": "Residential",
+  "cbse": true,
+  "affiliation": "3630081",
+  "schoolCode": "57599",
+  "established": "2003",
+  "directorCount": 2,
+  "principal": "Mr. V.V.V Naveen Kumar (Academic Principal) & Mr. T Pavan Kumar (Admin Principal)",
+  "address": "Hasanparthy, Warangal, Telangana",
+  "phone": "+91 9866514515",
+  "email": "hasanparthy@ghs.ac.in",
+  "mapEmbed": "",
+  "whatsapp": "+91 9866514517",
+  "classes": "Pre-Primary to Class XII",
+  "strength": "",
+  "tagline": "Excellence in Residential Education",
+  "description": "Greenwood's flagship residential campus in Hasanparthy offers world-class CBSE education in a nurturing, 24/7 residential environment. Students here benefit from round-the-clock academic support, dedicated hostel facilities, and a structured daily routine designed for academic excellence.",
+  "theme": {
+    "primary": "#1a5276",
+    "accent": "#f39c12",
+    "light": "#eaf0fb"
+  },
+  "highlights": [
+    "Fully residential campus",
+    "CBSE curriculum up to Class XII",
+    "24/7 student care & supervision",
+    "Smart classrooms with digital boards",
+    "State-of-the-art boys & girls hostel",
+    "Dedicated medical room",
+    "GPS-tracked transport network",
+    "100% board pass record"
+  ],
+  "facilities": [
+    "Boys & Girls Hostel",
+    "Dining Hall",
+    "Science Labs",
+    "Computer Lab",
+    "Library",
+    "Sports Ground",
+    "Medical Room",
+    "Smart Classrooms",
+    "Transport",
+    "CCTV Surveillance"
+  ]
+}

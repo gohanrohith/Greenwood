@@ -1,0 +1,34 @@
+/* Campus-specific overrides — theme colors injected as CSS vars from EJS */
+
+.navbar-campus .nav-link:hover,
+.navbar-campus .nav-link.active { color: var(--campus-primary); }
+.navbar-campus .nav-cta { background: var(--campus-primary); border-color: var(--campus-primary); }
+.navbar-campus .nav-cta:hover { filter: brightness(.88); }
+
+.topbar-campus { background: var(--campus-primary); }
+
+.section-tag { background: var(--lime, #B5D236); color: var(--navy, #1F1B76); }
+
+.campus-stats-bar { background: var(--campus-primary); }
+
+.sidebar-cta { background: linear-gradient(135deg, var(--campus-primary) 0%, color-mix(in srgb, var(--campus-primary) 75%, black) 100%) !important; }
+
+.btn-primary { background: var(--campus-primary); border-color: var(--campus-primary); }
+.btn-primary:hover { filter: brightness(.88); }
+.btn-outline { color: var(--campus-primary); border-color: var(--campus-primary); }
+.btn-outline:hover { background: var(--campus-primary); color: #fff; }
+
+.footer-campus { background: color-mix(in srgb, var(--campus-primary) 80%, black); }
+.footer-col h4 { border-bottom-color: var(--lime, #B5D236); }
+
+.disclosure-section h2 { border-bottom-color: var(--lime, #B5D236); }
+.disclosure-table th    { background: var(--campus-primary); }
+.disclosure-notice      { border-left-color: var(--campus-primary); background: rgba(0,0,0,.03); }
+
+.principal-card { border-left: 4px solid var(--campus-primary); }
+.campus-hero-tag { background: var(--lime, #B5D236); color: var(--navy, #1F1B76); }
+.stat-number { color: var(--lime, #B5D236); }
+.why-card:hover { border-top-color: var(--lime, #B5D236); }
+.facility-card { border-top-color: var(--lime, #B5D236); }
+.download-card { border-top-color: var(--lime, #B5D236); }
+.testimonial-card { border-left-color: var(--lime, #B5D236); }

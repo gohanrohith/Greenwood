@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../../partials/topbar') %>
+<%- include('../../partials/nav-main') %>
+<main>
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Child Protection Policy</h1>
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/compliance">Compliance</a> / Child Protection</div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container" style="max-width:820px">
+      <div style="background:var(--white);border-radius:var(--radius-lg);padding:3rem;box-shadow:var(--shadow)">
+        <div style="background:rgba(238,20,31,.06);border-left:4px solid var(--red);padding:1.25rem;border-radius:0 var(--radius) var(--radius) 0;margin-bottom:2rem">
+          <strong style="color:var(--red)">Our Commitment:</strong>
+          <span style="color:var(--gray-dark);font-size:.9rem;margin-left:.5rem">The safety and well-being of every child is Greenwood's highest priority. We have zero tolerance for any form of abuse, exploitation, or harm toward any student.</span>
+        </div>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Purpose</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">This policy establishes Greenwood High School's commitment to protecting all students from harm and ensuring that every child feels safe, respected, and supported within our school environments.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Scope</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">This policy applies to all staff (teaching and non-teaching), management, volunteers, parents, and any person who interacts with students on school premises or in school-related activities across all five Greenwood campuses.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Safeguarding Measures</h2>
+        <ul style="color:var(--gray);line-height:2;padding-left:1.5rem;margin-bottom:1.5rem">
+          <li>CCTV surveillance covering all campus areas including classrooms, corridors, and entry/exit points</li>
+          <li>Police verification and background checks for all staff before employment</li>
+          <li>No adult to be alone with a single student in an isolated area</li>
+          <li>Controlled visitor access — all visitors must sign in and be accompanied</li>
+          <li>Separate and supervised hostel facilities with trained wardens (Hasanparthy)</li>
+          <li>Regular training for all staff on child safety and reporting procedures</li>
+          <li>Confidential complaint mechanism for students and parents</li>
+        </ul>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Reporting a Concern</h2>
+        <p style="color:var(--gray);margin-bottom:1.5rem;line-height:1.8">Any student, parent, or staff member who has a concern about a child's safety must report it immediately to the Campus Principal or the School Management Committee. All reports are treated confidentially and investigated promptly.</p>
+        <p style="color:var(--gray);line-height:1.8">Reports may be made in person, by phone, or via email to <a href="mailto:office@ghs.ac.in" style="color:var(--green)">office@ghs.ac.in</a>. Emergency child safety concerns should be reported to local police (Dial 100) immediately.</p>
+
+        <h2 style="color:var(--navy);font-size:1.15rem;margin-bottom:.75rem">Review</h2>
+        <p style="color:var(--gray);line-height:1.8">This policy is reviewed annually by school management and updated as required by law or best practice guidance.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('../../partials/footer-main') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

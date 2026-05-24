@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Learn about Greenwood High School — our history, founding directors, vision, mission, and the Akarshmanasa Educational Society.">
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Greenwood High School">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="Learn about Greenwood High School — our history, founding directors, vision, mission, and the Akarshmanasa Educational Society.">
+  <meta property="og:url" content="<%= canonicalUrl %>">
+  <meta property="og:image" content="https://ghs.ac.in/images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= title %>">
+  <meta name="twitter:description" content="Learn about Greenwood High School — our history, founding directors, vision, mission, and the Akarshmanasa Educational Society.">
+  <meta name="twitter:image" content="https://ghs.ac.in/images/og-image.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>About Greenwood High School</h1>
+      <p>Two decades of nurturing excellence across Warangal & Telangana</p>
+      <div class="breadcrumb"><a href="/">Home</a> / About Us</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container about-grid">
+      <div class="about-image">
+        <img src="/images/about-school.jpg" alt="Greenwood High School"
+             onerror="this.parentElement.style.background='var(--green-light)';this.style.display='none'">
+      </div>
+      <div class="about-text">
+        <span class="section-tag">Our Story</span>
+        <h2>Built on a Vision of Accessible Excellence</h2>
+        <p>Greenwood High School was founded in 2003 under the Akarshmanasa Educational Society with a single conviction — that world-class education should not be the privilege of a few, but the right of every child in Warangal district.</p>
+        <p>What began as a single campus has grown into a network of five institutions serving thousands of students across CBSE and Telangana State Board streams, from Class I through Class XII.</p>
+        <p>Over two decades, Greenwood has produced board toppers, Olympiad winners, state-level athletes, and responsible citizens — shaped by the same values of discipline, curiosity, and care.</p>
+        <div class="about-features">
+          <div class="about-feature"><i class="fas fa-check-circle"></i> Established 2003</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> 5 Active Campuses</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> CBSE & State Board</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> 5000+ Students</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> 200+ Faculty</div>
+          <div class="about-feature"><i class="fas fa-check-circle"></i> 20+ Years of Excellence</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">The Society</span>
+        <h2>Akarshmanasa Educational Society</h2>
+        <p>The governing body behind Greenwood's sustained growth and community commitment</p>
+      </div>
+      <div style="max-width:800px;margin:0 auto;text-align:center">
+        <p style="color:var(--gray);font-size:.97rem;line-height:1.9;margin-bottom:1.25rem">The Akarshmanasa Educational Society was established with the mission of creating institutions that combine academic rigour with human values. It oversees governance, policy, and strategic growth across all Greenwood campuses — ensuring every child receives consistent quality regardless of which campus they attend.</p>
+        <p style="color:var(--gray);font-size:.97rem;line-height:1.9">Under its stewardship, Greenwood has achieved CBSE affiliation across three campuses while maintaining strong State Board results, earning recognition from parents, peers, and education authorities across Telangana.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Founding Leadership</span>
+        <h2>The Directors</h2>
+        <p>Visionary founders who built Greenwood from the ground up</p>
+      </div>
+      <div class="directors-grid">
+        <% school.directors.forEach(d => { %>
+        <div class="director-card">
+          <div class="director-photo">
+            <img src="<%= d.photo %>" alt="<%= d.name %>"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="director-photo-placeholder" style="display:none"><i class="fas fa-user"></i></div>
+          </div>
+          <div class="director-role"><%= d.role %></div>
+          <h3 class="director-name"><%= d.name %></h3>
+          <p class="director-designation"><%= d.designation %></p>
+          <p class="director-bio"><%= d.bio %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Our Purpose</span>
+        <h2>Vision & Mission</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:900px;margin:0 auto">
+        <div style="background:var(--white);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--shadow);text-align:center">
+          <div style="width:60px;height:60px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:1.5rem;color:var(--green)"><i class="fas fa-eye"></i></div>
+          <h3 style="color:var(--navy);font-size:1.1rem;margin-bottom:.75rem">Our Vision</h3>
+          <p style="color:var(--gray);font-size:.9rem;line-height:1.8"><%= school.vision %></p>
+        </div>
+        <div style="background:var(--white);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--shadow);text-align:center">
+          <div style="width:60px;height:60px;background:rgba(31,27,118,.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:1.5rem;color:var(--navy)"><i class="fas fa-bullseye"></i></div>
+          <h3 style="color:var(--navy);font-size:1.1rem;margin-bottom:.75rem">Our Mission</h3>
+          <p style="color:var(--gray);font-size:.9rem;line-height:1.8"><%= school.mission %></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Our Reach</span>
+        <h2>Five Campuses, One Greenwood</h2>
+      </div>
+      <div class="campus-cards">
+        <% campuses.forEach(c => { %>
+        <div class="campus-card" style="--card-color:<%= c.theme.primary %>">
+          <div class="campus-card-image">
+            <img src="/images/campuses/<%= c.slug %>.jpg" alt="<%= c.name %>"
+                 onerror="this.style.background='<%= c.theme.light %>';this.style.display='block'">
+            <div class="campus-card-badge"><%= c.board %></div>
+          </div>
+          <div class="campus-card-body">
+            <h3><%= c.name %></h3>
+            <p class="campus-type"><i class="fas fa-map-marker-alt"></i> <%= c.address %></p>
+            <a href="http://<%= c.slug %>.ghs.ac.in" class="btn btn-campus">Visit Campus Site</a>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Want to Know More?</h2>
+        <p>Visit a campus, speak to our team, or apply online. We're happy to help you find the right fit.</p>
+        <div class="cta-actions">
+          <a href="/admissions" class="btn btn-white">Apply for Admissions</a>
+          <a href="/contact" class="btn btn-outline-white">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="admin-page-header"><h1>Settings</h1></div>
+
+      <% if (typeof success !== 'undefined' && success) { %>
+      <div class="alert alert-success"><i class="fas fa-check-circle"></i> Settings saved successfully.</div>
+      <% } %>
+      <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> <%= error %></div>
+      <% } %>
+
+      <form action="/settings" method="POST" class="admin-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+        <div class="admin-card">
+          <h3>Admissions Settings</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Admissions Status</label>
+              <select name="admissions_open">
+                <option value="1" <%= (typeof settings !== 'undefined' && settings.admissions_open == '1') ? 'selected' : '' %>>Open — accepting enquiries</option>
+                <option value="0" <%= (typeof settings !== 'undefined' && settings.admissions_open == '0') ? 'selected' : '' %>>Closed</option>
+              </select>
+              <small style="color:var(--gray);font-size:.78rem">Controls the "Admissions Open/Closed" banner on the public admissions pages.</small>
+            </div>
+            <div class="form-group">
+              <label>Admission Year</label>
+              <input type="text" name="admission_year" value="<%= (typeof settings !== 'undefined' && settings.admission_year) ? settings.admission_year : '2025–26' %>" placeholder="e.g. 2025–26">
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Contact Details</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Main Phone Number</label>
+              <input type="text" name="phone_main" value="<%= (typeof settings !== 'undefined' && settings.phone_main) ? settings.phone_main : '' %>" placeholder="+91 XXXXXXXXXX">
+            </div>
+            <div class="form-group">
+              <label>Main WhatsApp Number</label>
+              <input type="text" name="whatsapp_main" value="<%= (typeof settings !== 'undefined' && settings.whatsapp_main) ? settings.whatsapp_main : '' %>" placeholder="+91 XXXXXXXXXX">
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h3>Change Password</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" name="current_password" autocomplete="current-password">
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" name="new_password" autocomplete="new-password">
+            </div>
+          </div>
+          <div class="form-group" style="max-width:300px">
+            <label>Confirm New Password</label>
+            <input type="password" name="confirm_password" autocomplete="new-password">
+          </div>
+          <p style="font-size:.8rem;color:var(--gray)">Leave password fields blank to keep your current password.</p>
+        </div>
+
+        <div style="display:flex;gap:.75rem;padding:.5rem 0">
+          <button type="submit" class="btn btn-primary">Save Settings</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/campus.css">
+  <style>:root{--campus-primary:<%= campus.theme.primary %>;--campus-accent:<%= campus.theme.accent %>;--campus-light:<%= campus.theme.light %>;}</style>
+</head>
+<body class="site-campus campus-<%= campus.slug %>">
+<%- include('../partials/topbar-campus') %>
+<%- include('../partials/nav-campus') %>
+<main>
+
+  <section class="page-hero" style="background:linear-gradient(120deg,var(--campus-primary),var(--navy))">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Facilities</h1>
+      <p>World-class infrastructure at <%= campus.name %></p>
+      <div class="breadcrumb"><a href="/">Home</a> / Facilities</div>
+    </div>
+  </section>
+
+  <section class="campus-stats-bar">
+    <div class="container stats-grid">
+      <div class="stat-item"><span class="stat-number"><%= campus.facilities.length %></span><span class="stat-label">Key Facilities</span></div>
+      <div class="stat-item"><span class="stat-number"><%= campus.board %></span><span class="stat-label">Curriculum</span></div>
+      <div class="stat-item"><span class="stat-number"><%= campus.type %></span><span class="stat-label">Campus Type</span></div>
+      <div class="stat-item"><span class="stat-number"><%= campus.classes %></span><span class="stat-label">Classes</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Infrastructure</span>
+        <h2>Everything Your Child Needs</h2>
+        <p>Built for safety, learning, and growth — every facility at <%= campus.shortName %> campus</p>
+      </div>
+      <div class="facilities-icon-grid">
+        <%
+        const facilityIcons = {
+          'Science Lab': 'fas fa-flask', 'Science Labs': 'fas fa-flask',
+          'Composite Science Lab': 'fas fa-flask', 'Composite Science Laboratory': 'fas fa-flask',
+          'Computer Lab': 'fas fa-desktop',
+          'Library': 'fas fa-book', 'Digital Library': 'fas fa-book-open',
+          'Sports Ground': 'fas fa-running', 'Multi-Purpose Sports Arena': 'fas fa-running',
+          'Transport': 'fas fa-bus',
+          'CCTV Surveillance': 'fas fa-shield-alt',
+          'Smart Classrooms': 'fas fa-chalkboard',
+          'Medical Room': 'fas fa-heartbeat',
+          'Boys & Girls Hostel': 'fas fa-home',
+          'Dining Hall': 'fas fa-utensils',
+          'Math Excellence Centre': 'fas fa-calculator',
+          'Textile Skill Lab': 'fas fa-tshirt',
+          'Playground': 'fas fa-child',
+        };
+        campus.facilities.forEach(f => {
+          const icon = facilityIcons[f] || 'fas fa-star';
+        %>
+        <div class="facility-icon-card">
+          <div class="facility-icon-wrap" style="background:var(--campus-light);color:var(--campus-primary)"><i class="<%= icon %>"></i></div>
+          <span><%= f %></span>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIAL: Hostel section for Hasanparthy -->
+  <% if (campus.slug === 'hasanparthy') { %>
+  <section class="section bg-light">
+    <div class="container campus-about-grid">
+      <div class="campus-about-image">
+        <img src="/images/campuses/hasanparthy-hostel.jpg" alt="Hostel at Hasanparthy"
+             onerror="this.parentElement.style.background='var(--campus-light)';this.style.display='none'">
+      </div>
+      <div class="campus-about-text">
+        <span class="section-tag">Residential</span>
+        <h2>Hostel Facilities</h2>
+        <p>Greenwood Hasanparthy is a fully residential campus with separate, well-maintained boys' and girls' hostels. Students benefit from a structured daily routine, round-the-clock supervision, and nutritious meals designed by nutrition advisors.</p>
+        <ul class="campus-highlights" style="margin-top:1.25rem">
+          <li><i class="fas fa-check-circle"></i> Separate Boys & Girls Hostels</li>
+          <li><i class="fas fa-check-circle"></i> 24/7 warden supervision</li>
+          <li><i class="fas fa-check-circle"></i> Nutritious meals — breakfast, lunch, snacks, dinner</li>
+          <li><i class="fas fa-check-circle"></i> Dedicated study halls with evening supervision</li>
+          <li><i class="fas fa-check-circle"></i> Medical room with first aid & emergency protocols</li>
+          <li><i class="fas fa-check-circle"></i> Regular parent communication & campus visits</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Come See Our Facilities</h2>
+        <p>Schedule a campus tour and see everything <%= campus.name %> has to offer.</p>
+        <div class="cta-actions">
+          <a href="/contact" class="btn btn-white">Book a Visit</a>
+          <a href="/admissions" class="btn btn-outline-white">Apply Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-campus') %>
+<a href="https://wa.me/<%= campus.whatsapp.replace(/\D/g,'') %>" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

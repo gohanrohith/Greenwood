@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="World-class facilities at Greenwood High School — smart classrooms, labs, library, sports, hostel, and transport across all campuses.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Facilities</h1>
+      <p>Infrastructure designed to inspire learning, safety, and growth</p>
+      <div class="breadcrumb"><a href="/">Home</a> / Facilities</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Our Infrastructure</span>
+        <h2>Everything Your Child Needs — Under One Roof</h2>
+        <p>Greenwood campuses are built to support every dimension of student life — academic, physical, creative, and personal</p>
+      </div>
+      <%
+      const facilityBlocks = [
+        {
+          icon: 'fas fa-chalkboard',
+          title: 'Smart Classrooms',
+          desc: 'Every classroom is equipped with interactive digital boards, projectors, and connected teaching systems. Audio-visual learning tools make complex concepts easy to understand and keep students engaged throughout the day.',
+          img: '/images/facilities/smart-classroom.jpg',
+        },
+        {
+          icon: 'fas fa-flask',
+          title: 'Science Laboratories',
+          desc: 'Dedicated Physics, Chemistry, and Biology laboratories with modern equipment. Students conduct experiments from Class VI onwards, building practical understanding alongside theoretical knowledge. All labs follow safety protocols.',
+          img: '/images/facilities/lab.jpg',
+        },
+        {
+          icon: 'fas fa-desktop',
+          title: 'Computer Laboratory',
+          desc: 'Modern computers with internet access on every campus. Programming, digital literacy, and project research are all conducted here. Computer Science is integrated into the curriculum from primary classes.',
+          img: '/images/facilities/computer-lab.jpg',
+        },
+        {
+          icon: 'fas fa-book',
+          title: 'Library',
+          desc: 'Well-stocked libraries with curriculum books, reference texts, encyclopaedias, newspapers, and a dedicated reading corner. Students are encouraged to read beyond textbooks through structured library periods.',
+          img: '/images/facilities/library.jpg',
+        },
+        {
+          icon: 'fas fa-running',
+          title: 'Sports & Physical Education',
+          desc: 'Large sports grounds with facilities for cricket, volleyball, athletics, kabaddi, and other sports. Physical Education is a core part of every student\'s week. Trained PE teachers and coaches on each campus.',
+          img: '/images/facilities/sports.jpg',
+        },
+        {
+          icon: 'fas fa-shield-alt',
+          title: 'Safety & Security',
+          desc: 'CCTV surveillance covering all campus areas, trained security personnel, controlled entry-exit management, and medical rooms with first aid kits. Child safety is a non-negotiable priority at Greenwood.',
+          img: '/images/facilities/security.jpg',
+        },
+        {
+          icon: 'fas fa-bus',
+          title: 'Transport',
+          desc: 'GPS-tracked school buses covering major routes in Warangal and Mancherial districts. Buses are operated by trained drivers with female attendants. Route details available from each campus office.',
+          img: '/images/facilities/transport.jpg',
+        },
+        {
+          icon: 'fas fa-home',
+          title: 'Hostel (Hasanparthy)',
+          desc: 'Separate boys\' and girls\' hostels at the Hasanparthy residential campus. Round-the-clock supervision, nutritious meals, medical care, and a structured daily routine designed for academic excellence.',
+          img: '/images/facilities/hostel.jpg',
+        },
+      ];
+      %>
+      <div style="display:flex;flex-direction:column;gap:60px">
+        <% facilityBlocks.forEach((f, i) => { %>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;<%= i % 2 !== 0 ? 'direction:rtl' : '' %>">
+          <div style="<%= i % 2 !== 0 ? 'direction:rtl' : '' %>">
+            <div style="border-radius:var(--radius-lg);overflow:hidden;height:300px;background:var(--off-white);position:relative;display:flex;align-items:center;justify-content:center">
+              <img src="<%= f.img %>" alt="<%= f.title %>" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+                   onerror="this.style.display='none'">
+              <i class="<%= f.icon %>" style="font-size:3.5rem;color:var(--gray-light);position:relative;z-index:0"></i>
+            </div>
+          </div>
+          <div style="<%= i % 2 !== 0 ? 'direction:ltr' : '' %>">
+            <div style="width:56px;height:56px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;font-size:1.3rem;color:var(--green)">
+              <i class="<%= f.icon %>"></i>
+            </div>
+            <h2 style="font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.75rem"><%= f.title %></h2>
+            <p style="color:var(--gray);font-size:.94rem;line-height:1.85"><%= f.desc %></p>
+          </div>
+        </div>
+        <% if (i < facilityBlocks.length - 1) { %>
+        <hr style="border:none;border-top:1px solid var(--gray-light)">
+        <% } %>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Availability</span>
+        <h2>Facilities by Campus</h2>
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)">
+          <thead>
+            <tr style="background:var(--navy);color:var(--white)">
+              <th style="padding:14px 18px;text-align:left;font-size:.84rem">Facility</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Hasanparthy</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Hunter Road</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Mancherial</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Naimnagar</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Gopalpur</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% const facilityMatrix = [
+              ['Smart Classrooms', true, true, true, true, true],
+              ['Computer Lab', true, true, true, true, true],
+              ['Science Labs', true, true, true, true, false],
+              ['Library', true, true, true, true, true],
+              ['Sports Ground', true, true, true, true, true],
+              ['CCTV Surveillance', true, true, true, true, true],
+              ['Transport', true, true, true, true, true],
+              ['Boys & Girls Hostel', true, false, false, false, false],
+              ['Dining Hall', true, false, false, false, false],
+              ['Medical Room', true, true, false, false, false],
+            ];
+            facilityMatrix.forEach((row, i) => { %>
+            <tr style="border-bottom:1px solid var(--gray-light);background:<%= i % 2 === 0 ? 'var(--white)' : 'var(--off-white)' %>">
+              <td style="padding:12px 18px;font-size:.87rem;font-weight:500;color:var(--gray-dark)"><%= row[0] %></td>
+              <% row.slice(1).forEach(v => { %>
+              <td style="padding:12px 18px;text-align:center;font-size:.95rem">
+                <% if (v) { %><i class="fas fa-check-circle" style="color:var(--green)"></i><% } else { %><i class="fas fa-minus" style="color:var(--gray-light)"></i><% } %>
+              </td>
+              <% }) %>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>See It for Yourself</h2>
+        <p>Schedule a campus visit and see our facilities in person. Our team is happy to show you around.</p>
+        <div class="cta-actions">
+          <a href="/contact" class="btn btn-white">Book a Campus Visit</a>
+          <a href="/admissions" class="btn btn-outline-white">Apply for Admissions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>
