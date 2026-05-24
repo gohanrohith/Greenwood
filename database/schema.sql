@@ -1,8 +1,6 @@
 -- Greenwood High School — Database Schema
 -- Run this once to create all tables
-
-CREATE DATABASE IF NOT EXISTS greenwood_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE greenwood_db;
+-- NOTE: Select your database in phpMyAdmin before importing (do not run CREATE DATABASE here)
 
 -- Admin users
 CREATE TABLE IF NOT EXISTS admins (
