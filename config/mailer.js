@@ -5,10 +5,11 @@ let transport = null;
 function getTransport() {
   if (transport) return transport;
   if (!process.env.MAIL_PASS) return null;
+  const port = parseInt(process.env.MAIL_PORT || '587');
   transport = nodemailer.createTransport({
-    host: process.env.MAIL_HOST || 'smtp.hostinger.com',
-    port: parseInt(process.env.MAIL_PORT || '465'),
-    secure: true,
+    host: process.env.MAIL_HOST || 'smtp.office365.com',
+    port,
+    secure: port === 465,
     auth: {
       user: process.env.MAIL_USER,
       pass: process.env.MAIL_PASS,
