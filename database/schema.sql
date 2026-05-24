@@ -195,7 +195,7 @@ VALUES ('admin', '$2b$10$FYmK8Q/xQ3jxokXbxQEJ9Oz2metBrfknl8ja46D8cRjiCFhDyH4D6',
 -- Default settings
 INSERT IGNORE INTO settings (setting_key, value) VALUES
   ('admissions_open', '1'),
-  ('admission_year', '2025-26'),
+  ('admission_year', '2026-27'),
   ('phone_main', '+91 XXXXXXXXXX'),
   ('email_main', 'office@ghs.ac.in'),
   ('whatsapp_main', '+91 XXXXXXXXXX');

@@ -1,4 +1,4 @@
-const { getAllCampuses } = require('../config/campuses');
+﻿const { getAllCampuses } = require('../config/campuses');
 const crypto = require('crypto');
 const { notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry } = require('../config/mailer');
 
@@ -89,7 +89,7 @@ exports.admissions = async (req, res) => {
     title: 'Admissions | Greenwood High School',
     campuses: getAllCampuses(),
     admissionsOpen: settingsMap.admissions_open !== '0',
-    admissionYear: settingsMap.admission_year || '2025-26',
+    admissionYear: settingsMap.admission_year || '2026-27',
     success: req.query.success || null,
     error: req.query.error || null,
   });
