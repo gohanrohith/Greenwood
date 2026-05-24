@@ -56,7 +56,8 @@ if (process.env.DB_PASS) {
       }
       set(sid, s, cb) {
         this._mem[sid] = s;
-        mysqlStore.set(sid, s, () => cb(null));
+        cb(null);
+        mysqlStore.set(sid, s, () => {});
       }
       destroy(sid, cb) {
         delete this._mem[sid];
