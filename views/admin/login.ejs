@@ -17,7 +17,7 @@
       <% if (error) { %>
       <div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> <%= error %></div>
       <% } %>
-      <form action="/login" method="POST" class="login-form">
+      <form action="/admin/login" method="POST" class="login-form">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div class="form-group">
           <label><i class="fas fa-user"></i> Username</label>
