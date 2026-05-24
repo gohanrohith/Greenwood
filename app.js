@@ -16,6 +16,7 @@ const apiRoutes    = require('./routes/api');
 
 const app = express();
 
+app.set('trust proxy', 1);
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(compression());
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
