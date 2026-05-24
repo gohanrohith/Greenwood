@@ -44,12 +44,22 @@ if (process.env.DB_PASS) {
       createDatabaseTable: false,
     }, pool);
 
-    // Wrap the store so DB errors don't 503 every request.
-    // Public pages need no session; admin will fail to log in (expected when DB is down).
+    // Wrap MySQL store with in-memory fallback so sessions work even when DB is
+    // unavailable (wrong password, cold start). MySQL is still attempted for
+    // persistence across restarts; memory fills the gap when it fails.
     class SafeStore extends session.Store {
-      get(sid, cb) { mysqlStore.get(sid, (e, s) => cb(null, e ? null : s)); }
-      set(sid, s, cb) { mysqlStore.set(sid, s, () => cb(null)); }
-      destroy(sid, cb) { mysqlStore.destroy(sid, () => cb(null)); }
+      constructor() { super(); this._mem = {}; }
+      get(sid, cb) {
+        mysqlStore.get(sid, (e, s) => cb(null, (!e && s) ? s : (this._mem[sid] || null)));
+      }
+      set(sid, s, cb) {
+        this._mem[sid] = s;
+        mysqlStore.set(sid, s, () => cb(null));
+      }
+      destroy(sid, cb) {
+        delete this._mem[sid];
+        mysqlStore.destroy(sid, () => cb(null));
+      }
     }
     sessionConfig.store = new SafeStore();
   } catch (e) {
