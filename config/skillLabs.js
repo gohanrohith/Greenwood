@@ -21,7 +21,7 @@ const skillLabs = [
       'Entrepreneurship & craft-to-market skills',
     ],
     img: '/images/facilities/skill-textile.jpg',
-    campuses: ['hasanparthy', 'hunter-road', 'mancherial'],
+    campuses: ['naimnagar', 'hasanparthy', 'hunter-road', 'mancherial'],
   },
   {
     id: 'pottery',
@@ -45,7 +45,7 @@ const skillLabs = [
       'Creativity, patience & spatial reasoning',
     ],
     img: '/images/facilities/skill-pottery.jpg',
-    campuses: ['hasanparthy', 'hunter-road', 'mancherial'],
+    campuses: ['naimnagar', 'hasanparthy', 'hunter-road', 'mancherial'],
   },
   {
     id: 'public-speaking',
@@ -69,7 +69,7 @@ const skillLabs = [
       'Competitive elocution preparation',
     ],
     img: '/images/facilities/skill-public-speaking.jpg',
-    campuses: ['hasanparthy', 'hunter-road', 'mancherial'],
+    campuses: ['naimnagar', 'hasanparthy', 'hunter-road', 'mancherial'],
   },
 ];
 
