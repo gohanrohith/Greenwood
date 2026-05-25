@@ -39,8 +39,8 @@
           <div style="font-size:.85rem;font-weight:600;color:#1F1B76">Skill Laboratories</div>
         </div>
         <div>
-          <div style="font-size:2rem;font-weight:800;color:#00663A">3</div>
-          <div style="font-size:.85rem;font-weight:600;color:#1F1B76">CBSE Campuses</div>
+          <div style="font-size:2rem;font-weight:800;color:#00663A">All</div>
+          <div style="font-size:.85rem;font-weight:600;color:#1F1B76">Greenwood Campuses</div>
         </div>
         <div>
           <div style="font-size:2rem;font-weight:800;color:#00663A">VI–X</div>
@@ -59,7 +59,7 @@
           <h2 style="margin-top:.5rem">What is Kaushal Bodh?</h2>
           <p style="color:var(--gray);line-height:1.85;margin-bottom:1rem">CBSE's <strong>Kaushal Bodh</strong> (Skill Awareness) programme integrates vocational and life-skills education into the mainstream school curriculum. It bridges the gap between academic knowledge and practical, real-world application.</p>
           <p style="color:var(--gray);line-height:1.85;margin-bottom:1rem">At Greenwood, we go beyond the minimum requirement — our Skill Laboratories are fully equipped, purpose-built spaces with trained instructors. Students spend dedicated periods in these labs each week as part of their timetable.</p>
-          <p style="color:var(--gray);line-height:1.85">The programme is active across three CBSE campuses: <strong>Hasanparthy, Hunter Road, and Mancherial</strong>.</p>
+          <p style="color:var(--gray);line-height:1.85">The programme is available across <strong>all Greenwood schools</strong>, making it one of the few school groups in the region to offer Kaushal Bodh at this scale.</p>
           <div style="display:flex;gap:.75rem;margin-top:1.75rem;flex-wrap:wrap">
             <a href="/admissions" class="btn btn-primary">Enquire About Admissions</a>
             <a href="/facilities" class="btn btn-outline">All Facilities</a>
@@ -102,13 +102,6 @@
             <img src="<%= lab.img %>" alt="<%= lab.title %>" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
             <i class="<%= lab.icon %>" style="font-size:4rem;color:var(--green);opacity:.25;position:relative;z-index:0"></i>
           </div>
-          <!-- Campuses badge -->
-          <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:.4rem;justify-content:<%= i % 2 !== 0 ? 'flex-end' : 'flex-start' %>">
-            <span style="font-size:.72rem;color:var(--gray);font-weight:600;margin-right:.25rem;padding-top:.2rem">Available at:</span>
-            <% lab.campuses.forEach(c => { const names = {hasanparthy:'Hasanparthy','hunter-road':'Hunter Road',mancherial:'Mancherial'}; %>
-            <span style="background:var(--green-light);color:var(--green);font-size:.72rem;font-weight:700;padding:.2rem .65rem;border-radius:20px"><%= names[c] || c %></span>
-            <% }) %>
-          </div>
         </div>
 
         <!-- TEXT SIDE -->
@@ -140,49 +133,6 @@
     </div>
   </section>
   <% }) %>
-
-  <!-- CAMPUS TABLE -->
-  <section class="section bg-light">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Availability</span>
-        <h2>Skill Labs by Campus</h2>
-        <p>Currently active across three CBSE campuses</p>
-      </div>
-      <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)">
-          <thead>
-            <tr style="background:var(--navy);color:var(--white)">
-              <th style="padding:14px 18px;text-align:left;font-size:.84rem">Skill Lab</th>
-              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Hasanparthy</th>
-              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Hunter Road</th>
-              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Mancherial</th>
-              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Naimnagar</th>
-              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Gopalpur</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% const campusMap = { 'hasanparthy': 0, 'hunter-road': 1, 'mancherial': 2, 'naimnagar': 3, 'gopalpur': 4 };
-               const allCampuses = ['hasanparthy','hunter-road','mancherial','naimnagar','gopalpur'];
-            %>
-            <% skillLabs.forEach((lab, i) => { %>
-            <tr style="border-bottom:1px solid var(--gray-light);background:<%= i % 2 === 0 ? 'var(--white)' : 'var(--off-white)' %>">
-              <td style="padding:14px 18px;font-size:.88rem;font-weight:600;color:var(--gray-dark)">
-                <i class="<%= lab.icon %>" style="color:var(--green);margin-right:.5rem"></i><%= lab.title %>
-              </td>
-              <% allCampuses.forEach(c => { const has = lab.campuses.includes(c); %>
-              <td style="padding:14px 18px;text-align:center">
-                <% if (has) { %><i class="fas fa-check-circle" style="color:var(--green);font-size:1rem"></i><% } else { %><i class="fas fa-minus" style="color:var(--gray-light)"></i><% } %>
-              </td>
-              <% }) %>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      </div>
-      <p style="margin-top:1.25rem;font-size:.83rem;color:var(--gray);text-align:center">Naimnagar was the first Greenwood campus to introduce Skill Labs. Gopalpur follows State Board curriculum without Kaushal Bodh.</p>
-    </div>
-  </section>
 
   <!-- CTA -->
   <section class="admissions-cta">
