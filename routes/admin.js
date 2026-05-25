@@ -64,6 +64,9 @@ router.post('/testimonials/:id/delete',    ctrl.deleteTestimonial);
 router.get('/newsletter',              ctrl.newsletterList);
 router.post('/newsletter/:id/delete',  ctrl.deleteNewsletterSub);
 
+// Session keepalive (auto-logout heartbeat)
+router.get('/keepalive', (req, res) => { req.session.touch(); res.sendStatus(204); });
+
 // Settings
 router.get('/settings', ctrl.settings);
 router.post('/settings', ctrl.saveSettings);
