@@ -180,6 +180,9 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
 -- ALTER TABLE testimonials ... (new table, no migration needed)
 -- ALTER TABLE newsletter_subscribers ... (new table, no migration needed)
 
+-- Migration: update admission year from 2025-26 to 2026-27
+UPDATE settings SET value='2026-27' WHERE setting_key='admission_year' AND value='2025-26';
+
 -- Migration: add Google Reviews columns to testimonials
 ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS rating    TINYINT      DEFAULT 5;
 ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS source    VARCHAR(20)  DEFAULT 'manual';

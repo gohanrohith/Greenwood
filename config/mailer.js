@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const https = require('https');
 
 let transport = null;
 
@@ -90,4 +91,39 @@ async function autoReplyAdmissionEnquiry(data) {
   });
 }
 
-module.exports = { sendMail, notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry };
+// ── WhatsApp via CallMeBot ─────────────────────────────────────────────
+// Setup: send "I allow callmebot to send me messages" to +34 644 52 74 29 on WhatsApp,
+// then set WHATSAPP_APIKEY and WHATSAPP_NUMBER in .env
+async function sendWhatsApp(text) {
+  const apiKey = process.env.WHATSAPP_APIKEY;
+  const phone  = process.env.WHATSAPP_NUMBER;
+  if (!apiKey || !phone) return;
+  return new Promise(resolve => {
+    const encoded = encodeURIComponent(text);
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${encoded}&apikey=${apiKey}`;
+    https.get(url, res => { res.resume(); resolve(); }).on('error', () => resolve());
+  });
+}
+
+async function whatsappAdmissionEnquiry(data) {
+  const msg = [
+    `📋 *New Enquiry — ${data.campus}*`,
+    `👤 Parent: ${data.parent_name}`,
+    `📞 Phone: ${data.phone}`,
+    `🎓 Student: ${data.student_name || '—'} (Class ${data.class_seeking || '—'})`,
+    data.message ? `💬 ${data.message.slice(0, 100)}` : null,
+  ].filter(Boolean).join('\n');
+  await sendWhatsApp(msg);
+}
+
+async function whatsappContactForm(data) {
+  const msg = [
+    `📩 *Contact Form — ${data.subject || 'General'}*`,
+    `👤 ${data.name}`,
+    `📞 ${data.phone}`,
+    `💬 ${(data.message || '').slice(0, 120)}`,
+  ].join('\n');
+  await sendWhatsApp(msg);
+}
+
+module.exports = { sendMail, notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry, whatsappAdmissionEnquiry, whatsappContactForm };

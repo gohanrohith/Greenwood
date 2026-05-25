@@ -1,6 +1,6 @@
 ﻿const { getAllCampuses } = require('../config/campuses');
 const crypto = require('crypto');
-const { notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry } = require('../config/mailer');
+const { notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry, whatsappAdmissionEnquiry, whatsappContactForm } = require('../config/mailer');
 
 async function dbQuery(sql, params = []) {
   try {
@@ -118,6 +118,7 @@ exports.admissionEnquiry = async (req, res) => {
     );
     notifyAdmissionEnquiry({ parent_name: name, phone, email, student_name, class_seeking: cls, campus, message }).catch(() => {});
     autoReplyAdmissionEnquiry({ parent_name: name, phone, email, student_name, class_seeking: cls, campus }).catch(() => {});
+    whatsappAdmissionEnquiry({ parent_name: name, phone, email, student_name, class_seeking: cls, campus, message }).catch(() => {});
   } catch (e) { console.error('Admission save error:', e.message); }
   res.redirect('/admissions?success=1');
 };
@@ -163,6 +164,7 @@ exports.contactSubmit = async (req, res) => {
       [name, phone, email || null, subject || null, message]
     );
     notifyContactSubmission({ name, phone, email, subject, message }).catch(() => {});
+    whatsappContactForm({ name, phone, email, subject, message }).catch(() => {});
   } catch (e) { console.error('Contact save error:', e.message); }
   res.redirect('/contact?success=1');
 };
