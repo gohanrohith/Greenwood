@@ -3,7 +3,13 @@
     <div class="container footer-grid">
       <div class="footer-col">
         <div class="footer-brand">
-          <span class="footer-logo-text">Greenwood High School</span>
+          <div class="footer-brand-lockup">
+            <img src="/emblem.png" alt="" class="footer-emblem-icon"
+                 onerror="this.style.display='none'">
+            <img src="/White%20Logo.png" alt="Greenwood High School" class="footer-logo-img"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'">
+            <span class="footer-logo-text" style="display:none">Greenwood High School</span>
+          </div>
           <p>Nurturing excellence across Warangal & Telangana since 2005. Five campuses. One vision.</p>
         </div>
         <% if (school && (school.social.facebook || school.social.instagram || school.social.youtube || school.social.twitter)) { %>

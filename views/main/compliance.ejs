@@ -37,7 +37,7 @@
           {slug:'hunterroad', name:'Hunter Road Campus', type:'Day Scholar'},
           {slug:'mancherial', name:'Mancherial Campus', type:'Day Scholar'},
         ].forEach(c => { %>
-        <a href="http://<%= c.slug %>.ghs.ac.in/disclosure" style="background:var(--white);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow);text-decoration:none;border:2px solid transparent;transition:border-color .2s;display:block" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='transparent'">
+        <a href="/<%= c.slug %>/disclosure" style="background:var(--white);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow);text-decoration:none;border:2px solid transparent;transition:border-color .2s;display:block" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='transparent'">
           <div style="width:52px;height:52px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.2rem;color:var(--green)"><i class="fas fa-file-certificate"></i></div>
           <h3 style="color:var(--navy);font-size:1rem;margin-bottom:.25rem"><%= c.name %></h3>
           <p style="font-size:.8rem;color:var(--gray);margin-bottom:1rem">CBSE · <%= c.type %></p>
@@ -61,7 +61,7 @@
           {slug:'naimnagar', name:'Naimnagar Campus'},
           {slug:'gopalpur', name:'Gopalpur Campus'},
         ].forEach(c => { %>
-        <a href="http://<%= c.slug %>.ghs.ac.in/disclosure" style="background:var(--white);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow);text-decoration:none;border:2px solid transparent;transition:border-color .2s;display:block" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='transparent'">
+        <a href="/<%= c.slug %>/disclosure" style="background:var(--white);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--shadow);text-decoration:none;border:2px solid transparent;transition:border-color .2s;display:block" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='transparent'">
           <div style="width:52px;height:52px;background:rgba(31,27,118,.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.2rem;color:var(--navy)"><i class="fas fa-file-alt"></i></div>
           <h3 style="color:var(--navy);font-size:1rem;margin-bottom:.25rem"><%= c.name %></h3>
           <p style="font-size:.8rem;color:var(--gray);margin-bottom:1rem">Telangana State Board</p>

@@ -98,10 +98,10 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`\n  Greenwood running at:`);
   console.log(`  Main site   →  http://lvh.me:${PORT}`);
-  console.log(`  Hasanparthy →  http://hasanparthy.lvh.me:${PORT}`);
-  console.log(`  Hunter Road →  http://hunterroad.lvh.me:${PORT}`);
-  console.log(`  Naimnagar   →  http://naimnagar.lvh.me:${PORT}`);
-  console.log(`  Mancherial  →  http://mancherial.lvh.me:${PORT}`);
-  console.log(`  Gopalpur    →  http://gopalpur.lvh.me:${PORT}`);
-  console.log(`  Admin       →  http://admin.lvh.me:${PORT}\n`);
+  console.log(`  Hasanparthy →  http://lvh.me:${PORT}/hasanparthy`);
+  console.log(`  Hunter Road →  http://lvh.me:${PORT}/hunterroad`);
+  console.log(`  Naimnagar   →  http://lvh.me:${PORT}/naimnagar`);
+  console.log(`  Mancherial  →  http://lvh.me:${PORT}/mancherial`);
+  console.log(`  Gopalpur    →  http://lvh.me:${PORT}/gopalpur`);
+  console.log(`  Admin       →  http://lvh.me:${PORT}/admin\n`);
 });

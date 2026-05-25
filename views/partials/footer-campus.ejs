@@ -2,9 +2,17 @@
   <div class="footer-top">
     <div class="container footer-grid">
       <div class="footer-col">
-        <span class="footer-logo-text"><%= campus.name %></span>
-        <p><%= campus.board %> | <%= campus.type %></p>
-        <p><%= campus.address %></p>
+        <div class="footer-brand">
+          <div class="footer-brand-lockup">
+            <img src="/emblem.png" alt="" class="footer-emblem-icon"
+                 onerror="this.style.display='none'">
+            <img src="/White%20Logo.png" alt="<%= campus.name %>" class="footer-logo-img"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline'">
+            <span class="footer-logo-text" style="display:none"><%= campus.name %></span>
+          </div>
+          <p><%= campus.board %> | <%= campus.type %></p>
+          <p><%= campus.address %></p>
+        </div>
       </div>
 
       <div class="footer-col">

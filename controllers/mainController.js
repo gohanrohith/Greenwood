@@ -233,7 +233,7 @@ exports.sitemap = async (req, res) => {
     xml += `  <url><loc>${base}${p}</loc><changefreq>weekly</changefreq></url>\n`;
   });
   campuses.forEach(c => {
-    const cBase = `https://${c.slug}.ghs.ac.in`;
+    const cBase = `https://ghs.ac.in/${c.slug}`;
     ['/about','/academics','/faculty','/facilities','/events','/gallery','/notices','/downloads','/admissions','/contact'].forEach(p => {
       xml += `  <url><loc>${cBase}${p}</loc><changefreq>weekly</changefreq></url>\n`;
     });

@@ -10,8 +10,8 @@
   <title><%= title %></title>
   <meta name="description" content="Greenwood High School Warangal — Quality CBSE and State Board education across 5 campuses in Telangana.">
   <link rel="canonical" href="<%= canonicalUrl %>">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <link rel="apple-touch-icon" href="/emblem.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Greenwood High School">
   <meta property="og:title" content="Greenwood High School Warangal | Official Website">
@@ -29,7 +29,7 @@
     "name": "Greenwood High School",
     "alternateName": "GHS Warangal",
     "url": "https://ghs.ac.in",
-    "logo": "https://ghs.ac.in/images/logo.png",
+    "logo": "https://ghs.ac.in/Greenlogo.png",
     "image": "https://ghs.ac.in/images/og-image.jpg",
     "description": "Quality CBSE and State Board education across 5 campuses in Warangal, Telangana.",
     "address": {
@@ -155,7 +155,7 @@
               <li><i class="fas fa-check"></i> <%= h %></li>
               <% }) %>
             </ul>
-            <a href="http://<%= c.slug %>.ghs.ac.in" class="btn btn-campus">Visit Campus Site</a>
+            <a href="/<%= c.slug %>" class="btn btn-campus">Visit Campus Site</a>
           </div>
         </div>
         <% }) %>

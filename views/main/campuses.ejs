@@ -5,8 +5,8 @@
   <title><%= title %></title>
   <meta name="description" content="Explore all 5 Greenwood campuses — Hasanparthy (CBSE Residential), Hunter Road, Mancherial, Naimnagar, and Gopalpur.">
   <link rel="canonical" href="<%= canonicalUrl %>">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <link rel="apple-touch-icon" href="/emblem.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -66,8 +66,8 @@
               <% }) %>
             </ul>
             <div class="campus-detail-actions">
-              <a href="http://<%= c.slug %>.ghs.ac.in" class="btn btn-primary">Visit Campus Site</a>
-              <a href="http://<%= c.slug %>.ghs.ac.in/admissions" class="btn btn-outline">Apply Now</a>
+              <a href="/<%= c.slug %>" class="btn btn-primary">Visit Campus Site</a>
+              <a href="/<%= c.slug %>/admissions" class="btn btn-outline">Apply Now</a>
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@
               <td style="padding:14px 18px;font-size:.86rem;color:var(--gray)"><%= c.type %></td>
               <td style="padding:14px 18px;font-size:.86rem;color:var(--gray)"><%= c.classes %></td>
               <td style="padding:14px 18px;font-size:.86rem;color:var(--gray)"><%= c.address.split(',')[0] %></td>
-              <td style="padding:14px 18px"><a href="http://<%= c.slug %>.ghs.ac.in" class="btn btn-sm btn-outline">Visit</a></td>
+              <td style="padding:14px 18px"><a href="/<%= c.slug %>" class="btn btn-sm btn-outline">Visit</a></td>
             </tr>
             <% }) %>
           </tbody>

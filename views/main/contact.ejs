@@ -5,8 +5,8 @@
   <title><%= title %></title>
   <meta name="description" content="Contact Greenwood High School Warangal — phone, email, address, and enquiry form for all campuses.">
   <link rel="canonical" href="<%= canonicalUrl %>">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <link rel="apple-touch-icon" href="/emblem.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -113,7 +113,7 @@
         <h3 style="color:var(--navy);margin-bottom:1.25rem">Campus Contacts</h3>
         <div style="display:flex;flex-direction:column;gap:.65rem">
           <% campuses.forEach(c => { %>
-          <a href="http://<%= c.slug %>.ghs.ac.in/contact" style="background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius);padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--gray-light)'">
+          <a href="/<%= c.slug %>/contact" style="background:var(--white);border:1px solid var(--gray-light);border-radius:var(--radius);padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--gray-light)'">
             <div>
               <strong style="font-size:.9rem;color:var(--navy)"><%= c.shortName %> Campus</strong>
               <div style="font-size:.75rem;color:var(--gray);margin-top:.15rem"><%= c.board %> · <%= c.address.split(',')[0] %></div>

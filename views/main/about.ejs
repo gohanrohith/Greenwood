@@ -5,8 +5,8 @@
   <title><%= title %></title>
   <meta name="description" content="Learn about Greenwood High School — our history, founding directors, vision, mission, and the Akarshmanasa Educational Society.">
   <link rel="canonical" href="<%= canonicalUrl %>">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <link rel="apple-touch-icon" href="/emblem.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Greenwood High School">
   <meta property="og:title" content="<%= title %>">
@@ -137,7 +137,7 @@
           <div class="campus-card-body">
             <h3><%= c.name %></h3>
             <p class="campus-type"><i class="fas fa-map-marker-alt"></i> <%= c.address %></p>
-            <a href="http://<%= c.slug %>.ghs.ac.in" class="btn btn-campus">Visit Campus Site</a>
+            <a href="/<%= c.slug %>" class="btn btn-campus">Visit Campus Site</a>
           </div>
         </div>
         <% }) %>

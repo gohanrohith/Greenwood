@@ -776,6 +776,9 @@ ul  { list-style: none; }
 }
 .footer-top { padding: 64px 0 44px; }
 .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1.4fr 1.4fr; gap: 48px; }
+.footer-brand-lockup { display: flex; align-items: center; gap: 0; margin-bottom: .75rem; }
+.footer-emblem-icon { height: 44px; width: 44px; object-fit: contain; flex-shrink: 0; }
+.footer-brand-lockup .footer-logo-img { height: 44px; width: auto; display: block; margin-bottom: 0; }
 .footer-brand .footer-logo-text {
   font-size: 1.35rem; font-weight: 800; color: var(--white);
   margin-bottom: .75rem; display: block;

@@ -5,8 +5,8 @@
   <title><%= title %></title>
   <meta name="description" content="Apply for admissions at Greenwood High School Warangal — CBSE and State Board programs across 5 campuses for the 2026-27 academic year.">
   <link rel="canonical" href="<%= canonicalUrl %>">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <link rel="apple-touch-icon" href="/emblem.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Greenwood High School">
   <meta property="og:title" content="<%= title %>">
@@ -164,7 +164,7 @@
               <strong style="font-size:.9rem;color:var(--navy)"><%= c.shortName %></strong>
               <span style="font-size:.75rem;color:var(--gray);margin-left:.5rem"><%= c.board %></span>
             </div>
-            <a href="http://<%= c.slug %>.ghs.ac.in/admissions" style="font-size:.8rem;color:var(--green);font-weight:600">Apply →</a>
+            <a href="/<%= c.slug %>/admissions" style="font-size:.8rem;color:var(--green);font-weight:600">Apply →</a>
           </div>
           <% }) %>
         </div>
