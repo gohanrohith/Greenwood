@@ -58,6 +58,20 @@
         </div>
 
         <div class="admin-card">
+          <h3>Google Reviews</h3>
+          <p style="font-size:.8rem;color:var(--gray);margin-bottom:1rem">Enter your Google Places API key and the Place ID for Greenwood High School to enable automatic review sync.</p>
+          <div class="form-group">
+            <label>Google Places API Key</label>
+            <input type="text" name="google_places_api_key" value="<%= (typeof settings !== 'undefined' && settings.google_places_api_key) ? settings.google_places_api_key : '' %>" placeholder="AIza...">
+          </div>
+          <div class="form-group">
+            <label>Google Place ID</label>
+            <input type="text" name="google_place_id" value="<%= (typeof settings !== 'undefined' && settings.google_place_id) ? settings.google_place_id : '' %>" placeholder="ChIJ...">
+            <small style="color:var(--gray);font-size:.75rem">Find your Place ID at <a href="https://developers.google.com/maps/documentation/places/web-service/place-id" target="_blank" rel="noopener" style="color:var(--green)">Google's Place ID Finder</a></small>
+          </div>
+        </div>
+
+        <div class="admin-card">
           <h3>Change Password</h3>
           <div class="form-row">
             <div class="form-group">

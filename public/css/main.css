@@ -549,17 +549,28 @@ ul  { list-style: none; }
 .section-cta { text-align: center; margin-top: 1.5rem; }
 
 /* â”€â”€â”€ TESTIMONIALS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-.testimonial-card {
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  box-shadow: var(--shadow);
-  border-left: 4px solid var(--lime);
-  position: relative;
+.google-rating-badge {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--white); padding: .4rem .9rem; border-radius: 20px;
+  box-shadow: var(--shadow); margin-top: .75rem; font-size: .88rem; font-weight: 700;
 }
-.testimonial-card p { font-style: italic; color: var(--gray); margin-bottom: 1rem; font-size: .9rem; line-height: 1.75; }
-.testimonial-author strong { font-size: .82rem; color: var(--navy); font-weight: 600; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem; }
+.testimonial-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  padding: 1.5rem 1.6rem 1.35rem; box-shadow: var(--shadow);
+  display: flex; flex-direction: column;
+  transition: box-shadow .2s, transform .2s;
+}
+.testimonial-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,.11); transform: translateY(-2px); }
+.tcard-quote-icon { color: var(--lime); font-size: 1.4rem; line-height: 1; margin-bottom: .6rem; opacity: .7; }
+.tcard-text { font-style: italic; color: var(--gray); font-size: .875rem; line-height: 1.75; flex: 1; margin-bottom: .9rem; }
+.tcard-footer { display: flex; align-items: center; gap: .65rem; margin-top: auto; }
+.tcard-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.tcard-avatar-initial { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .9rem; }
+.tcard-meta { flex: 1; min-width: 0; }
+.tcard-name { display: block; font-size: .82rem; font-weight: 700; color: var(--navy); }
+.tcard-role { display: block; font-size: .72rem; color: var(--gray); margin-top: .1rem; }
+.tcard-source { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; background: #fff; border: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: center; }
 
 /* â”€â”€â”€ CONTACT PREVIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .contact-preview-grid, .contact-form-grid, .admissions-grid {

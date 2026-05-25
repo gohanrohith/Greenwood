@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const path  = require('path');
 const fs    = require('fs');
+const { syncGoogleReviews } = require('../services/googleReviews');
 const multer = require('multer');
 const { isValidImage, isValidDocument } = require('../utils/magicBytes');
 
@@ -271,9 +272,9 @@ exports.deleteDownload = async (req, res) => {
 
 // ── Settings ──────────────────────────────────────────
 exports.settings = async (req, res) => {
-  const settings = await q('SELECT setting_key, value FROM settings');
+  const rows = await q('SELECT setting_key, value FROM settings');
   const map = {};
-  settings.forEach(s => { map[s.setting_key] = s.value; });
+  rows.forEach(s => { map[s.setting_key] = s.value; });
   res.render('admin/settings', {
     title: 'Settings | Greenwood Admin',
     settings: map,
@@ -283,6 +284,7 @@ exports.settings = async (req, res) => {
 };
 exports.saveSettings = async (req, res) => {
   const { admissions_open, admission_year, phone_main, whatsapp_main,
+          google_place_id, google_places_api_key,
           current_password, new_password, confirm_password } = req.body;
 
   if (admissions_open !== undefined) {
@@ -300,6 +302,14 @@ exports.saveSettings = async (req, res) => {
   if (whatsapp_main) {
     await q('INSERT INTO settings (setting_key, value) VALUES (?,?) ON DUPLICATE KEY UPDATE value=?',
       ['whatsapp_main', whatsapp_main, whatsapp_main]);
+  }
+  if (google_place_id !== undefined) {
+    await q('INSERT INTO settings (setting_key, value) VALUES (?,?) ON DUPLICATE KEY UPDATE value=?',
+      ['google_place_id', google_place_id.trim(), google_place_id.trim()]);
+  }
+  if (google_places_api_key !== undefined) {
+    await q('INSERT INTO settings (setting_key, value) VALUES (?,?) ON DUPLICATE KEY UPDATE value=?',
+      ['google_places_api_key', google_places_api_key.trim(), google_places_api_key.trim()]);
   }
 
   if (new_password) {
@@ -320,25 +330,55 @@ exports.saveSettings = async (req, res) => {
 
 // ── Testimonials ──────────────────────────────────────
 exports.testimonialsList = async (req, res) => {
-  const testimonials = await q('SELECT * FROM testimonials ORDER BY sort_order ASC, created_at DESC');
+  const [testimonials, settingsRows] = await Promise.all([
+    q('SELECT * FROM testimonials WHERE is_active=1 ORDER BY sort_order ASC, created_at DESC'),
+    q('SELECT setting_key, value FROM settings WHERE setting_key IN (?,?,?)',
+      ['google_place_id','google_places_api_key','google_overall_rating']),
+  ]);
+  const settingsMap = {};
+  settingsRows.forEach(s => { settingsMap[s.setting_key] = s.value; });
   res.render('admin/testimonials', {
     title: 'Testimonials | Greenwood Admin',
     testimonials,
+    settings: settingsMap,
     success: req.query.success || null,
+    error:   req.query.error   || null,
   });
 };
 
 exports.createTestimonial = async (req, res) => {
-  const { name, role, campus, quote, sort_order } = req.body;
+  const { name, role, campus, quote, rating, sort_order } = req.body;
   if (!name || !quote) return res.redirect('/admin/testimonials?error=Name+and+quote+required');
-  await q('INSERT INTO testimonials (name, role, campus, quote, sort_order) VALUES (?,?,?,?,?)',
-    [name.trim(), role || 'Parent', campus || null, quote.trim(), parseInt(sort_order) || 0]);
+  await q('INSERT INTO testimonials (name, role, campus, quote, rating, sort_order) VALUES (?,?,?,?,?,?)',
+    [name.trim(), role || 'Parent', campus || null, quote.trim(), parseInt(rating) || 5, parseInt(sort_order) || 0]);
   res.redirect('/admin/testimonials?success=1');
 };
 
 exports.deleteTestimonial = async (req, res) => {
   await q('UPDATE testimonials SET is_active=0 WHERE id=?', [req.params.id]);
   res.redirect('/admin/testimonials');
+};
+
+exports.syncGoogleReviews = async (req, res) => {
+  try {
+    const settingsRows = await q('SELECT setting_key, value FROM settings WHERE setting_key IN (?,?)',
+      ['google_place_id', 'google_places_api_key']);
+    const sm = {};
+    settingsRows.forEach(s => { sm[s.setting_key] = s.value; });
+    if (!sm.google_place_id || !sm.google_places_api_key) {
+      return res.redirect('/admin/testimonials?error=Set+Google+Place+ID+and+API+Key+in+Settings+first');
+    }
+    const result = await syncGoogleReviews(sm.google_place_id, sm.google_places_api_key, q);
+    if (result.overallRating) {
+      await q('INSERT INTO settings (setting_key,value) VALUES (?,?) ON DUPLICATE KEY UPDATE value=?',
+        ['google_overall_rating', String(result.overallRating), String(result.overallRating)]);
+      await q('INSERT INTO settings (setting_key,value) VALUES (?,?) ON DUPLICATE KEY UPDATE value=?',
+        ['google_total_ratings', String(result.totalRatings), String(result.totalRatings)]);
+    }
+    res.redirect(`/admin/testimonials?success=Synced+${result.synced}+new+reviews`);
+  } catch (err) {
+    res.redirect(`/admin/testimonials?error=${encodeURIComponent(err.message)}`);
+  }
 };
 
 // ── Newsletter admin ──────────────────────────────────

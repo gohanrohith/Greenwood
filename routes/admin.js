@@ -55,9 +55,10 @@ router.post('/downloads/upload', ctrl.uploadDownload);
 router.post('/downloads/:id/delete', ctrl.deleteDownload);
 
 // Testimonials
-router.get('/testimonials',            ctrl.testimonialsList);
-router.post('/testimonials/create',    ctrl.createTestimonial);
-router.post('/testimonials/:id/delete', ctrl.deleteTestimonial);
+router.get('/testimonials',                ctrl.testimonialsList);
+router.post('/testimonials/create',        ctrl.createTestimonial);
+router.post('/testimonials/google-sync',   ctrl.syncGoogleReviews);
+router.post('/testimonials/:id/delete',    ctrl.deleteTestimonial);
 
 // Newsletter
 router.get('/newsletter',              ctrl.newsletterList);

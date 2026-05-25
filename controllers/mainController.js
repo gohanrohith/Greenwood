@@ -42,18 +42,30 @@ async function getArticles(limit = 10) {
   );
 }
 
-async function getTestimonials(limit = 3) {
+async function getTestimonials(limit = 6) {
   return dbQuery('SELECT * FROM testimonials WHERE is_active=1 ORDER BY sort_order ASC, created_at DESC LIMIT ?', [limit]);
 }
 
+async function getGoogleMeta() {
+  const rows = await dbQuery(
+    "SELECT setting_key, value FROM settings WHERE setting_key IN ('google_overall_rating','google_total_ratings')"
+  );
+  const m = {};
+  rows.forEach(r => { m[r.setting_key] = r.value; });
+  return m;
+}
+
 exports.home = async (req, res) => {
-  const [notices, gallery, testimonials] = await Promise.all([getNotices(), getGallery(), getTestimonials()]);
+  const [notices, gallery, testimonials, googleMeta] = await Promise.all([
+    getNotices(), getGallery(), getTestimonials(), getGoogleMeta(),
+  ]);
   res.render('main/index', {
     title: 'Greenwood High School Warangal | Official Website',
     campuses: getAllCampuses(),
     notices,
     gallery,
     testimonials,
+    googleMeta,
   });
 };
 

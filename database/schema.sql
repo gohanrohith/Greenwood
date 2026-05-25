@@ -180,6 +180,12 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
 -- ALTER TABLE testimonials ... (new table, no migration needed)
 -- ALTER TABLE newsletter_subscribers ... (new table, no migration needed)
 
+-- Migration: add Google Reviews columns to testimonials
+ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS rating    TINYINT      DEFAULT 5;
+ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS source    VARCHAR(20)  DEFAULT 'manual';
+ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS source_id VARCHAR(200) DEFAULT NULL;
+ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS avatar_url VARCHAR(500) DEFAULT NULL;
+
 -- Site settings (key-value store)
 CREATE TABLE IF NOT EXISTS settings (
   id          INT AUTO_INCREMENT PRIMARY KEY,
