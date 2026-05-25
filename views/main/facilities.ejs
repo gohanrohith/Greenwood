@@ -110,59 +110,51 @@
     </div>
   </section>
 
-  <!-- KAUSHAL BODH SKILL LABS -->
-  <section class="section">
+  <!-- KAUSHAL BODH SKILL LABS TEASER -->
+  <section class="section" style="background:linear-gradient(135deg,#f0f9f4 0%,#e8f5e9 100%)">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">CBSE Kaushal Bodh</span>
-        <h2>Skill Laboratories</h2>
-        <p>Under the CBSE Kaushal Bodh programme, Greenwood equips students with hands-on vocational skills alongside academics — preparing them for real-world challenges with creativity, confidence, and craft.</p>
-      </div>
-      <%
-      const skillLabs = [
-        {
-          icon: 'fas fa-scissors',
-          title: 'Textile Lab',
-          desc: 'The Textile Skill Lab introduces students to fabric science, hand embroidery, basic stitching, and garment design. Students develop fine motor skills, creativity, and an appreciation for traditional and modern textile arts — practical skills that connect classroom learning to real-world craft and entrepreneurship.',
-          img: '/images/facilities/skill-textile.jpg',
-        },
-        {
-          icon: 'fas fa-palette',
-          title: 'Pottery Lab',
-          desc: 'Our Pottery Lab is a hands-on creative space where students work with clay to shape pottery, tiles, and decorative objects. Guided by trained instructors, the programme develops patience, spatial thinking, and artistic expression while honouring India\'s rich tradition of ceramic craft.',
-          img: '/images/facilities/skill-pottery.jpg',
-        },
-        {
-          icon: 'fas fa-microphone-alt',
-          title: 'Public Speaking',
-          desc: 'The Public Speaking programme builds confident communication, structured argumentation, and stage presence. Through debates, group discussions, formal speeches, and presentations, students overcome hesitation and develop the oratory skills essential for leadership, academics, and professional life.',
-          img: '/images/facilities/skill-public-speaking.jpg',
-        },
-      ];
-      %>
-      <div style="display:flex;flex-direction:column;gap:60px">
-        <% skillLabs.forEach((f, i) => { %>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;<%= i % 2 !== 0 ? 'direction:rtl' : '' %>">
-          <div style="<%= i % 2 !== 0 ? 'direction:rtl' : '' %>">
-            <div style="border-radius:var(--radius-lg);overflow:hidden;height:300px;background:var(--green-light);position:relative;display:flex;align-items:center;justify-content:center">
-              <img src="<%= f.img %>" alt="<%= f.title %>" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
-                   onerror="this.style.display='none'">
-              <i class="<%= f.icon %>" style="font-size:3.5rem;color:var(--green);opacity:.35;position:relative;z-index:0"></i>
-            </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:#fff;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.3rem .8rem;border-radius:20px;margin-bottom:1rem">
+            <i class="fas fa-award"></i> CBSE Kaushal Bodh
           </div>
-          <div style="<%= i % 2 !== 0 ? 'direction:ltr' : '' %>">
-            <div style="width:56px;height:56px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;font-size:1.3rem;color:var(--green)">
-              <i class="<%= f.icon %>"></i>
+          <h2 style="font-size:1.9rem;font-weight:800;color:var(--navy);margin-bottom:.85rem;line-height:1.25">Skill Laboratories —<br>A Unique Greenwood Offering</h2>
+          <p style="color:var(--gray);line-height:1.85;margin-bottom:1.25rem">Greenwood is one of very few schools in the region with fully equipped, purpose-built Kaushal Bodh Skill Labs. Students get dedicated weekly sessions in hands-on vocational skills that complement their academic journey.</p>
+          <div style="display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.75rem">
+            <% const labPreviews = [
+              ['fas fa-scissors','Textile Lab','Embroidery, stitching & garment design'],
+              ['fas fa-palette','Pottery Lab','Clay craft, ceramics & artistic expression'],
+              ['fas fa-microphone-alt','Public Speaking Lab','Debate, oratory & confident communication'],
+            ]; labPreviews.forEach(l => { %>
+            <div style="display:flex;align-items:center;gap:.85rem">
+              <div style="width:38px;height:38px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="<%= l[0] %>" style="color:var(--green);font-size:.85rem"></i>
+              </div>
+              <div>
+                <span style="font-weight:700;color:var(--navy);font-size:.88rem"><%= l[1] %></span>
+                <span style="color:var(--gray);font-size:.82rem;margin-left:.5rem"><%= l[2] %></span>
+              </div>
             </div>
-            <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--green);margin-bottom:.4rem;display:block">Kaushal Bodh</span>
-            <h2 style="font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:.75rem"><%= f.title %></h2>
-            <p style="color:var(--gray);font-size:.94rem;line-height:1.85"><%= f.desc %></p>
+            <% }) %>
+          </div>
+          <a href="/skill-labs" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:.5rem">
+            Explore Skill Laboratories <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div style="border-radius:var(--radius-lg);overflow:hidden;height:200px;background:var(--green-light);position:relative;display:flex;align-items:center;justify-content:center;grid-column:span 2">
+            <img src="/images/facilities/skill-textile.jpg" alt="Textile Lab" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
+            <i class="fas fa-scissors" style="font-size:3rem;color:var(--green);opacity:.3;position:relative;z-index:0"></i>
+          </div>
+          <div style="border-radius:var(--radius-lg);overflow:hidden;height:160px;background:var(--green-light);position:relative;display:flex;align-items:center;justify-content:center">
+            <img src="/images/facilities/skill-pottery.jpg" alt="Pottery Lab" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
+            <i class="fas fa-palette" style="font-size:2.5rem;color:var(--green);opacity:.3;position:relative;z-index:0"></i>
+          </div>
+          <div style="border-radius:var(--radius-lg);overflow:hidden;height:160px;background:var(--green-light);position:relative;display:flex;align-items:center;justify-content:center">
+            <img src="/images/facilities/skill-public-speaking.jpg" alt="Public Speaking" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
+            <i class="fas fa-microphone-alt" style="font-size:2.5rem;color:var(--green);opacity:.3;position:relative;z-index:0"></i>
           </div>
         </div>
-        <% if (i < skillLabs.length - 1) { %>
-        <hr style="border:none;border-top:1px solid var(--gray-light)">
-        <% } %>
-        <% }) %>
       </div>
     </div>
   </section>

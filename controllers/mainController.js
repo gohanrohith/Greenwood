@@ -93,6 +93,14 @@ exports.facilities = (req, res) => {
   res.render('main/facilities', { title: 'Facilities | Greenwood High School' });
 };
 
+exports.skillLabs = (req, res) => {
+  const skillLabs = require('../config/skillLabs');
+  res.render('main/skill-labs', {
+    title: 'Skill Laboratories (Kaushal Bodh) | Greenwood High School',
+    skillLabs,
+  });
+};
+
 exports.admissions = async (req, res) => {
   const settings = await dbQuery('SELECT setting_key, value FROM settings WHERE setting_key IN (?,?)', ['admissions_open','admission_year']);
   const settingsMap = {};
@@ -240,7 +248,7 @@ exports.newsletterUnsubscribe = async (req, res) => {
 exports.sitemap = async (req, res) => {
   const campuses = getAllCampuses();
   const base = 'https://ghs.ac.in';
-  const mainPages = ['','/about','/campuses','/academics','/facilities','/admissions','/achievements','/news','/gallery','/contact','/compliance'];
+  const mainPages = ['','/about','/campuses','/academics','/facilities','/skill-labs','/admissions','/achievements','/news','/gallery','/contact','/compliance'];
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
   mainPages.forEach(p => {

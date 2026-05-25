@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <link rel="apple-touch-icon" href="/emblem.png">
+  <title><%= title %></title>
+  <meta name="description" content="Greenwood High School's CBSE Kaushal Bodh Skill Laboratories — Textile Lab, Pottery Lab, and Public Speaking. Hands-on vocational learning for real-world skills.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <!-- HERO -->
+  <section class="page-hero" style="background:linear-gradient(120deg,#00663A,#1F1B76)">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <div style="display:inline-flex;align-items:center;gap:.6rem;background:rgba(181,210,54,.18);border:1px solid rgba(181,210,54,.4);border-radius:20px;padding:.35rem .9rem;margin-bottom:1rem">
+        <i class="fas fa-award" style="color:#B5D236;font-size:.85rem"></i>
+        <span style="color:#B5D236;font-size:.8rem;font-weight:700;letter-spacing:.04em">CBSE KAUSHAL BODH PROGRAMME</span>
+      </div>
+      <h1>Skill Laboratories</h1>
+      <p>Hands-on vocational learning that prepares students for real-world challenges — with creativity, craft, and confidence.</p>
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/facilities">Facilities</a> / Skill Laboratories</div>
+    </div>
+  </section>
+
+  <!-- INTRO BAND -->
+  <section style="background:#B5D236;padding:2.5rem 0">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;text-align:center">
+        <div>
+          <div style="font-size:2rem;font-weight:800;color:#00663A">3</div>
+          <div style="font-size:.85rem;font-weight:600;color:#1F1B76">Skill Laboratories</div>
+        </div>
+        <div>
+          <div style="font-size:2rem;font-weight:800;color:#00663A">3</div>
+          <div style="font-size:.85rem;font-weight:600;color:#1F1B76">CBSE Campuses</div>
+        </div>
+        <div>
+          <div style="font-size:2rem;font-weight:800;color:#00663A">VI–X</div>
+          <div style="font-size:.85rem;font-weight:600;color:#1F1B76">Classes Covered</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT KAUSHAL BODH -->
+  <section class="section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:center">
+        <div>
+          <span class="section-tag">About the Programme</span>
+          <h2 style="margin-top:.5rem">What is Kaushal Bodh?</h2>
+          <p style="color:var(--gray);line-height:1.85;margin-bottom:1rem">CBSE's <strong>Kaushal Bodh</strong> (Skill Awareness) programme integrates vocational and life-skills education into the mainstream school curriculum. It bridges the gap between academic knowledge and practical, real-world application.</p>
+          <p style="color:var(--gray);line-height:1.85;margin-bottom:1rem">At Greenwood, we go beyond the minimum requirement — our Skill Laboratories are fully equipped, purpose-built spaces with trained instructors. Students spend dedicated periods in these labs each week as part of their timetable.</p>
+          <p style="color:var(--gray);line-height:1.85">The programme is active across three CBSE campuses: <strong>Hasanparthy, Hunter Road, and Mancherial</strong>.</p>
+          <div style="display:flex;gap:.75rem;margin-top:1.75rem;flex-wrap:wrap">
+            <a href="/admissions" class="btn btn-primary">Enquire About Admissions</a>
+            <a href="/facilities" class="btn btn-outline">All Facilities</a>
+          </div>
+        </div>
+        <div style="background:var(--green-light);border-radius:var(--radius-lg);padding:2rem">
+          <h3 style="color:var(--navy);font-size:1rem;font-weight:700;margin-bottom:1.25rem">Why Skill Labs Matter</h3>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.85rem">
+            <% const whyPoints = [
+              ['fas fa-brain','Develops problem-solving beyond textbooks'],
+              ['fas fa-hands','Builds fine motor skills, patience and precision'],
+              ['fas fa-briefcase','Vocational head-start before Class X'],
+              ['fas fa-trophy','Supported performance in board assessments'],
+              ['fas fa-globe','Aligns with NEP 2020 skill integration goals'],
+              ['fas fa-seedling','Fosters entrepreneurial thinking from school'],
+            ]; %>
+            <% whyPoints.forEach(p => { %>
+            <li style="display:flex;align-items:flex-start;gap:.75rem">
+              <span style="width:32px;height:32px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="<%= p[0] %>" style="color:#fff;font-size:.75rem"></i>
+              </span>
+              <span style="color:var(--gray-dark);font-size:.9rem;line-height:1.5;padding-top:.35rem"><%= p[1] %></span>
+            </li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EACH LAB -->
+  <% skillLabs.forEach((lab, i) => { %>
+  <section class="section <%= i % 2 !== 0 ? 'bg-light' : '' %>">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;<%= i % 2 !== 0 ? 'direction:rtl' : '' %>">
+
+        <!-- IMAGE SIDE -->
+        <div style="<%= i % 2 !== 0 ? 'direction:rtl' : '' %>">
+          <div style="border-radius:var(--radius-lg);overflow:hidden;height:360px;background:var(--green-light);position:relative;display:flex;align-items:center;justify-content:center">
+            <img src="<%= lab.img %>" alt="<%= lab.title %>" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
+            <i class="<%= lab.icon %>" style="font-size:4rem;color:var(--green);opacity:.25;position:relative;z-index:0"></i>
+          </div>
+          <!-- Campuses badge -->
+          <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:.4rem;justify-content:<%= i % 2 !== 0 ? 'flex-end' : 'flex-start' %>">
+            <span style="font-size:.72rem;color:var(--gray);font-weight:600;margin-right:.25rem;padding-top:.2rem">Available at:</span>
+            <% lab.campuses.forEach(c => { const names = {hasanparthy:'Hasanparthy','hunter-road':'Hunter Road',mancherial:'Mancherial'}; %>
+            <span style="background:var(--green-light);color:var(--green);font-size:.72rem;font-weight:700;padding:.2rem .65rem;border-radius:20px"><%= names[c] || c %></span>
+            <% }) %>
+          </div>
+        </div>
+
+        <!-- TEXT SIDE -->
+        <div style="<%= i % 2 !== 0 ? 'direction:ltr' : '' %>">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+            <div style="width:56px;height:56px;background:var(--green-light);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--green);flex-shrink:0">
+              <i class="<%= lab.icon %>"></i>
+            </div>
+            <div>
+              <span style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--green)">Kaushal Bodh · <%= lab.tag %></span>
+              <h2 style="font-size:1.6rem;font-weight:800;color:var(--navy);margin:0"><%= lab.title %></h2>
+            </div>
+          </div>
+          <p style="color:var(--gray);font-size:.95rem;line-height:1.85;font-style:italic;margin-bottom:1.25rem;border-left:3px solid var(--lime);padding-left:1rem"><%= lab.tagline %></p>
+          <div style="color:var(--gray);font-size:.9rem;line-height:1.85"><%- lab.longDesc %></div>
+          <div style="margin-top:1.5rem">
+            <h3 style="font-size:.85rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.85rem">What Students Learn</h3>
+            <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:.55rem">
+              <% lab.highlights.forEach(h => { %>
+              <li style="display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;color:var(--gray-dark)">
+                <i class="fas fa-check-circle" style="color:var(--green);margin-top:.15rem;flex-shrink:0"></i>
+                <%= h %>
+              </li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% }) %>
+
+  <!-- CAMPUS TABLE -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Availability</span>
+        <h2>Skill Labs by Campus</h2>
+        <p>Currently active across three CBSE campuses</p>
+      </div>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)">
+          <thead>
+            <tr style="background:var(--navy);color:var(--white)">
+              <th style="padding:14px 18px;text-align:left;font-size:.84rem">Skill Lab</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Hasanparthy</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Hunter Road</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Mancherial</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Naimnagar</th>
+              <th style="padding:14px 18px;text-align:center;font-size:.84rem">Gopalpur</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% const campusMap = { 'hasanparthy': 0, 'hunter-road': 1, 'mancherial': 2, 'naimnagar': 3, 'gopalpur': 4 };
+               const allCampuses = ['hasanparthy','hunter-road','mancherial','naimnagar','gopalpur'];
+            %>
+            <% skillLabs.forEach((lab, i) => { %>
+            <tr style="border-bottom:1px solid var(--gray-light);background:<%= i % 2 === 0 ? 'var(--white)' : 'var(--off-white)' %>">
+              <td style="padding:14px 18px;font-size:.88rem;font-weight:600;color:var(--gray-dark)">
+                <i class="<%= lab.icon %>" style="color:var(--green);margin-right:.5rem"></i><%= lab.title %>
+              </td>
+              <% allCampuses.forEach(c => { const has = lab.campuses.includes(c); %>
+              <td style="padding:14px 18px;text-align:center">
+                <% if (has) { %><i class="fas fa-check-circle" style="color:var(--green);font-size:1rem"></i><% } else { %><i class="fas fa-minus" style="color:var(--gray-light)"></i><% } %>
+              </td>
+              <% }) %>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:1.25rem;font-size:.83rem;color:var(--gray);text-align:center">Naimnagar and Gopalpur follow State Board curriculum. Skill Labs are part of the CBSE Kaushal Bodh programme.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="admissions-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Give Your Child a Real-World Head-Start</h2>
+        <p>Admissions open for 2026–27. Visit a campus to see the Skill Labs in person.</p>
+        <div class="cta-actions">
+          <a href="/admissions" class="btn btn-white">Apply for Admissions</a>
+          <a href="/contact" class="btn btn-outline-white">Book a Campus Visit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+<script src="/js/main.js"></script>
+</body>
+</html>

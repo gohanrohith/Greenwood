@@ -71,6 +71,49 @@
     </div>
   </section>
 
+  <!-- SKILL LABS TEASER — shown for CBSE campuses with Kaushal Bodh -->
+  <% const skillLabCampuses = ['hasanparthy','hunter-road','mancherial']; %>
+  <% if (skillLabCampuses.includes(campus.slug)) { %>
+  <section class="section" style="background:linear-gradient(135deg,#f0f9f4 0%,#e8f5e9 100%)">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center">
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:.5rem;background:var(--campus-primary,var(--green));color:#fff;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.3rem .8rem;border-radius:20px;margin-bottom:1rem">
+            <i class="fas fa-award"></i> CBSE Kaushal Bodh
+          </div>
+          <h2 style="font-size:1.65rem;font-weight:800;color:var(--navy);margin-bottom:.85rem">Skill Laboratories</h2>
+          <p style="color:var(--gray);line-height:1.85;margin-bottom:1.25rem">This campus is home to fully equipped Kaushal Bodh Skill Labs — Textile, Pottery, and Public Speaking — giving students dedicated hands-on vocational learning time each week.</p>
+          <div style="display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem">
+            <% [['fas fa-scissors','Textile Lab'],['fas fa-palette','Pottery Lab'],['fas fa-microphone-alt','Public Speaking Lab']].forEach(l => { %>
+            <div style="display:flex;align-items:center;gap:.75rem">
+              <i class="<%= l[0] %>" style="color:var(--campus-primary,var(--green));width:16px;text-align:center"></i>
+              <span style="font-size:.88rem;color:var(--gray-dark);font-weight:500"><%= l[1] %></span>
+            </div>
+            <% }) %>
+          </div>
+          <a href="/skill-labs" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:.5rem">
+            Learn More <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <div style="border-radius:var(--radius-lg);overflow:hidden;height:180px;background:var(--green-light);position:relative;display:flex;align-items:center;justify-content:center;grid-column:span 2">
+            <img src="/images/facilities/skill-textile.jpg" alt="Textile Lab" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
+            <i class="fas fa-scissors" style="font-size:2.5rem;color:var(--green);opacity:.3;position:relative;z-index:0"></i>
+          </div>
+          <div style="border-radius:var(--radius-lg);overflow:hidden;height:140px;background:var(--green-light);position:relative;display:flex;align-items:center;justify-content:center">
+            <img src="/images/facilities/skill-pottery.jpg" alt="Pottery Lab" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
+            <i class="fas fa-palette" style="font-size:2rem;color:var(--green);opacity:.3;position:relative;z-index:0"></i>
+          </div>
+          <div style="border-radius:var(--radius-lg);overflow:hidden;height:140px;background:var(--green-light);position:relative;display:flex;align-items:center;justify-content:center">
+            <img src="/images/facilities/skill-public-speaking.jpg" alt="Public Speaking" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display='none'">
+            <i class="fas fa-microphone-alt" style="font-size:2rem;color:var(--green);opacity:.3;position:relative;z-index:0"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
   <!-- SPECIAL: Hostel section for Hasanparthy -->
   <% if (campus.slug === 'hasanparthy') { %>
   <section class="section bg-light">

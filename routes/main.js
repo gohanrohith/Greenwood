@@ -10,6 +10,7 @@ router.get('/about', ctrl.about);
 router.get('/campuses', ctrl.campuses);
 router.get('/academics', ctrl.academics);
 router.get('/facilities', ctrl.facilities);
+router.get('/skill-labs', ctrl.skillLabs);
 router.get('/admissions', ctrl.admissions);
 router.post('/admissions/enquiry', formLimiter, csrfProtect, ...validateAdmission, handleErrors('/admissions'), ctrl.admissionEnquiry);
 router.get('/achievements', ctrl.achievements);
