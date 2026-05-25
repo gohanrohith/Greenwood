@@ -91,29 +91,41 @@ async function autoReplyAdmissionEnquiry(data) {
   });
 }
 
-// ── WhatsApp via CallMeBot ─────────────────────────────────────────────
-// Setup: send "I allow callmebot to send me messages" to +34 644 52 74 29 on WhatsApp,
-// then set WHATSAPP_APIKEY and WHATSAPP_NUMBER in .env
-async function sendWhatsApp(text) {
-  const apiKey = process.env.WHATSAPP_APIKEY;
-  const phone  = process.env.WHATSAPP_NUMBER;
-  if (!apiKey || !phone) return;
+// ── Telegram notifications ─────────────────────────────────────────────
+// Setup:
+// 1. Open Telegram → search @BotFather → /newbot → copy the Bot Token
+// 2. Message your new bot once, then open:
+//    https://api.telegram.org/bot<TOKEN>/getUpdates
+//    Copy the "id" from result[0].message.chat.id — that is your Chat ID
+// 3. Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in .env
+async function sendTelegram(text) {
+  const token  = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
   return new Promise(resolve => {
-    const encoded = encodeURIComponent(text);
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${encoded}&apikey=${apiKey}`;
-    https.get(url, res => { res.resume(); resolve(); }).on('error', () => resolve());
+    const body = JSON.stringify({ chat_id: chatId, text, parse_mode: 'Markdown' });
+    const req = https.request({
+      hostname: 'api.telegram.org',
+      path: `/bot${token}/sendMessage`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
+    }, res => { res.resume(); resolve(); });
+    req.on('error', () => resolve());
+    req.write(body);
+    req.end();
   });
 }
 
 async function whatsappAdmissionEnquiry(data) {
   const msg = [
-    `📋 *New Enquiry — ${data.campus}*`,
+    `📋 *New Admission Enquiry — ${data.campus}*`,
     `👤 Parent: ${data.parent_name}`,
     `📞 Phone: ${data.phone}`,
+    data.email ? `✉️ Email: ${data.email}` : null,
     `🎓 Student: ${data.student_name || '—'} (Class ${data.class_seeking || '—'})`,
-    data.message ? `💬 ${data.message.slice(0, 100)}` : null,
+    data.message ? `💬 ${data.message.slice(0, 200)}` : null,
   ].filter(Boolean).join('\n');
-  await sendWhatsApp(msg);
+  await sendTelegram(msg);
 }
 
 async function whatsappContactForm(data) {
@@ -121,9 +133,10 @@ async function whatsappContactForm(data) {
     `📩 *Contact Form — ${data.subject || 'General'}*`,
     `👤 ${data.name}`,
     `📞 ${data.phone}`,
-    `💬 ${(data.message || '').slice(0, 120)}`,
-  ].join('\n');
-  await sendWhatsApp(msg);
+    data.email ? `✉️ ${data.email}` : null,
+    `💬 ${(data.message || '').slice(0, 200)}`,
+  ].filter(Boolean).join('\n');
+  await sendTelegram(msg);
 }
 
 module.exports = { sendMail, notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry, whatsappAdmissionEnquiry, whatsappContactForm };
