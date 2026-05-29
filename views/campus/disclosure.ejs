@@ -95,7 +95,7 @@
             <tr>
               <th style="width:50%">Document</th>
               <th style="width:25%">Status</th>
-              <th style="width:25%">Download</th>
+              <th style="width:25%">View</th>
             </tr>
           </thead>
           <tbody>
@@ -113,7 +113,7 @@
             </td>
             <td>
               <% if (dbDoc) { %>
-              <a href="/uploads/compliance/<%= dbDoc.filename %>" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Download</a>
+              <a href="/uploads/compliance/<%= dbDoc.filename %>" target="_blank" rel="noopener" class="btn btn-sm btn-outline">View</a>
               <% } else { %>
               <span style="font-size:.78rem;color:var(--gray)">Not uploaded</span>
               <% } %>
@@ -124,7 +124,7 @@
           <tr>
             <td><%= doc.label || key %></td>
             <td><span class="doc-badge uploaded"><i class="fas fa-check"></i> Available</span></td>
-            <td><a href="/uploads/compliance/<%= doc.filename %>" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Download</a></td>
+            <td><a href="/uploads/compliance/<%= doc.filename %>" target="_blank" rel="noopener" class="btn btn-sm btn-outline">View</a></td>
           </tr>
           <% }) }) %>
           </tbody>
@@ -137,7 +137,7 @@
           <thead><tr><th style="width:20%">Year</th><th style="width:20%">Class</th><th>Appeared</th><th>Passed</th><th>Pass %</th></tr></thead>
           <tbody>
           <% if (docs['results'] && docs['results'].length > 0) { %>
-          <tr><td colspan="5"><a href="/uploads/compliance/<%= docs['results'][0].filename %>" target="_blank" class="btn btn-sm btn-outline">Download Results PDF</a></td></tr>
+          <tr><td colspan="5"><a href="/uploads/compliance/<%= docs['results'][0].filename %>" target="_blank" class="btn btn-sm btn-outline">View Results PDF</a></td></tr>
           <% } else { %>
           <tr><td>2024–25</td><td>X</td><td>—</td><td>—</td><td style="color:var(--gray)">To be updated</td></tr>
           <% if (campus.slug === 'hasanparthy') { %><tr><td>2024–25</td><td>XII</td><td>—</td><td>—</td><td style="color:var(--gray)">To be updated</td></tr><% } %>
@@ -200,7 +200,7 @@
         <h2>H. Fee Structure</h2>
         <p style="font-size:.88rem;color:var(--gray);margin-bottom:.75rem">The complete class-wise fee structure is available for download:</p>
         <% if (docs['fee_structure'] && docs['fee_structure'][0]) { %>
-        <a href="/uploads/compliance/<%= docs['fee_structure'][0].filename %>" target="_blank" class="btn btn-outline">Download Fee Structure (PDF)</a>
+        <a href="/uploads/compliance/<%= docs['fee_structure'][0].filename %>" target="_blank" class="btn btn-outline">View Fee Structure (PDF)</a>
         <% } else { %>
         <a href="<%= campusBase %>/downloads" class="btn btn-outline">View Downloads Section</a>
         <% } %>
@@ -249,7 +249,7 @@
         const stateExtraKeys = Object.keys(docs).filter(k => !stateCoreKeys.includes(k));
         %>
         <table class="disclosure-table">
-          <thead><tr><th style="width:50%">Document</th><th style="width:25%">Status</th><th style="width:25%">Download</th></tr></thead>
+          <thead><tr><th style="width:50%">Document</th><th style="width:25%">Status</th><th style="width:25%">View</th></tr></thead>
           <tbody>
           <% stateMandatory.forEach(md => {
             const dbDoc = docs[md.key] && docs[md.key][0];
@@ -257,14 +257,14 @@
           <tr>
             <td><%= md.label %></td>
             <td><% if (dbDoc) { %><span class="doc-badge uploaded"><i class="fas fa-check"></i> Available</span><% } else { %><span class="doc-badge pending"><i class="fas fa-clock"></i> Pending</span><% } %></td>
-            <td><% if (dbDoc) { %><a href="/uploads/compliance/<%= dbDoc.filename %>" target="_blank" class="btn btn-sm btn-outline">Download</a><% } else { %><span style="font-size:.78rem;color:var(--gray)">Not uploaded</span><% } %></td>
+            <td><% if (dbDoc) { %><a href="/uploads/compliance/<%= dbDoc.filename %>" target="_blank" class="btn btn-sm btn-outline">View</a><% } else { %><span style="font-size:.78rem;color:var(--gray)">Not uploaded</span><% } %></td>
           </tr>
           <% }) %>
           <% stateExtraKeys.forEach(key => { docs[key].forEach(doc => { %>
           <tr>
             <td><%= doc.label || key %></td>
             <td><span class="doc-badge uploaded"><i class="fas fa-check"></i> Available</span></td>
-            <td><a href="/uploads/compliance/<%= doc.filename %>" target="_blank" class="btn btn-sm btn-outline">Download</a></td>
+            <td><a href="/uploads/compliance/<%= doc.filename %>" target="_blank" class="btn btn-sm btn-outline">View</a></td>
           </tr>
           <% }) }) %>
           </tbody>
