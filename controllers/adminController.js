@@ -218,12 +218,18 @@ exports.deleteFaculty = async (req, res) => {
 // ── Compliance Documents ──────────────────────────────
 exports.complianceList = async (req, res) => {
   const campus = req.query.campus || '';
-  let sql = 'SELECT * FROM compliance_documents WHERE 1=1';
+  let sql = 'SELECT * FROM compliance_documents WHERE is_active=1';
   const params = [];
   if (campus) { sql += ' AND campus=?'; params.push(campus); }
   sql += ' ORDER BY campus, sort_order';
   const docs = await q(sql, params);
-  res.render('admin/compliance', { title: 'Compliance Docs | Greenwood Admin', docs, filterCampus: campus });
+  res.render('admin/compliance', {
+    title: 'Compliance Docs | Greenwood Admin',
+    docs,
+    filterCampus: campus,
+    error: req.query.error || null,
+    success: req.query.success || null,
+  });
 };
 exports.uploadComplianceDoc = (req, res) => {
   documentUpload(req, res, async err => {
@@ -237,7 +243,7 @@ exports.uploadComplianceDoc = (req, res) => {
     }
     await q('INSERT INTO compliance_documents (campus, doc_type, label, filename, year, sort_order, uploaded_by) VALUES (?,?,?,?,?,?,?)',
       [campus, doc_type, label, req.file.filename, year || null, sort_order || 0, req.session.adminId || null]);
-    res.redirect('/admin/compliance');
+    res.redirect('/admin/compliance?success=Document+uploaded+successfully');
   });
 };
 exports.deleteComplianceDoc = async (req, res) => {
