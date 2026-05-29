@@ -1,14 +1,33 @@
 // ── Mobile nav ────────────────────────────────────────
-const navToggle = document.getElementById('navToggle');
-const navMenu   = document.getElementById('navMenu');
+const navToggle  = document.getElementById('navToggle');
+const navMenu    = document.getElementById('navMenu');
+const navOverlay = document.getElementById('navOverlay');
+
+function closeNav() {
+  navMenu?.classList.remove('open');
+  navToggle?.classList.remove('open');
+  navOverlay?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function openNav() {
+  navMenu?.classList.add('open');
+  navToggle?.classList.add('open');
+  navOverlay?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
 if (navToggle && navMenu) {
   navToggle.addEventListener('click', () => {
-    const open = navMenu.classList.toggle('open');
-    navToggle.classList.toggle('open', open);
-    document.body.style.overflow = open ? 'hidden' : '';
+    navMenu.classList.contains('open') ? closeNav() : openNav();
   });
 }
+
+// Close on overlay click
+navOverlay?.addEventListener('click', closeNav);
+
+// Close on Escape key
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
 // Mobile dropdown toggles
 document.querySelectorAll('.has-dropdown > .nav-link').forEach(link => {
@@ -16,17 +35,20 @@ document.querySelectorAll('.has-dropdown > .nav-link').forEach(link => {
     if (window.innerWidth > 900) return;
     e.preventDefault();
     const parent = link.parentElement;
+    // Close siblings
+    document.querySelectorAll('.has-dropdown.open').forEach(el => {
+      if (el !== parent) el.classList.remove('open');
+    });
     parent.classList.toggle('open');
   });
 });
 
-// Close nav when a non-toggle link is clicked (mobile)
-document.querySelectorAll('.nav-link:not(.has-dropdown > .nav-link)').forEach(link => {
+// Close nav when a leaf link is clicked (mobile)
+document.querySelectorAll('#navMenu a').forEach(link => {
   link.addEventListener('click', () => {
     if (window.innerWidth > 900) return;
-    navMenu?.classList.remove('open');
-    navToggle?.classList.remove('open');
-    document.body.style.overflow = '';
+    if (link.closest('.has-dropdown') && link === link.closest('.has-dropdown').children[0]) return;
+    closeNav();
   });
 });
 
