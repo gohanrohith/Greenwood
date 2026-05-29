@@ -86,6 +86,7 @@
           { key: 'building_safety', label: 'Building Safety Certificate' },
           { key: 'deo_certificate', label: 'DEO/SDMC Certificate' },
           { key: 'land_certificate', label: 'Land / Building Certificate' },
+          { key: 'sanitary_certificate', label: 'Sanitary Certificate' },
         ];
         const cbseCoreKeys = mandatoryDocs.map(d => d.key).concat(['results','fee_structure']);
         const cbseExtraKeys = Object.keys(docs).filter(k => !cbseCoreKeys.includes(k));
