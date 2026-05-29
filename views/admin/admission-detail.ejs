@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,14 +14,81 @@
   <div class="admin-content">
     <%- include('../partials/admin-topbar') %>
     <div class="admin-body">
-      <div class="admin-page-header"><h1>Admission Detail</h1><a href="/admissions" class="btn btn-outline">← Back</a></div>
-      <div class="admin-card">
-        <% if (!admission) { %><p>Enquiry not found.</p><% } %>
+      <div class="admin-page-header">
+        <h1>Admission Enquiry #<%= admission ? admission.id : '—' %></h1>
+        <a href="/admin/admissions" class="btn btn-outline">← Back to Enquiries</a>
       </div>
+
+      <% if (!admission) { %>
+      <div class="admin-card"><p>Enquiry not found.</p></div>
+      <% } else { %>
+
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:1.5rem;align-items:start">
+
+        <!-- Details card -->
+        <div class="admin-card">
+          <h3 style="margin-bottom:1.5rem;color:var(--navy)">Enquiry Details</h3>
+          <table style="width:100%;border-collapse:collapse">
+            <% [
+              ['Parent / Guardian', admission.parent_name],
+              ['Phone', admission.phone],
+              ['Email', admission.email || '—'],
+              ['Student Name', admission.student_name || '—'],
+              ['Class Seeking', admission.class_seeking || '—'],
+              ['Campus', admission.campus],
+              ['Submitted', new Date(admission.created_at).toLocaleString('en-IN')],
+            ].forEach(([label, value]) => { %>
+            <tr style="border-bottom:1px solid var(--gray-light)">
+              <td style="padding:.85rem .5rem;font-size:.85rem;color:var(--gray);width:180px;font-weight:600"><%= label %></td>
+              <td style="padding:.85rem .5rem;font-size:.9rem;color:var(--navy)"><%= value %></td>
+            </tr>
+            <% }) %>
+          </table>
+
+          <% if (admission.message) { %>
+          <div style="margin-top:1.5rem">
+            <p style="font-size:.85rem;color:var(--gray);font-weight:600;margin-bottom:.5rem">Message</p>
+            <div style="background:var(--gray-light);border-radius:var(--radius);padding:1rem;font-size:.9rem;color:var(--navy);line-height:1.6"><%= admission.message %></div>
+          </div>
+          <% } %>
+        </div>
+
+        <!-- Status card -->
+        <div class="admin-card">
+          <h3 style="margin-bottom:1.25rem;color:var(--navy)">Status</h3>
+          <span class="badge status-<%= admission.status %>" style="font-size:.9rem;padding:.4rem 1rem;margin-bottom:1.5rem;display:inline-block"><%= admission.status.charAt(0).toUpperCase() + admission.status.slice(1) %></span>
+
+          <form action="/admin/admissions/<%= admission.id %>/status" method="POST" style="margin-top:1rem">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div class="form-group" style="margin-bottom:1rem">
+              <label style="font-size:.85rem;color:var(--gray);font-weight:600">Update Status</label>
+              <select name="status" class="status-select status-<%= admission.status %>" style="margin-top:.4rem;width:100%">
+                <option value="new"       <%= admission.status==='new'       ? 'selected':'' %>>New</option>
+                <option value="contacted" <%= admission.status==='contacted' ? 'selected':'' %>>Contacted</option>
+                <option value="enrolled"  <%= admission.status==='enrolled'  ? 'selected':'' %>>Enrolled</option>
+                <option value="closed"    <%= admission.status==='closed'    ? 'selected':'' %>>Closed</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%">Update</button>
+          </form>
+
+          <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gray-light)">
+            <a href="tel:<%= admission.phone %>" class="btn btn-outline" style="width:100%;display:block;text-align:center;margin-bottom:.75rem">
+              <i class="fas fa-phone" style="margin-right:.4rem"></i> Call
+            </a>
+            <% if (admission.phone) { %>
+            <a href="https://wa.me/<%= admission.phone.replace(/\D/g,'') %>" target="_blank" rel="noopener" class="btn" style="width:100%;display:block;text-align:center;background:#25d366;color:#fff;border:none">
+              <i class="fab fa-whatsapp" style="margin-right:.4rem"></i> WhatsApp
+            </a>
+            <% } %>
+          </div>
+        </div>
+
+      </div>
+      <% } %>
     </div>
   </div>
 </div>
 <script src="/js/admin.js"></script>
 </body>
 </html>
-

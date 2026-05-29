@@ -110,11 +110,11 @@ exports.events = async (req, res) => {
   });
 };
 
-exports.admissions = async (req, res) => {
-  const { notifyAdmissionEnquiry } = require('../config/mailer');
+exports.admissions = (req, res) => {
   res.render('campus/admissions', {
     title: `Admissions | ${req.campus.name}`,
     success: req.query.success || null,
+    error: req.query.error || null,
     ...base(req),
   });
 };
@@ -128,8 +128,11 @@ exports.admissionEnquiry = async (req, res) => {
       `INSERT INTO admission_enquiries (parent_name, phone, email, student_name, class_seeking, campus, message) VALUES (?,?,?,?,?,?,?)`,
       [name, phone, email || null, student_name || null, cls || null, req.campus.slug, message || null]
     );
-    const { notifyAdmissionEnquiry } = require('../config/mailer');
-    notifyAdmissionEnquiry({ parent_name: name, phone, email, student_name, class_seeking: cls, campus: req.campus.name, message }).catch(() => {});
+    const { notifyAdmissionEnquiry, autoReplyAdmissionEnquiry, whatsappAdmissionEnquiry } = require('../config/mailer');
+    const data = { parent_name: name, phone, email, student_name, class_seeking: cls, campus: req.campus.name, message };
+    notifyAdmissionEnquiry(data).catch(() => {});
+    autoReplyAdmissionEnquiry(data).catch(() => {});
+    whatsappAdmissionEnquiry(data).catch(() => {});
   } catch (e) { console.error('Admission save error:', e.message); }
   res.redirect(req.campusBase + '/admissions?success=1');
 };
