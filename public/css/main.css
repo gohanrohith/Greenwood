@@ -1087,13 +1087,9 @@ ul  { list-style: none; }
     transition: background .18s, padding-left .18s, color .18s;
   }
   .nav-link:hover { background: var(--green-light); color: var(--green); padding-left: 26px; }
-  .nav-item-cta { border-bottom: none !important; }
-  .nav-cta {
-    margin: 1.25rem 1.25rem .5rem;
-    text-align: center; justify-content: center;
-    border-radius: var(--radius); padding: 13px 20px;
-  }
-  .nav-cta:hover { padding-left: 20px; }
+  .nav-item-cta { display: flex; justify-content: center; padding: .75rem 1.5rem 1rem; border-bottom: none !important; }
+  .nav-cta { width: auto; margin: 0; padding: 10px 28px; text-align: center; justify-content: center; border-radius: var(--radius); }
+  .nav-cta:hover { padding-left: 28px; }
   .nav-item-search { padding: .25rem 1.25rem 1.5rem; border-bottom: none !important; }
   .nav-item-search .nav-link {
     justify-content: flex-start; gap: .5rem;
@@ -1101,6 +1097,10 @@ ul  { list-style: none; }
     border-radius: var(--radius); width: auto;
   }
   .nav-item-search .nav-link:hover { background: transparent; color: var(--green); padding-left: 0; }
+
+  /* Kill desktop hover — it has higher specificity and keeps dropdowns open on touch */
+  .has-dropdown:hover .dropdown,
+  .has-dropdown:hover .campus-mega { display: none; }
 
   /* Dropdown in drawer */
   .has-dropdown .dropdown {
