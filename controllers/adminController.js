@@ -24,9 +24,11 @@ function imageUpload(dest, maxCount = 10) {
 }
 
 function fileUpload(dest) {
+  const dir = path.join(__dirname, '../public/uploads', dest);
+  fs.mkdirSync(dir, { recursive: true });
   return multer({
     storage: multer.diskStorage({
-      destination: (req, file, cb) => cb(null, path.join(__dirname, '../public/uploads', dest)),
+      destination: (req, file, cb) => cb(null, dir),
       filename: (req, file, cb) => {
         const ext = path.extname(file.originalname).toLowerCase();
         cb(null, `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`);
@@ -36,10 +38,11 @@ function fileUpload(dest) {
   }).single('file');
 }
 
-const galleryUpload   = imageUpload('gallery');
-const facultyUpload   = imageUpload('faculty', 1);
-const documentUpload  = fileUpload('documents');
-const downloadUpload  = fileUpload('downloads');
+const galleryUpload      = imageUpload('gallery');
+const facultyUpload      = imageUpload('faculty', 1);
+const complianceUpload   = fileUpload('compliance');
+const documentUpload     = fileUpload('documents');
+const downloadUpload     = fileUpload('downloads');
 
 // ── DB helpers ────────────────────────────────────────
 async function q(sql, params = []) {
@@ -232,11 +235,11 @@ exports.complianceList = async (req, res) => {
   });
 };
 exports.uploadComplianceDoc = (req, res) => {
-  documentUpload(req, res, async err => {
+  complianceUpload(req, res, async err => {
     if (err) return res.redirect('/admin/compliance?error=' + encodeURIComponent(err.message));
     const { campus, doc_type, label, year, sort_order } = req.body;
     if (!req.file) return res.redirect('/admin/compliance?error=No+file+uploaded');
-    const filePath = path.join(__dirname, '../public/uploads/documents', req.file.filename);
+    const filePath = path.join(__dirname, '../public/uploads/compliance', req.file.filename);
     if (!isValidDocument(filePath)) {
       fs.unlinkSync(filePath);
       return res.redirect('/admin/compliance?error=Invalid+file+type.+Only+PDF%2C+DOC%2C+DOCX%2C+XLS%2C+XLSX+allowed.');
