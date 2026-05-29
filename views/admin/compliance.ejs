@@ -22,7 +22,7 @@
 
       <div class="admin-card">
         <h3>Upload Document</h3>
-        <form action="/compliance/upload?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="admin-form">
+        <form action="/admin/compliance/upload?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="admin-form">
           <div class="form-row">
             <div class="form-group">
               <label>Campus *</label>
@@ -102,7 +102,7 @@
               <td><a href="/uploads/compliance/<%= d.filename %>" target="_blank" class="btn btn-sm btn-outline">View</a></td>
               <td><%= new Date(d.created_at).toLocaleDateString('en-IN') %></td>
               <td>
-                <form action="/compliance/<%= d.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this document?')">
+                <form action="/admin/compliance/<%= d.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this document?')">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                 </form>
