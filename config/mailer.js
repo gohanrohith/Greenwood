@@ -139,4 +139,16 @@ async function whatsappContactForm(data) {
   await sendTelegram(msg);
 }
 
-module.exports = { sendMail, notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry, whatsappAdmissionEnquiry, whatsappContactForm };
+async function whatsappConcernForm(data) {
+  const msg = [
+    `⚠️ *Concern / Query — ${data.campus || 'main'}*`,
+    `👤 ${data.name}`,
+    `📞 ${data.phone}`,
+    data.email ? `✉️ ${data.email}` : null,
+    `🏷️ Category: ${data.category || 'other'}`,
+    `💬 ${(data.message || '').slice(0, 200)}`,
+  ].filter(Boolean).join('\n');
+  await sendTelegram(msg);
+}
+
+module.exports = { sendMail, notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry, whatsappAdmissionEnquiry, whatsappContactForm, whatsappConcernForm };

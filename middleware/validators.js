@@ -22,6 +22,18 @@ exports.contactForm = [
   body('message').trim().notEmpty().withMessage('Message is required').isLength({ max: 2000 }),
 ];
 
+const VALID_CATEGORIES = ['academics', 'discipline', 'facilities', 'fees', 'staff', 'safety', 'other', ''];
+
+exports.concernForm = [
+  body('name').trim().notEmpty().withMessage('Name is required').isLength({ max: 200 }),
+  body('phone').trim().notEmpty().withMessage('Phone number is required')
+    .matches(/^[+\d\s()\-]{7,20}$/).withMessage('Enter a valid phone number'),
+  body('email').optional({ checkFalsy: true }).trim().isEmail().withMessage('Enter a valid email').normalizeEmail(),
+  body('campus').optional({ checkFalsy: true }).trim().isIn(VALID_CAMPUSES),
+  body('category').optional({ checkFalsy: true }).trim().isIn(VALID_CATEGORIES),
+  body('message').trim().notEmpty().withMessage('Please describe your concern').isLength({ max: 3000 }),
+];
+
 exports.handleErrors = (redirectPath) => (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

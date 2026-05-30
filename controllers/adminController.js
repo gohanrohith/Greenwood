@@ -403,3 +403,30 @@ exports.deleteNewsletterSub = async (req, res) => {
   await q('DELETE FROM newsletter_subscribers WHERE id=?', [req.params.id]);
   res.redirect('/admin/newsletter');
 };
+
+// ── Concerns & Queries ────────────────────────────────
+exports.concernsList = async (req, res) => {
+  const { status, campus } = req.query;
+  let sql = 'SELECT * FROM concern_submissions WHERE is_active=1';
+  const params = [];
+  if (status) { sql += ' AND status=?'; params.push(status); }
+  if (campus) { sql += ' AND campus=?'; params.push(campus); }
+  sql += ' ORDER BY created_at DESC';
+  const concerns = await q(sql, params);
+  res.render('admin/concerns', {
+    title: 'Concerns & Queries | Greenwood Admin',
+    concerns,
+    filters: { status: status || '', campus: campus || '' },
+    success: req.query.success || null,
+  });
+};
+
+exports.updateConcernStatus = async (req, res) => {
+  const { status, admin_notes } = req.body;
+  const allowed = ['new','in_progress','resolved','closed'];
+  if (allowed.includes(status)) {
+    await q('UPDATE concern_submissions SET status=?, admin_notes=? WHERE id=?',
+      [status, admin_notes || null, req.params.id]);
+  }
+  res.redirect('/admin/concerns');
+};

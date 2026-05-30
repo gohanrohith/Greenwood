@@ -139,7 +139,18 @@ Tables: `admins`, `sessions`, `notices`, `events`, `articles`, `gallery`, `facul
 
 ---
 
-## 9. Deliberately Not Built (out of scope)
+## 9. Concerns & Queries Module ✅ DONE
+
+- [x] `/concern` — Public form (name, phone, email, campus, category, message)
+- [x] DB table `concern_submissions` with status workflow (new → in_progress → resolved → closed)
+- [x] Telegram notification on submission via `whatsappConcernForm`
+- [x] Admin module at `/admin/concerns` — filter by status/campus, inline status update, admin notes
+- [x] Footer link only (not in main nav)
+- [ ] **Run DB migration** — add `concern_submissions` table: `CREATE TABLE IF NOT EXISTS concern_submissions ...` (see schema.sql)
+
+---
+
+## 10. Deliberately Not Built (out of scope)
 
 - [ ] **Online fee payment** — no Razorpay/PayU integration
 - [ ] **Alumni section** — no alumni page or registration

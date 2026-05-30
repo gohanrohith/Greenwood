@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta name="description" content="Raise a concern or query with Greenwood High School. We take every concern seriously and respond promptly.">
+  <link rel="canonical" href="<%= canonicalUrl %>">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <link rel="apple-touch-icon" href="/emblem.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="site-main">
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+<main>
+
+  <section class="page-hero">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <h1>Raise a Concern or Query</h1>
+      <p>We listen. Every concern is reviewed and addressed by the management.</p>
+      <div class="breadcrumb"><a href="/">Home</a> / Raise a Concern</div>
+    </div>
+  </section>
+
+  <% if (success) { %>
+  <div style="background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;padding:1.25rem;text-align:center;font-weight:600">
+    <i class="fas fa-check-circle"></i> Your concern has been submitted. We will get back to you within 48 hours.
+  </div>
+  <% } %>
+
+  <% if (error) { %>
+  <div style="background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:1rem;text-align:center;font-weight:600">
+    <i class="fas fa-exclamation-circle"></i> <%= error %>
+  </div>
+  <% } %>
+
+  <section class="section">
+    <div class="container" style="max-width:760px">
+
+      <div style="background:var(--off-white);border-left:4px solid var(--green);padding:1.25rem 1.5rem;border-radius:0 var(--radius) var(--radius) 0;margin-bottom:2.5rem">
+        <p style="margin:0;font-size:.92rem;color:var(--navy);line-height:1.7">
+          <strong>Confidentiality assured.</strong> Your concern will be reviewed by the school management team. Please provide accurate contact details so we can follow up with you directly.
+        </p>
+      </div>
+
+      <form action="/concern" method="POST" class="enquiry-form">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" name="name" required placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" name="phone" required placeholder="+91 XXXXXXXXXX">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Campus</label>
+            <select name="campus">
+              <option value="main">General / Not campus-specific</option>
+              <% campuses.forEach(c => { %>
+              <option value="<%= c.slug %>"><%= c.name %></option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <select name="category">
+            <option value="academics">Academics / Curriculum</option>
+            <option value="discipline">Discipline / Behaviour</option>
+            <option value="facilities">Facilities / Infrastructure</option>
+            <option value="fees">Fees / Finance</option>
+            <option value="staff">Staff / Teacher Conduct</option>
+            <option value="safety">Safety / Security</option>
+            <option value="other" selected>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Your Concern or Query *</label>
+          <textarea name="message" rows="6" required placeholder="Please describe your concern in detail..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;padding:13px 32px">
+          <i class="fas fa-paper-plane" style="margin-right:.5rem"></i> Submit Concern
+        </button>
+      </form>
+
+    </div>
+  </section>
+
+</main>
+<%- include('../partials/footer-main') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

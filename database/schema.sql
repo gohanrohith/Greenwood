@@ -183,6 +183,22 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
 -- Migration: update admission year from 2025-26 to 2026-27
 UPDATE settings SET value='2026-27' WHERE setting_key='admission_year' AND value='2025-26';
 
+-- Concerns & Queries
+CREATE TABLE IF NOT EXISTS concern_submissions (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  name            VARCHAR(200) NOT NULL,
+  phone           VARCHAR(20)  NOT NULL,
+  email           VARCHAR(200) DEFAULT NULL,
+  campus          VARCHAR(50)  DEFAULT 'main',
+  category        VARCHAR(50)  DEFAULT 'other',
+  message         TEXT NOT NULL,
+  status          ENUM('new','in_progress','resolved','closed') DEFAULT 'new',
+  admin_notes     TEXT DEFAULT NULL,
+  is_active       TINYINT(1) DEFAULT 1,
+  created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- Migration: add Google Reviews columns to testimonials
 ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS rating    TINYINT      DEFAULT 5;
 ALTER TABLE testimonials ADD COLUMN IF NOT EXISTS source    VARCHAR(20)  DEFAULT 'manual';

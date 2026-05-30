@@ -3,7 +3,7 @@ const router = express.Router();
 const ctrl = require('../controllers/mainController');
 const { formLimiter } = require('../middleware/rateLimiter');
 const { csrfProtect } = require('../middleware/csrf');
-const { admissionEnquiry: validateAdmission, contactForm: validateContact, handleErrors } = require('../middleware/validators');
+const { admissionEnquiry: validateAdmission, contactForm: validateContact, concernForm: validateConcern, handleErrors } = require('../middleware/validators');
 
 router.get('/', ctrl.home);
 router.get('/about', ctrl.about);
@@ -19,6 +19,8 @@ router.get('/gallery', ctrl.gallery);
 router.get('/careers', ctrl.careers);
 router.get('/contact', ctrl.contact);
 router.post('/contact', formLimiter, csrfProtect, ...validateContact, handleErrors('/contact'), ctrl.contactSubmit);
+router.get('/concern', ctrl.concern);
+router.post('/concern', formLimiter, csrfProtect, ...validateConcern, handleErrors('/concern'), ctrl.concernSubmit);
 router.get('/compliance', ctrl.compliance);
 router.get('/search', ctrl.search);
 router.post('/newsletter/subscribe', formLimiter, csrfProtect, ctrl.newsletterSubscribe);

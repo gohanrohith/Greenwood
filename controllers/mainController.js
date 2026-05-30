@@ -1,6 +1,6 @@
 ﻿const { getAllCampuses } = require('../config/campuses');
 const crypto = require('crypto');
-const { notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry, whatsappAdmissionEnquiry, whatsappContactForm } = require('../config/mailer');
+const { notifyAdmissionEnquiry, notifyContactSubmission, autoReplyAdmissionEnquiry, whatsappAdmissionEnquiry, whatsappContactForm, whatsappConcernForm } = require('../config/mailer');
 
 async function dbQuery(sql, params = []) {
   try {
@@ -175,6 +175,28 @@ exports.contactSubmit = async (req, res) => {
     whatsappContactForm({ name, phone, email, subject, message }).catch(() => {});
   } catch (e) { console.error('Contact save error:', e.message); }
   res.redirect('/contact?success=1');
+};
+
+exports.concern = (req, res) => {
+  res.render('main/concern', {
+    title: 'Raise a Concern | Greenwood High School',
+    campuses: getAllCampuses(),
+    success: req.query.success || null,
+    error: req.query.error || null,
+  });
+};
+
+exports.concernSubmit = async (req, res) => {
+  const { name, phone, email, campus, category, message } = req.body;
+  try {
+    const { query } = require('../config/db');
+    await query(
+      `INSERT INTO concern_submissions (name, phone, email, campus, category, message) VALUES (?,?,?,?,?,?)`,
+      [name, phone, email || null, campus || 'main', category || 'other', message]
+    );
+    whatsappConcernForm({ name, phone, email, campus, category, message }).catch(() => {});
+  } catch (e) { console.error('Concern save error:', e.message); }
+  res.redirect('/concern?success=1');
 };
 
 exports.compliance = (req, res) => {
