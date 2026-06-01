@@ -61,7 +61,7 @@
             <a href="/faculty" class="quick-action"><i class="fas fa-user-plus"></i> Add Faculty</a>
             <a href="/compliance" class="quick-action"><i class="fas fa-file-upload"></i> Upload Compliance</a>
             <a href="/downloads" class="quick-action"><i class="fas fa-download"></i> Add Download</a>
-            <a href="/admissions" class="quick-action"><i class="fas fa-eye"></i> View Enquiries</a>
+            <a href="/admin/admissions" class="quick-action"><i class="fas fa-eye"></i> View Enquiries</a>
             <a href="/settings" class="quick-action"><i class="fas fa-cog"></i> Settings</a>
           </div>
         </div>
@@ -79,12 +79,12 @@
                 <td><span class="badge"><%= e.campus %></span></td>
                 <td><%= e.class_seeking || '—' %></td>
                 <td><%= new Date(e.created_at).toLocaleDateString('en-IN') %></td>
-                <td><a href="/admissions/<%= e.id %>" class="btn btn-sm btn-outline">View</a></td>
+                <td><a href="/admin/admissions/<%= e.id %>" class="btn btn-sm btn-outline">View</a></td>
               </tr>
               <% }) %>
             </tbody>
           </table>
-          <a href="/admissions" style="font-size:.83rem;color:var(--navy);font-weight:600;display:inline-block;margin-top:.75rem">View all enquiries →</a>
+          <a href="/admin/admissions" style="font-size:.83rem;color:var(--navy);font-weight:600;display:inline-block;margin-top:.75rem">View all enquiries →</a>
         </div>
         <% } %>
       </div>
