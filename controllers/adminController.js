@@ -5,11 +5,14 @@ const { syncGoogleReviews } = require('../services/googleReviews');
 const multer = require('multer');
 const { isValidImage, isValidDocument } = require('../utils/magicBytes');
 
+// ── Upload base path ──────────────────────────────────
+const UPLOADS_BASE = process.env.UPLOADS_DIR || path.join(__dirname, '../public/uploads');
+
 // ── Multer factories ──────────────────────────────────
 function imageUpload(dest, maxCount = 10) {
   return multer({
     storage: multer.diskStorage({
-      destination: (req, file, cb) => cb(null, path.join(__dirname, '../public/uploads', dest)),
+      destination: (req, file, cb) => cb(null, path.join(UPLOADS_BASE, dest)),
       filename: (req, file, cb) => {
         const ext = path.extname(file.originalname).toLowerCase();
         cb(null, `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`);
@@ -24,7 +27,7 @@ function imageUpload(dest, maxCount = 10) {
 }
 
 function fileUpload(dest) {
-  const dir = path.join(__dirname, '../public/uploads', dest);
+  const dir = path.join(UPLOADS_BASE, dest);
   fs.mkdirSync(dir, { recursive: true });
   return multer({
     storage: multer.diskStorage({
@@ -239,7 +242,7 @@ exports.uploadComplianceDoc = (req, res) => {
     if (err) return res.redirect('/admin/compliance?error=' + encodeURIComponent(err.message));
     const { campus, doc_type, label, year, sort_order } = req.body;
     if (!req.file) return res.redirect('/admin/compliance?error=No+file+uploaded');
-    const filePath = path.join(__dirname, '../public/uploads/compliance', req.file.filename);
+    const filePath = path.join(UPLOADS_BASE, 'compliance', req.file.filename);
     if (!isValidDocument(filePath)) {
       fs.unlinkSync(filePath);
       return res.redirect('/admin/compliance?error=Invalid+file+type.+Only+PDF%2C+DOC%2C+DOCX%2C+XLS%2C+XLSX+allowed.');
@@ -264,7 +267,7 @@ exports.uploadDownload = (req, res) => {
     if (err) return res.redirect('/admin/downloads?error=' + encodeURIComponent(err.message));
     const { campus, label, category } = req.body;
     if (!req.file) return res.redirect('/admin/downloads?error=No+file+uploaded');
-    const filePath = path.join(__dirname, '../public/uploads/downloads', req.file.filename);
+    const filePath = path.join(UPLOADS_BASE, 'downloads', req.file.filename);
     if (!isValidDocument(filePath)) {
       fs.unlinkSync(filePath);
       return res.redirect('/admin/downloads?error=Invalid+file+type.+Only+PDF%2C+DOC%2C+DOCX%2C+XLS%2C+XLSX+allowed.');
