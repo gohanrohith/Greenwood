@@ -44,6 +44,24 @@
   <section class="section">
     <div class="container" style="max-width:900px">
 
+      <% const docTypeLabels = {
+          cbse_affiliation: 'CBSE Affiliation Letter',
+          noc: 'NOC from State Government',
+          recognition: 'Recognition Certificate',
+          fire_safety: 'Fire Safety Certificate',
+          building_safety: 'Building Safety Certificate',
+          deo_certificate: 'DEO/SDMC Certificate',
+          land_certificate: 'Land / Building Certificate',
+          sanitary_certificate: 'Sanitary Certificate',
+          results: 'Academic Results',
+          fee_structure: 'Fee Structure',
+          prospectus: 'Prospectus / Brochure',
+          academic_calendar: 'Academic Calendar',
+          syllabus: 'Syllabus',
+          tc_form: 'Transfer Certificate Form',
+        };
+        const docLabel = (doc, key) => doc.label || docTypeLabels[key] || key.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+      %>
       <% if (campus.cbse) { %>
       <!-- CBSE MANDATORY DISCLOSURE -->
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem">
@@ -78,24 +96,6 @@
 
       <div class="disclosure-section">
         <h2>B. Documents & Certificates</h2>
-        <% const docTypeLabels = {
-          cbse_affiliation: 'CBSE Affiliation Letter',
-          noc: 'NOC from State Government',
-          recognition: 'Recognition Certificate',
-          fire_safety: 'Fire Safety Certificate',
-          building_safety: 'Building Safety Certificate',
-          deo_certificate: 'DEO/SDMC Certificate',
-          land_certificate: 'Land / Building Certificate',
-          sanitary_certificate: 'Sanitary Certificate',
-          results: 'Academic Results',
-          fee_structure: 'Fee Structure',
-          prospectus: 'Prospectus / Brochure',
-          academic_calendar: 'Academic Calendar',
-          syllabus: 'Syllabus',
-          tc_form: 'Transfer Certificate Form',
-        };
-        const docLabel = (doc, key) => doc.label || docTypeLabels[key] || key.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-        %>
         <% const mandatoryDocs = [
           { key: 'cbse_affiliation', label: 'CBSE Affiliation Letter' },
           { key: 'noc', label: 'NOC from State Government' },
