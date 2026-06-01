@@ -24,6 +24,7 @@ if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const sessionConfig = {
   secret: process.env.SESSION_SECRET || 'greenwood-dev-secret',
