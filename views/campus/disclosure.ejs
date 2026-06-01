@@ -78,6 +78,24 @@
 
       <div class="disclosure-section">
         <h2>B. Documents & Certificates</h2>
+        <% const docTypeLabels = {
+          cbse_affiliation: 'CBSE Affiliation Letter',
+          noc: 'NOC from State Government',
+          recognition: 'Recognition Certificate',
+          fire_safety: 'Fire Safety Certificate',
+          building_safety: 'Building Safety Certificate',
+          deo_certificate: 'DEO/SDMC Certificate',
+          land_certificate: 'Land / Building Certificate',
+          sanitary_certificate: 'Sanitary Certificate',
+          results: 'Academic Results',
+          fee_structure: 'Fee Structure',
+          prospectus: 'Prospectus / Brochure',
+          academic_calendar: 'Academic Calendar',
+          syllabus: 'Syllabus',
+          tc_form: 'Transfer Certificate Form',
+        };
+        const docLabel = (doc, key) => doc.label || docTypeLabels[key] || key.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+        %>
         <% const mandatoryDocs = [
           { key: 'cbse_affiliation', label: 'CBSE Affiliation Letter' },
           { key: 'noc', label: 'NOC from State Government' },
@@ -123,7 +141,7 @@
           <% }) %>
           <% cbseExtraKeys.forEach(key => { docs[key].forEach(doc => { %>
           <tr>
-            <td><%= doc.label || key %></td>
+            <td><%= docLabel(doc, key) %></td>
             <td><span class="doc-badge uploaded"><i class="fas fa-check"></i> Available</span></td>
             <td><a href="/uploads/compliance/<%= doc.filename %>" target="_blank" rel="noopener" class="btn btn-sm btn-outline">View</a></td>
           </tr>
@@ -263,7 +281,7 @@
           <% }) %>
           <% stateExtraKeys.forEach(key => { docs[key].forEach(doc => { %>
           <tr>
-            <td><%= doc.label || key %></td>
+            <td><%= docLabel(doc, key) %></td>
             <td><span class="doc-badge uploaded"><i class="fas fa-check"></i> Available</span></td>
             <td><a href="/uploads/compliance/<%= doc.filename %>" target="_blank" class="btn btn-sm btn-outline">View</a></td>
           </tr>
