@@ -93,7 +93,7 @@
         <% articles.forEach(a => { %>
         <%
           const imgSrc = a.image
-            ? (a.image.startsWith('http') ? a.image : '/uploads/gallery/' + a.image)
+            ? (a.image.startsWith('http') || a.image.startsWith('/') ? a.image : '/uploads/gallery/' + a.image)
             : null;
         %>
         <a href="<%= (a.source === 'gtimes' && a.gtimes_url) ? a.gtimes_url : '#' %>"
