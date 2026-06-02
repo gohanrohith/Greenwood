@@ -17,26 +17,37 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow);
       overflow: hidden;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      grid-template-rows: 1fr auto;
+      display: flex;
+      flex-direction: row;
+      min-height: 160px;
       transition: transform .2s, box-shadow .2s;
       text-decoration: none;
       color: inherit;
     }
     .ghs-news-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
     .ghs-news-card-img {
-      grid-row: 1 / 3;
+      width: 220px;
+      min-width: 220px;
+      height: auto;
+      min-height: 160px;
+      flex-shrink: 0;
       overflow: hidden;
-      background-color: var(--green);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      min-height: 150px;
-      display: flex; align-items: center; justify-content: center;
+      background: var(--green);
+      position: relative;
     }
-    .ghs-news-card-body { padding: 1.1rem 1.25rem .5rem; display: flex; flex-direction: column; }
-    .ghs-news-card-footer { padding: .6rem 1.25rem .9rem; display: flex; align-items: center; justify-content: space-between; }
+    .ghs-news-card-img img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s;
+    }
+    .ghs-news-card:hover .ghs-news-card-img img { transform: scale(1.04); }
+    .ghs-news-card-right { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+    .ghs-news-card-body { padding: 1.1rem 1.25rem .5rem; flex: 1; }
+    .ghs-news-card-footer { padding: .6rem 1.25rem .9rem; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--gray-light); }
 
     /* ── Event card grid ── */
     .ghs-events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
@@ -49,8 +60,8 @@
 
     /* ── Responsive ── */
     @media (max-width: 640px) {
-      .ghs-news-card { grid-template-columns: 1fr; }
-      .ghs-news-card-img { grid-row: 1; height: 180px; }
+      .ghs-news-card { flex-direction: column; }
+      .ghs-news-card-img { width: 100%; min-width: 0; height: 180px; min-height: 0; }
       .ghs-events-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -88,9 +99,14 @@
         <a href="<%= (a.source === 'gtimes' && a.gtimes_url) ? a.gtimes_url : '#' %>"
            <%= (a.source === 'gtimes' && a.gtimes_url) ? 'target="_blank" rel="noopener"' : '' %>
            class="ghs-news-card">
-          <div class="ghs-news-card-img" style="background-image:url('<%= imgSrc || '' %>')">
-            <% if (!imgSrc) { %><i class="fas fa-newspaper" style="font-size:2rem;color:rgba(255,255,255,.4)"></i><% } %>
+          <div class="ghs-news-card-img">
+            <% if (imgSrc) { %>
+            <img src="<%= imgSrc %>" alt="<%= a.title %>">
+            <% } else { %>
+            <i class="fas fa-newspaper" style="font-size:2rem;color:rgba(255,255,255,.4);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></i>
+            <% } %>
           </div>
+          <div class="ghs-news-card-right">
           <div class="ghs-news-card-body">
             <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem">
               <% if (a.category) { %>
@@ -113,6 +129,7 @@
             <% } %>
             <span style="font-size:.8rem;font-weight:600;color:var(--green)">Read More <i class="fas fa-arrow-right"></i></span>
           </div>
+          </div><%/* close ghs-news-card-right */%>
         </a>
         <% }) %>
       </div>
