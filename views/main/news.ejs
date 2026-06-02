@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,53 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="/css/main.css">
+  <style>
+    /* ── Horizontal news card (GTimes style) ── */
+    .ghs-news-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      grid-template-rows: 1fr auto;
+      transition: transform .2s, box-shadow .2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .ghs-news-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    .ghs-news-card-img {
+      grid-row: 1 / 3;
+      overflow: hidden;
+      background: var(--gray-light);
+      min-height: 150px;
+    }
+    .ghs-news-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .ghs-news-card:hover .ghs-news-card-img img { transform: scale(1.04); }
+    .ghs-news-card-img-placeholder {
+      width: 100%; height: 100%; min-height: 150px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--green), #00a85a);
+    }
+    .ghs-news-card-body { padding: 1.1rem 1.25rem .5rem; display: flex; flex-direction: column; }
+    .ghs-news-card-footer { padding: .6rem 1.25rem .9rem; display: flex; align-items: center; justify-content: space-between; }
+
+    /* ── Event card grid ── */
+    .ghs-events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .ghs-event-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow); overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .ghs-event-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .ghs-news-card { grid-template-columns: 1fr; grid-template-rows: 180px 1fr auto; }
+      .ghs-news-card-img { grid-row: 1; min-height: 0; }
+      .ghs-events-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body class="site-main">
 <%- include('../partials/topbar') %>
@@ -25,8 +72,76 @@
     </div>
   </section>
 
-  <!-- UPCOMING EVENTS -->
+  <!-- ── GTimes NEWS ──────────────────────────────────── -->
   <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Latest News</span>
+        <h2>News & Articles</h2>
+        <p>Stories, updates, and announcements from the Greenwood community via <strong>GTimes</strong></p>
+      </div>
+      <% if (articles && articles.length > 0) { %>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <% articles.forEach(a => { %>
+        <%
+          const imgSrc = a.image
+            ? (a.image.startsWith('http') ? a.image : '/uploads/gallery/' + a.image)
+            : null;
+        %>
+        <a href="<%= (a.source === 'gtimes' && a.gtimes_url) ? a.gtimes_url : '#' %>"
+           <%= (a.source === 'gtimes' && a.gtimes_url) ? 'target="_blank" rel="noopener"' : '' %>
+           class="ghs-news-card">
+          <div class="ghs-news-card-img">
+            <% if (imgSrc) { %>
+            <img src="<%= imgSrc %>" alt="<%= a.title %>" loading="lazy" onerror="this.closest('.ghs-news-card-img').innerHTML='<div class=ghs-news-card-img-placeholder><i class=\'fas fa-newspaper\' style=\'font-size:2rem;color:rgba(255,255,255,.5)\'></i></div>'">
+            <% } else { %>
+            <div class="ghs-news-card-img-placeholder">
+              <i class="fas fa-newspaper" style="font-size:2rem;color:rgba(255,255,255,.5)"></i>
+            </div>
+            <% } %>
+          </div>
+          <div class="ghs-news-card-body">
+            <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem">
+              <% if (a.category) { %>
+              <span style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;background:rgba(31,27,118,.08);color:var(--navy);padding:2px 9px;border-radius:3px"><%= a.category %></span>
+              <% } %>
+              <span style="font-size:.72rem;color:var(--gray)"><i class="fas fa-calendar" style="margin-right:.25rem"></i><%= new Date(a.published_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) %></span>
+            </div>
+            <h3 style="font-size:.98rem;font-weight:700;color:var(--navy);line-height:1.4;margin-bottom:.4rem;flex:1"><%= a.title %></h3>
+            <% if (a.excerpt) { %>
+            <p style="font-size:.83rem;color:var(--gray);line-height:1.6"><%= a.excerpt.substring(0,110) %><%= a.excerpt.length>110?'…':'' %></p>
+            <% } %>
+          </div>
+          <div class="ghs-news-card-footer">
+            <% if (a.source === 'gtimes') { %>
+            <span style="font-size:.72rem;color:var(--gray);display:flex;align-items:center;gap:.3rem">
+              <img src="https://gtimes.in/emblem.png" style="height:14px;width:auto" onerror="this.style.display='none'"> GTimes
+            </span>
+            <% } else { %>
+            <span></span>
+            <% } %>
+            <span style="font-size:.8rem;font-weight:600;color:var(--green)">Read More <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </a>
+        <% }) %>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem">
+        <a href="https://gtimes.in/articles" target="_blank" rel="noopener" class="btn btn-outline">
+          More stories on GTimes &nbsp;<i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+      <% } else { %>
+      <div style="text-align:center;padding:4rem;color:var(--gray)">
+        <i class="fas fa-newspaper" style="font-size:3rem;margin-bottom:1rem;opacity:.3"></i>
+        <p>No articles yet. Read our full coverage on GTimes.</p>
+        <a href="https://gtimes.in" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:1rem">Visit GTimes</a>
+      </div>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- ── UPCOMING EVENTS ─────────────────────────────── -->
+  <section class="section bg-light">
     <div class="container">
       <div class="section-header">
         <span class="section-tag">Events</span>
@@ -34,27 +149,34 @@
         <p>School events, celebrations, competitions, and campus activities</p>
       </div>
       <% if (events && events.length > 0) { %>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px">
+      <div class="ghs-events-grid">
         <% events.forEach(ev => { %>
-        <div style="background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
-          <% if (ev.image) { %>
-          <img src="/uploads/gallery/<%= ev.image %>" alt="<%= ev.title %>" style="width:100%;height:180px;object-fit:cover">
+        <%
+          const evImg = ev.image
+            ? (ev.image.startsWith('http') ? ev.image : '/uploads/gallery/' + ev.image)
+            : null;
+        %>
+        <div class="ghs-event-card">
+          <% if (evImg) { %>
+          <img src="<%= evImg %>" alt="<%= ev.title %>" style="width:100%;height:170px;object-fit:cover" onerror="this.style.display='none'">
           <% } else { %>
-          <div style="height:80px;background:linear-gradient(120deg,var(--navy),var(--green));display:flex;align-items:center;justify-content:center">
-            <i class="fas fa-calendar-alt" style="font-size:1.8rem;color:var(--lime)"></i>
+          <div style="height:70px;background:linear-gradient(120deg,var(--navy),var(--green));display:flex;align-items:center;justify-content:center">
+            <i class="fas fa-calendar-alt" style="font-size:1.6rem;color:rgba(255,255,255,.6)"></i>
           </div>
           <% } %>
-          <div style="padding:1.25rem">
+          <div style="padding:1.1rem 1.25rem 1.25rem">
             <% if (ev.event_date) { %>
-            <div style="font-size:.75rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem">
-              <i class="fas fa-calendar"></i> <%= new Date(ev.event_date).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'}) %>
+            <div style="font-size:.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem">
+              <i class="fas fa-calendar"></i> <%= new Date(ev.event_date).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}) %>
             </div>
             <% } %>
-            <% if (ev.campus !== 'all') { %><span style="font-size:.7rem;background:var(--lime);color:var(--navy);padding:2px 9px;border-radius:10px;font-weight:700;margin-bottom:.6rem;display:inline-block"><%= ev.campus %></span><% } %>
-            <h3 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;line-height:1.4"><%= ev.title %></h3>
-            <% if (ev.description) { %><p style="font-size:.85rem;color:var(--gray);line-height:1.65"><%= ev.description.substring(0,100) %><%= ev.description.length>100?'...':'' %></p><% } %>
+            <% if (ev.campus && ev.campus !== 'all') { %>
+            <span style="font-size:.68rem;background:var(--lime);color:var(--navy);padding:2px 9px;border-radius:10px;font-weight:700;margin-bottom:.6rem;display:inline-block"><%= ev.campus %></span>
+            <% } %>
+            <h3 style="font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:.4rem;line-height:1.4"><%= ev.title %></h3>
+            <% if (ev.description) { %><p style="font-size:.83rem;color:var(--gray);line-height:1.6"><%= ev.description.substring(0,100) %><%= ev.description.length>100?'…':'' %></p><% } %>
             <% if (ev.source === 'gtimes' && ev.gtimes_url) { %>
-            <a href="<%= ev.gtimes_url %>" target="_blank" rel="noopener" style="font-size:.8rem;color:var(--green);font-weight:600;display:inline-flex;align-items:center;gap:.35rem;margin-top:.75rem">Read on GTimes <i class="fas fa-external-link-alt"></i></a>
+            <a href="<%= ev.gtimes_url %>" target="_blank" rel="noopener" style="font-size:.8rem;color:var(--green);font-weight:600;display:inline-flex;align-items:center;gap:.35rem;margin-top:.75rem">See on GTimes <i class="fas fa-external-link-alt"></i></a>
             <% } %>
           </div>
         </div>
@@ -63,63 +185,13 @@
       <% } else { %>
       <div style="text-align:center;padding:4rem;color:var(--gray)">
         <i class="fas fa-calendar-alt" style="font-size:3rem;margin-bottom:1rem;opacity:.3"></i>
-        <p>No events posted yet. Check back soon or follow us on GTimes.</p>
-        <a href="http://gtimes.in" target="_blank" rel="noopener" class="btn btn-outline" style="margin-top:1rem">Visit GTimes <i class="fas fa-external-link-alt"></i></a>
+        <p>No events posted yet. Check back soon.</p>
       </div>
       <% } %>
     </div>
   </section>
 
-  <!-- NEWS / ARTICLES -->
-  <section class="section bg-light">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Latest News</span>
-        <h2>News & Articles</h2>
-        <p>Stories, updates, and announcements from the Greenwood community</p>
-      </div>
-      <% if (articles && articles.length > 0) { %>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px">
-        <% articles.forEach(a => { %>
-        <div style="background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;transition:transform .2s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
-          <% if (a.image) { %>
-          <img src="/uploads/gallery/<%= a.image %>" alt="<%= a.title %>" style="width:100%;height:180px;object-fit:cover">
-          <% } else { %>
-          <div style="height:80px;background:linear-gradient(120deg,var(--green),var(--lime));display:flex;align-items:center;justify-content:center">
-            <i class="fas fa-newspaper" style="font-size:1.8rem;color:var(--navy)"></i>
-          </div>
-          <% } %>
-          <div style="padding:1.25rem">
-            <div style="font-size:.75rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem">
-              <i class="fas fa-clock"></i> <%= new Date(a.published_at).toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'}) %>
-              <% if (a.author) { %> · <%= a.author %><% } %>
-            </div>
-            <% if (a.category) { %><span style="font-size:.7rem;background:rgba(31,27,118,.08);color:var(--navy);padding:2px 9px;border-radius:10px;font-weight:700;margin-bottom:.6rem;display:inline-block;text-transform:capitalize"><%= a.category %></span><% } %>
-            <h3 style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.5rem;line-height:1.4"><%= a.title %></h3>
-            <% if (a.excerpt) { %><p style="font-size:.85rem;color:var(--gray);line-height:1.65"><%= a.excerpt.substring(0,110) %><%= a.excerpt.length>110?'...':'' %></p><% } %>
-            <% if (a.source === 'gtimes' && a.gtimes_url) { %>
-            <a href="<%= a.gtimes_url %>" target="_blank" rel="noopener" style="font-size:.8rem;color:var(--green);font-weight:600;display:inline-flex;align-items:center;gap:.35rem;margin-top:.75rem">Read full story on GTimes <i class="fas fa-external-link-alt"></i></a>
-            <% } %>
-          </div>
-        </div>
-        <% }) %>
-      </div>
-      <div style="text-align:center;margin-top:2.5rem">
-        <a href="http://gtimes.in" target="_blank" rel="noopener" class="btn btn-outline">
-          More stories on GTimes &nbsp;<i class="fas fa-external-link-alt"></i>
-        </a>
-      </div>
-      <% } else { %>
-      <div style="text-align:center;padding:4rem;color:var(--gray)">
-        <i class="fas fa-newspaper" style="font-size:3rem;margin-bottom:1rem;opacity:.3"></i>
-        <p>No articles yet. Read our full coverage on GTimes.</p>
-        <a href="http://gtimes.in" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:1rem">Visit GTimes</a>
-      </div>
-      <% } %>
-    </div>
-  </section>
-
-  <!-- NOTICES -->
+  <!-- ── NOTICES ──────────────────────────────────────── -->
   <% if (notices && notices.length > 0) { %>
   <section class="section">
     <div class="container">
@@ -148,12 +220,12 @@
   </section>
   <% } %>
 
-  <!-- GTIMES CTA -->
+  <!-- ── GTIMES CTA ───────────────────────────────────── -->
   <section style="background:var(--navy);padding:60px 0;text-align:center;color:var(--white)">
     <div class="container">
       <h2 style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:.75rem">Stay Updated with GTimes</h2>
       <p style="opacity:.85;margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto">GTimes is Greenwood's dedicated media platform — news, events, student achievements, and campus stories all in one place.</p>
-      <a href="http://gtimes.in" target="_blank" rel="noopener" class="btn btn-lime">
+      <a href="https://gtimes.in" target="_blank" rel="noopener" class="btn btn-lime">
         Visit GTimes &nbsp;<i class="fas fa-external-link-alt"></i>
       </a>
     </div>
