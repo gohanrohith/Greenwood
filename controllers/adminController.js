@@ -498,8 +498,9 @@ exports.teacherSaveSalary = async (req, res) => {
     [teacher_id || null, cbse_reg_number || null, designation || null,
      parseFloat(salary_basic) || 0, parseFloat(salary_hra) || 0,
      parseFloat(salary_da) || 0, parseFloat(salary_transport) || 0,
-     parseFloat(pf_percent) || 12, parseFloat(esi_percent) || 0.75,
-     parseFloat(tds_flat) || 0,
+     pf_percent !== '' && !isNaN(parseFloat(pf_percent)) ? parseFloat(pf_percent) : 12,
+     esi_percent !== '' && !isNaN(parseFloat(esi_percent)) ? parseFloat(esi_percent) : 0.75,
+     !isNaN(parseFloat(tds_flat)) ? parseFloat(tds_flat) : 0,
      req.params.id]);
   res.redirect(`/admin/teachers/${req.params.id}`);
 };

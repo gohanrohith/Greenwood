@@ -228,7 +228,7 @@ exports.payslipValidate = async (req, res) => {
     `SELECT * FROM teacher_payroll_entries WHERE teacher_id = ? AND month = ? AND year = ? AND enabled = 1`,
     [teacher.id, month, year]
   );
-  if (!entry) return renderErr('Pay slip not yet released for the selected month.');
+  if (!entry) return renderErr(`Pay slip for ${MONTH_NAMES[parseInt(month)]} ${year} has not been released yet. Please contact the school admin or try a different month.`);
 
   const calc = calcPayroll(teacher, entry);
 

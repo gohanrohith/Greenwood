@@ -103,7 +103,7 @@
                   </div>
                 </td>
                 <td style="font-family:monospace;font-size:.85rem">
-                  <%= t.teacher_id || '<span style="color:#cbd5e1">Not Assigned</span>' %>
+                  <%- t.teacher_id ? `<span style="font-family:monospace">${t.teacher_id}</span>` : '<span style="color:#cbd5e1;font-size:.82rem">Not Assigned</span>' %>
                 </td>
                 <td style="font-size:.83rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><%= t.current_branch %></td>
                 <td>

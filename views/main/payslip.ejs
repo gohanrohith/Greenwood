@@ -31,10 +31,11 @@
 
     /* Pay Slip Styles */
     .slip-wrap { background: #fff; border-radius: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,.1); overflow: hidden; }
-    .slip-header { background: var(--navy, #1F1B76); color: #fff; padding: 1.5rem; text-align: center; }
-    .slip-header img { width: 56px; margin-bottom: .5rem; }
+    .slip-header { background: var(--navy, #1F1B76); color: #fff; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
+    .slip-header img { width: 56px; flex-shrink: 0; }
+    .slip-header-text { flex: 1; }
     .slip-header h2 { margin: 0; font-size: 1rem; font-weight: 800; letter-spacing: .05em; }
-    .slip-header p { margin: .25rem 0 0; font-size: .8rem; opacity: .85; }
+    .slip-header p { margin: .2rem 0 0; font-size: .8rem; opacity: .85; }
     .slip-title { background: var(--green, #00663A); color: #fff; text-align: center; padding: .5rem; font-size: .85rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
     .slip-body { padding: 1.25rem; }
     .slip-info { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
@@ -62,9 +63,14 @@
     .btn-print:hover { background: #004d2b; }
     .btn-back { display: block; width: 100%; margin-top: .5rem; padding: .7rem; background: transparent; color: #475569; border: 1.5px solid #e2e8f0; border-radius: .6rem; font-family: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; text-align: center; }
     @media print {
-      body > *:not(.slip-print-area) { display: none !important; }
-      .slip-print-area { display: block !important; }
-      .btn-print, .btn-back, header, footer, nav { display: none !important; }
+      body { background: white !important; }
+      .topbar, .navbar-main, .footer-main, .whatsapp-float,
+      #cookieBanner, .btn-print, .btn-back { display: none !important; }
+      .payslip-wrap { margin: 0 !important; padding: 0 !important; max-width: 100% !important; }
+      .slip-wrap { box-shadow: none !important; border-radius: 0 !important; }
+      .slip-header, .slip-title, .slip-net, .slip-days .num {
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
     }
   </style>
 </head>
@@ -121,8 +127,10 @@
   <div class="slip-wrap slip-print-area">
     <div class="slip-header">
       <img src="/emblem.png" alt="Greenwood">
-      <h2>GREENWOOD HIGH SCHOOL — <%= slip.current_branch.split(' - ')[1] || slip.current_branch %></h2>
-      <p><%= slip.current_branch %></p>
+      <div class="slip-header-text">
+        <h2>GREENWOOD HIGH SCHOOL — <%= slip.current_branch.split(' - ')[1] || slip.current_branch %></h2>
+        <p><%= slip.current_branch %></p>
+      </div>
     </div>
     <div class="slip-title">Pay Slip — <%= monthName %> <%= year %></div>
 
