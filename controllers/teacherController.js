@@ -103,19 +103,23 @@ exports.registerPage = (req, res) => {
   res.render('main/teachers-register', {
     title: 'Teacher Registration | Greenwood High School',
     canonicalUrl: `https://${process.env.MAIN_DOMAIN || 'ghs.sc.in'}/teachers/register`,
-        success: req.query.success || null,
+    success: req.query.success || null,
     error: null,
+    formData: {},
+    errorStep: 1,
   });
 };
 
 // ── Public: Submit registration ───────────────────────────────────────────────
 exports.registerSubmit = (req, res, next) => {
   profileUpload(req, res, async (err) => {
-    const renderErr = (msg) => res.render('main/teachers-register', {
+    const renderErr = (msg, errorStep = 1) => res.render('main/teachers-register', {
       title: 'Teacher Registration | Greenwood High School',
       canonicalUrl: `https://${process.env.MAIN_DOMAIN || 'ghs.sc.in'}/teachers/register`,
-            success: null,
+      success: null,
       error: msg,
+      formData: req.body || {},
+      errorStep,
     });
 
     if (err) return renderErr(err.message);
@@ -136,18 +140,18 @@ exports.registerSubmit = (req, res, next) => {
             pf_number, esi_number } = b;
 
     if (!aadhar_number || aadhar_number.length !== 12 || !/^\d{12}$/.test(aadhar_number))
-      return renderErr('Invalid Aadhar number.');
+      return renderErr('Aadhar number must be exactly 12 digits.', 1);
     if (!full_name || !email || !phone || !date_of_birth || !gender)
-      return renderErr('Personal details are required.');
+      return renderErr('Please fill all required personal details.', 1);
     if (!street || !pincode || !state)
-      return renderErr('Address is required.');
+      return renderErr('Please fill your complete address.', 2);
     if (!tenth_board || !twelfth_board || !ug_degree)
-      return renderErr('10th, 12th, and UG qualifications are required.');
+      return renderErr('10th, 12th, and Undergraduate qualification details are required.', 3);
     if (!current_branch || !bank_name || !account_number || !ifsc_code || !pan_number)
-      return renderErr('Branch and bank details are required.');
+      return renderErr('Branch and bank details are required.', 6);
 
     const existing = await q1('SELECT id FROM teachers WHERE aadhar_number = ?', [aadhar_number]);
-    if (existing) return renderErr('This Aadhar number is already registered.');
+    if (existing) return renderErr('This Aadhar number is already registered. Please contact admin if this is an error.', 1);
 
     const profile_pic = req.file ? `/uploads/teachers/${req.file.filename}` : null;
 

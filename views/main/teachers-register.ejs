@@ -8,29 +8,27 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="/css/main.css">
   <style>
-    .reg-wrap { max-width: 860px; margin: 2.5rem auto; padding: 0 1rem 3rem; }
-    .reg-header { text-align: center; margin-bottom: 2rem; }
-    .reg-header img { width: 72px; margin-bottom: .75rem; }
-    .reg-header h1 { font-size: 1.7rem; font-weight: 800; color: var(--navy, #1F1B76); margin: 0; }
-    .reg-header p { color: #64748b; margin: .25rem 0 0; }
+    .reg-wrap { max-width: 860px; margin: 2rem auto; padding: 0 1rem 3rem; }
+    .reg-page-title { margin-bottom: 1.5rem; }
+    .reg-page-title h1 { font-size: 1.6rem; font-weight: 800; color: #1F1B76; margin: 0 0 .25rem; }
+    .reg-page-title p { color: #64748b; margin: 0; font-size: .9rem; }
     .step-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; position: relative; }
     .step-bar::before { content: ''; position: absolute; top: 20px; left: 0; right: 0; height: 2px; background: #e2e8f0; z-index: 0; }
     .step-item { display: flex; flex-direction: column; align-items: center; gap: .4rem; z-index: 1; }
     .step-dot { width: 40px; height: 40px; border-radius: 50%; background: #e2e8f0; border: 2px solid #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem; color: #94a3b8; transition: all .3s; }
-    .step-dot.done { background: var(--green, #00663A); border-color: var(--green, #00663A); color: #fff; }
-    .step-dot.active { background: #fff; border-color: var(--green, #00663A); color: var(--green, #00663A); }
+    .step-dot.done { background: #00663A; border-color: #00663A; color: #fff; }
+    .step-dot.active { background: #fff; border-color: #00663A; color: #00663A; }
     .step-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #94a3b8; }
-    .step-label.active { color: var(--green, #00663A); }
+    .step-label.active { color: #00663A; }
     .reg-card { background: #fff; border-radius: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,.08); padding: 2rem; }
     .reg-card-header { display: flex; align-items: center; gap: .75rem; padding-bottom: 1.25rem; margin-bottom: 1.5rem; border-bottom: 1px solid #f1f5f9; }
-    .reg-card-icon { width: 38px; height: 38px; border-radius: .5rem; background: #e8f5ee; display: flex; align-items: center; justify-content: center; color: var(--green, #00663A); font-size: 1rem; }
-    .reg-card-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin: 0; }
+    .reg-card-icon { width: 38px; height: 38px; border-radius: .5rem; background: #e8f5ee; display: flex; align-items: center; justify-content: center; color: #00663A; font-size: 1rem; flex-shrink: 0; }
+    .reg-card-title { font-size: 1.05rem; font-weight: 700; color: #1e293b; margin: 0; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
     .form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
     .form-grid.cols-1 { grid-template-columns: 1fr; }
     .form-group { display: flex; flex-direction: column; gap: .35rem; }
     .form-group.span-2 { grid-column: span 2; }
-    .form-group.span-3 { grid-column: span 3; }
     .form-group label { font-size: .82rem; font-weight: 600; color: #475569; }
     .form-group label .req { color: #ef4444; }
     .form-group input, .form-group select, .form-group textarea {
@@ -39,35 +37,33 @@
       transition: border-color .2s, box-shadow .2s; box-sizing: border-box;
     }
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      outline: none; border-color: var(--green, #00663A); box-shadow: 0 0 0 3px rgba(0,102,58,.1); background: #fff;
+      outline: none; border-color: #00663A; box-shadow: 0 0 0 3px rgba(0,102,58,.1); background: #fff;
     }
     .form-group textarea { min-height: 90px; resize: vertical; }
     .section-divider { border: none; border-top: 1px solid #f1f5f9; margin: 1.5rem 0; }
-    .section-title { font-size: .88rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .07em; margin: 0 0 1rem; }
+    .section-title { font-size: .82rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .07em; margin: 0 0 .75rem; }
     .edu-block { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: .75rem; padding: 1.25rem; margin-bottom: 1rem; }
-    .edu-block-title { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #475569; margin: 0 0 1rem; }
+    .edu-block-title { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: #475569; margin: 0 0 .85rem; }
     .chip-grid { display: flex; flex-wrap: wrap; gap: .5rem; padding: .75rem; background: #f8fafc; border-radius: .75rem; border: 1.5px solid #e2e8f0; }
     .chip { padding: .35rem .85rem; border-radius: .4rem; font-size: .78rem; font-weight: 600; cursor: pointer; border: 1.5px solid #e2e8f0; background: #fff; color: #475569; transition: all .2s; user-select: none; }
-    .chip:hover { border-color: var(--green, #00663A); }
-    .chip.selected { background: var(--green, #00663A); border-color: var(--green, #00663A); color: #fff; }
-    .chip.selected-navy { background: var(--navy, #1F1B76); border-color: var(--navy, #1F1B76); color: #fff; }
+    .chip:hover { border-color: #00663A; }
+    .chip.selected { background: #00663A; border-color: #00663A; color: #fff; }
+    .chip.selected-navy { background: #1F1B76; border-color: #1F1B76; color: #fff; }
     .reg-nav { display: flex; gap: .75rem; padding-top: 1.5rem; border-top: 1px solid #f1f5f9; margin-top: 1.5rem; }
     .btn-reg-back { flex: 1; padding: .75rem; border: 1.5px solid #e2e8f0; border-radius: .6rem; background: #fff; color: #475569; font-family: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .2s; }
     .btn-reg-back:hover { background: #f8fafc; }
-    .btn-reg-next { flex: 2; padding: .75rem; border: none; border-radius: .6rem; background: var(--navy, #1F1B76); color: #fff; font-family: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .2s; }
+    .btn-reg-next { flex: 2; padding: .75rem; border: none; border-radius: .6rem; background: #1F1B76; color: #fff; font-family: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .2s; }
     .btn-reg-next:hover { background: #17145a; }
-    .btn-reg-submit { flex: 2; padding: .75rem; border: none; border-radius: .6rem; background: var(--green, #00663A); color: #fff; font-family: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .2s; }
+    .btn-reg-submit { flex: 2; padding: .75rem; border: none; border-radius: .6rem; background: #00663A; color: #fff; font-family: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .2s; }
     .btn-reg-submit:hover { background: #004d2b; }
     .step-content { display: none; }
     .step-content.active { display: block; }
     .aadhar-wrap { position: relative; }
     .aadhar-status { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%); font-size: .85rem; }
     .success-wrap { text-align: center; padding: 3rem 1rem; }
-    .success-icon { width: 80px; height: 80px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2rem; color: var(--green, #00663A); }
-    .alert-error { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: .75rem 1rem; border-radius: .5rem; margin-bottom: 1.25rem; font-size: .88rem; }
-    .upload-label { display: inline-flex; align-items: center; gap: .5rem; padding: .5rem 1rem; border: 1.5px dashed #cbd5e1; border-radius: .5rem; font-size: .82rem; font-weight: 600; color: #475569; cursor: pointer; transition: all .2s; background: #fff; }
-    .upload-label:hover { border-color: var(--green, #00663A); color: var(--green, #00663A); }
-    .upload-name { font-size: .78rem; color: #64748b; margin-top: .25rem; }
+    .success-icon { width: 80px; height: 80px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2rem; color: #00663A; }
+    .alert-error { background: #fef2f2; border: 1.5px solid #fecaca; color: #991b1b; padding: .85rem 1rem; border-radius: .6rem; margin-bottom: 1.25rem; font-size: .88rem; display: flex; align-items: flex-start; gap: .5rem; }
+    .alert-error i { margin-top: .1rem; flex-shrink: 0; }
     .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .review-block { background: #f8fafc; border-radius: .75rem; padding: 1.25rem; }
     .review-block h4 { font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: #94a3b8; font-weight: 700; margin: 0 0 .75rem; }
@@ -78,7 +74,7 @@
     @media (max-width: 640px) {
       .form-grid { grid-template-columns: 1fr; }
       .form-grid.cols-3 { grid-template-columns: 1fr; }
-      .form-group.span-2, .form-group.span-3 { grid-column: span 1; }
+      .form-group.span-2 { grid-column: span 1; }
       .step-label { display: none; }
       .review-grid { grid-template-columns: 1fr; }
     }
@@ -89,10 +85,12 @@
 <%- include('../partials/topbar') %>
 <%- include('../partials/nav-main') %>
 
+<% const f = typeof formData !== 'undefined' ? formData : {}; %>
+<% const startStep = typeof errorStep !== 'undefined' ? errorStep : 1; %>
+
 <div class="reg-wrap">
-  <div class="reg-header">
-    <img src="/emblem.png" alt="Greenwood">
-    <h1>Teacher Registration</h1>
+  <div class="reg-page-title">
+    <h1><i class="fas fa-user-tie" style="font-size:1.2rem;margin-right:.4rem"></i>Teacher Registration</h1>
     <p>Official onboarding portal — Greenwood Educational Institutions</p>
   </div>
 
@@ -100,14 +98,14 @@
   <div class="success-wrap">
     <div class="success-icon"><i class="fas fa-check"></i></div>
     <h2 style="color:#1e293b;margin:0 0 .5rem">Registration Submitted!</h2>
-    <p style="color:#64748b;max-width:400px;margin:0 auto 1.5rem">Your application has been securely received. Our administrative team will review and contact you shortly.</p>
+    <p style="color:#64748b;max-width:400px;margin:0 auto 1.5rem">Your application has been received. Our administrative team will review it and contact you shortly.</p>
     <a href="/" class="btn btn-primary">Back to Home</a>
   </div>
   <% } else { %>
 
   <!-- Step Bar -->
   <div class="step-bar" id="stepBar">
-    <div class="step-item"><div class="step-dot active" id="dot1">1</div><div class="step-label active" id="lbl1">Profile</div></div>
+    <div class="step-item"><div class="step-dot" id="dot1">1</div><div class="step-label" id="lbl1">Profile</div></div>
     <div class="step-item"><div class="step-dot" id="dot2">2</div><div class="step-label" id="lbl2">Address</div></div>
     <div class="step-item"><div class="step-dot" id="dot3">3</div><div class="step-label" id="lbl3">Education</div></div>
     <div class="step-item"><div class="step-dot" id="dot4">4</div><div class="step-label" id="lbl4">Higher Ed</div></div>
@@ -116,12 +114,18 @@
     <div class="step-item"><div class="step-dot" id="dot7">7</div><div class="step-label" id="lbl7">Review</div></div>
   </div>
 
-  <% if (error) { %><div class="alert-error"><i class="fas fa-exclamation-circle"></i> <%= error %></div><% } %>
+  <% if (error) { %>
+  <div class="alert-error">
+    <i class="fas fa-exclamation-circle"></i>
+    <div><strong>Please fix the following:</strong> <%= error %> Your previously entered details have been restored — check the highlighted step and continue.</div>
+  </div>
+  <% } %>
 
-  <form action="/teachers/register?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" id="regForm" novalidate>
+  <form action="/teachers/register" method="POST" enctype="multipart/form-data" id="regForm" novalidate>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
     <!-- STEP 1: Profile & Personal -->
-    <div class="step-content active" id="step1">
+    <div class="step-content" id="step1">
       <div class="reg-card">
         <div class="reg-card-header">
           <div class="reg-card-icon"><i class="fas fa-user"></i></div>
@@ -134,7 +138,9 @@
               <i class="fas fa-user" style="font-size:2rem;color:#cbd5e1" id="picIcon"></i>
               <img id="picImg" src="" style="display:none;width:100%;height:100%;object-fit:cover">
             </div>
-            <label class="upload-label" for="profile_pic"><i class="fas fa-camera"></i> Photo</label>
+            <label style="display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .85rem;border:1.5px dashed #cbd5e1;border-radius:.5rem;font-size:.8rem;font-weight:600;color:#475569;cursor:pointer" for="profile_pic">
+              <i class="fas fa-camera"></i> Photo
+            </label>
             <input type="file" name="profile_pic" id="profile_pic" accept="image/*" style="display:none" onchange="previewPic(this)">
           </div>
           <div style="flex:1;min-width:220px">
@@ -142,14 +148,14 @@
               <div class="form-group">
                 <label>Aadhar Number <span class="req">*</span></label>
                 <div class="aadhar-wrap">
-                  <input type="text" name="aadhar_number" id="aadharInput" maxlength="12" placeholder="12-digit number" required pattern="\d{12}">
+                  <input type="text" name="aadhar_number" id="aadharInput" maxlength="12" placeholder="12-digit number" required value="<%= f.aadhar_number || '' %>">
                   <span class="aadhar-status" id="aadharStatus"></span>
                 </div>
                 <small id="aadharMsg" style="font-size:.75rem;color:#ef4444;display:none">Already registered</small>
               </div>
               <div class="form-group">
                 <label>Full Name <span class="req">*</span></label>
-                <input type="text" name="full_name" placeholder="Legal name as per Aadhar" required>
+                <input type="text" name="full_name" placeholder="Legal name as per Aadhar" required value="<%= f.full_name || '' %>">
               </div>
             </div>
           </div>
@@ -158,34 +164,37 @@
         <div class="form-grid">
           <div class="form-group">
             <label>Email Address <span class="req">*</span></label>
-            <input type="email" name="email" placeholder="example@email.com" required>
+            <input type="email" name="email" placeholder="example@email.com" required value="<%= f.email || '' %>">
           </div>
           <div class="form-group">
             <label>Phone Number <span class="req">*</span></label>
-            <input type="text" name="phone" maxlength="10" placeholder="10-digit mobile" required>
+            <input type="text" name="phone" maxlength="10" placeholder="10-digit mobile" required value="<%= f.phone || '' %>">
           </div>
           <div class="form-group">
             <label>Date of Birth <span class="req">*</span></label>
-            <input type="date" name="date_of_birth" required>
+            <input type="date" name="date_of_birth" required value="<%= f.date_of_birth || '' %>">
           </div>
           <div class="form-group">
             <label>Gender <span class="req">*</span></label>
             <select name="gender" required>
               <option value="">Select</option>
-              <option>Male</option><option>Female</option><option>Other</option>
+              <option <%= f.gender==='Male' ? 'selected' : '' %>>Male</option>
+              <option <%= f.gender==='Female' ? 'selected' : '' %>>Female</option>
+              <option <%= f.gender==='Other' ? 'selected' : '' %>>Other</option>
             </select>
           </div>
           <div class="form-group">
             <label>Blood Group</label>
             <select name="blood_group">
               <option value="">Select</option>
-              <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-              <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+              <% ['A+','A-','B+','B-','AB+','AB-','O+','O-'].forEach(bg => { %>
+              <option <%= f.blood_group===bg ? 'selected' : '' %>><%= bg %></option>
+              <% }) %>
             </select>
           </div>
           <div class="form-group">
             <label>Designation</label>
-            <input type="text" name="designation" placeholder="e.g. Senior Science Teacher">
+            <input type="text" name="designation" placeholder="e.g. Senior Science Teacher" value="<%= f.designation || '' %>">
           </div>
         </div>
 
@@ -194,19 +203,20 @@
         <div class="form-grid cols-3">
           <div class="form-group">
             <label>Contact Name</label>
-            <input type="text" name="emergency_contact_name" placeholder="Father / Spouse name">
+            <input type="text" name="emergency_contact_name" placeholder="Father / Spouse name" value="<%= f.emergency_contact_name || '' %>">
           </div>
           <div class="form-group">
             <label>Relationship</label>
             <select name="emergency_contact_relation">
               <option value="">Select</option>
-              <option>Father</option><option>Mother</option><option>Spouse</option>
-              <option>Brother</option><option>Sister</option><option>Other</option>
+              <% ['Father','Mother','Spouse','Brother','Sister','Other'].forEach(r => { %>
+              <option <%= f.emergency_contact_relation===r ? 'selected' : '' %>><%= r %></option>
+              <% }) %>
             </select>
           </div>
           <div class="form-group">
             <label>Mobile</label>
-            <input type="text" name="emergency_contact_mobile" maxlength="10" placeholder="10-digit">
+            <input type="text" name="emergency_contact_mobile" maxlength="10" placeholder="10-digit" value="<%= f.emergency_contact_mobile || '' %>">
           </div>
         </div>
 
@@ -223,20 +233,18 @@
           <div class="reg-card-icon"><i class="fas fa-map-marker-alt"></i></div>
           <p class="reg-card-title">Address</p>
         </div>
-        <div class="form-grid cols-1">
-          <div class="form-group">
-            <label>Street Address / Local Area <span class="req">*</span></label>
-            <textarea name="street" placeholder="House No., Street, Landmark..." required></textarea>
-          </div>
+        <div class="form-group" style="margin-bottom:1.25rem">
+          <label>Street Address / Local Area <span class="req">*</span></label>
+          <textarea name="street" placeholder="House No., Street, Landmark..." required><%= f.street || '' %></textarea>
         </div>
         <div class="form-grid">
           <div class="form-group">
             <label>Pincode <span class="req">*</span></label>
-            <input type="text" name="pincode" maxlength="6" placeholder="6-digit pincode" required>
+            <input type="text" name="pincode" maxlength="6" placeholder="6-digit pincode" required value="<%= f.pincode || '' %>">
           </div>
           <div class="form-group">
             <label>State <span class="req">*</span></label>
-            <input type="text" name="state" placeholder="e.g. Telangana" required>
+            <input type="text" name="state" placeholder="e.g. Telangana" required value="<%= f.state || '' %>">
           </div>
         </div>
         <div class="reg-nav">
@@ -255,32 +263,32 @@
         </div>
 
         <div class="edu-block">
-          <p class="edu-block-title">10th Standard <span class="req">*</span></p>
+          <p class="edu-block-title">10th Standard <span class="req" style="color:#ef4444">*</span></p>
           <div class="form-grid cols-3">
-            <div class="form-group"><label>Board</label><input type="text" name="tenth_board" placeholder="e.g. CBSE, SSC" required></div>
-            <div class="form-group"><label>Year</label><input type="text" name="tenth_year" maxlength="4" placeholder="2010"></div>
-            <div class="form-group"><label>Percentage / CGPA</label><input type="text" name="tenth_percentage" placeholder="e.g. 87.5"></div>
+            <div class="form-group"><label>Board</label><input type="text" name="tenth_board" placeholder="e.g. CBSE, SSC" required value="<%= f.tenth_board || '' %>"></div>
+            <div class="form-group"><label>Year</label><input type="text" name="tenth_year" maxlength="4" placeholder="2010" value="<%= f.tenth_year || '' %>"></div>
+            <div class="form-group"><label>Percentage / CGPA</label><input type="text" name="tenth_percentage" placeholder="e.g. 87.5" value="<%= f.tenth_percentage || '' %>"></div>
           </div>
         </div>
 
         <div class="edu-block">
-          <p class="edu-block-title">12th Standard <span class="req">*</span></p>
+          <p class="edu-block-title">12th Standard <span class="req" style="color:#ef4444">*</span></p>
           <div class="form-grid cols-3">
-            <div class="form-group"><label>Board</label><input type="text" name="twelfth_board" placeholder="e.g. CBSE, BIE" required></div>
-            <div class="form-group"><label>Year</label><input type="text" name="twelfth_year" maxlength="4" placeholder="2012"></div>
-            <div class="form-group"><label>Percentage / CGPA</label><input type="text" name="twelfth_percentage" placeholder="e.g. 90.2"></div>
+            <div class="form-group"><label>Board</label><input type="text" name="twelfth_board" placeholder="e.g. CBSE, BIE" required value="<%= f.twelfth_board || '' %>"></div>
+            <div class="form-group"><label>Year</label><input type="text" name="twelfth_year" maxlength="4" placeholder="2012" value="<%= f.twelfth_year || '' %>"></div>
+            <div class="form-group"><label>Percentage / CGPA</label><input type="text" name="twelfth_percentage" placeholder="e.g. 90.2" value="<%= f.twelfth_percentage || '' %>"></div>
           </div>
         </div>
 
         <div class="edu-block">
-          <p class="edu-block-title">Undergraduate (UG) <span class="req">*</span></p>
+          <p class="edu-block-title">Undergraduate (UG) <span class="req" style="color:#ef4444">*</span></p>
           <div class="form-grid cols-3">
-            <div class="form-group"><label>Degree</label><input type="text" name="ug_degree" placeholder="e.g. B.Sc, B.A, B.Com" required></div>
-            <div class="form-group"><label>University</label><input type="text" name="ug_university" placeholder="University name"></div>
-            <div class="form-group"><label>Year</label><input type="text" name="ug_year" maxlength="4" placeholder="2015"></div>
+            <div class="form-group"><label>Degree</label><input type="text" name="ug_degree" placeholder="e.g. B.Sc, B.A, B.Com" required value="<%= f.ug_degree || '' %>"></div>
+            <div class="form-group"><label>University</label><input type="text" name="ug_university" placeholder="University name" value="<%= f.ug_university || '' %>"></div>
+            <div class="form-group"><label>Year</label><input type="text" name="ug_year" maxlength="4" placeholder="2015" value="<%= f.ug_year || '' %>"></div>
           </div>
           <div class="form-grid" style="margin-top:.75rem">
-            <div class="form-group"><label>Percentage / CGPA</label><input type="text" name="ug_percentage" placeholder="e.g. 75.4"></div>
+            <div class="form-group"><label>Percentage / CGPA</label><input type="text" name="ug_percentage" placeholder="e.g. 75.4" value="<%= f.ug_percentage || '' %>"></div>
           </div>
         </div>
 
@@ -296,28 +304,26 @@
       <div class="reg-card">
         <div class="reg-card-header">
           <div class="reg-card-icon"><i class="fas fa-university"></i></div>
-          <p class="reg-card-title">Higher Education (Optional)</p>
+          <p class="reg-card-title">Higher Education <span style="font-weight:400;color:#94a3b8;font-size:.85rem">(Optional)</span></p>
         </div>
-
         <div class="form-grid">
           <div class="edu-block">
             <p class="edu-block-title">B.Ed</p>
-            <div class="form-group" style="margin-bottom:.75rem"><label>Board / University</label><input type="text" name="bed_board" placeholder="e.g. Osmania University"></div>
+            <div class="form-group" style="margin-bottom:.75rem"><label>Board / University</label><input type="text" name="bed_board" placeholder="e.g. Osmania University" value="<%= f.bed_board || '' %>"></div>
             <div class="form-grid">
-              <div class="form-group"><label>Year</label><input type="text" name="bed_year" maxlength="4" placeholder="2016"></div>
-              <div class="form-group"><label>Percentage</label><input type="text" name="bed_percentage" placeholder="e.g. 72.0"></div>
+              <div class="form-group"><label>Year</label><input type="text" name="bed_year" maxlength="4" placeholder="2016" value="<%= f.bed_year || '' %>"></div>
+              <div class="form-group"><label>Percentage</label><input type="text" name="bed_percentage" placeholder="e.g. 72.0" value="<%= f.bed_percentage || '' %>"></div>
             </div>
           </div>
           <div class="edu-block">
             <p class="edu-block-title">M.Ed</p>
-            <div class="form-group" style="margin-bottom:.75rem"><label>Board / University</label><input type="text" name="med_board" placeholder="e.g. Osmania University"></div>
+            <div class="form-group" style="margin-bottom:.75rem"><label>Board / University</label><input type="text" name="med_board" placeholder="e.g. Osmania University" value="<%= f.med_board || '' %>"></div>
             <div class="form-grid">
-              <div class="form-group"><label>Year</label><input type="text" name="med_year" maxlength="4" placeholder="2018"></div>
-              <div class="form-group"><label>Percentage</label><input type="text" name="med_percentage" placeholder="e.g. 68.5"></div>
+              <div class="form-group"><label>Year</label><input type="text" name="med_year" maxlength="4" placeholder="2018" value="<%= f.med_year || '' %>"></div>
+              <div class="form-group"><label>Percentage</label><input type="text" name="med_percentage" placeholder="e.g. 68.5" value="<%= f.med_percentage || '' %>"></div>
             </div>
           </div>
         </div>
-
         <div class="reg-nav">
           <button type="button" class="btn-reg-back" onclick="goStep(3)"><i class="fas fa-arrow-left"></i> Back</button>
           <button type="button" class="btn-reg-next" onclick="goStep(5)">Continue <i class="fas fa-arrow-right"></i></button>
@@ -332,32 +338,31 @@
           <div class="reg-card-icon"><i class="fas fa-briefcase"></i></div>
           <p class="reg-card-title">Teaching Experience</p>
         </div>
-
         <div class="form-group" style="margin-bottom:1.5rem">
           <label>Most Recent Institution</label>
-          <input type="text" name="previous_school" placeholder="School / College name (leave blank if fresher)">
+          <input type="text" name="previous_school" placeholder="School / College name (leave blank if fresher)" value="<%= f.previous_school || '' %>">
         </div>
-
         <div class="form-grid">
           <div>
             <p class="section-title">Classes Taught</p>
-            <div class="chip-grid" id="classChips">
+            <div class="chip-grid">
+              <% const prevCls = Array.isArray(f.previous_classes) ? f.previous_classes : (f.previous_classes ? [f.previous_classes] : []); %>
               <% ['Nursery','LKG','UKG','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'].forEach(c => { %>
-              <span class="chip" data-name="previous_classes" data-val="<%= c %>" onclick="toggleChip(this)"><%= c %></span>
+              <span class="chip <%= prevCls.includes(c) ? 'selected' : '' %>" data-val="<%= c %>" onclick="toggleChip(this)"><%= c %></span>
               <% }) %>
             </div>
           </div>
           <div>
             <p class="section-title">Core Subjects</p>
-            <div class="chip-grid" id="subjectChips">
+            <div class="chip-grid">
+              <% const prevSubj = Array.isArray(f.previous_subjects) ? f.previous_subjects : (f.previous_subjects ? [f.previous_subjects] : []); %>
               <% ['English','Mathematics','Science','Social Studies','Hindi','Telugu','Physics','Chemistry','Biology','Computer Science','Commerce','Accountancy','Economics','Physical Education','Arts','Music'].forEach(s => { %>
-              <span class="chip chip-navy" data-name="previous_subjects" data-val="<%= s %>" onclick="toggleChipNavy(this)"><%= s %></span>
+              <span class="chip chip-navy <%= prevSubj.includes(s) ? 'selected-navy' : '' %>" data-val="<%= s %>" onclick="toggleChipNavy(this)"><%= s %></span>
               <% }) %>
             </div>
           </div>
         </div>
         <div id="chipInputs"></div>
-
         <div class="reg-nav">
           <button type="button" class="btn-reg-back" onclick="goStep(4)"><i class="fas fa-arrow-left"></i> Back</button>
           <button type="button" class="btn-reg-next" onclick="goStep(6)">Continue <i class="fas fa-arrow-right"></i></button>
@@ -378,12 +383,9 @@
           <div class="form-group" style="margin-bottom:.75rem">
             <select name="current_branch" required>
               <option value="">Select your branch</option>
-              <option>Greenwood High School - Erragattugutta</option>
-              <option>Greenwood High School - Hunter Road</option>
-              <option>Greenwood High School - Hasanparthy</option>
-              <option>Greenwood High School - Mancherial</option>
-              <option>Greenwood High School - Gopalpur</option>
-              <option>Greenwood High School - Naimnagar</option>
+              <% ['Greenwood High School - Erragattugutta','Greenwood High School - Hunter Road','Greenwood High School - Hasanparthy','Greenwood High School - Mancherial','Greenwood High School - Gopalpur','Greenwood High School - Naimnagar'].forEach(b => { %>
+              <option <%= f.current_branch===b ? 'selected' : '' %>><%= b %></option>
+              <% }) %>
             </select>
           </div>
           <div class="form-grid">
@@ -391,14 +393,18 @@
               <label>Current Class</label>
               <select name="current_class">
                 <option value="">Select</option>
-                <% ['Nursery','LKG','UKG','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'].forEach(c => { %><option><%= c %></option><% }) %>
+                <% ['Nursery','LKG','UKG','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','11th','12th'].forEach(c => { %>
+                <option <%= f.current_class===c ? 'selected' : '' %>><%= c %></option>
+                <% }) %>
               </select>
             </div>
             <div class="form-group">
               <label>Current Subject</label>
               <select name="current_subject">
                 <option value="">Select</option>
-                <% ['English','Mathematics','Science','Social Studies','Hindi','Telugu','Physics','Chemistry','Biology','Computer Science','Commerce','Accountancy','Economics','Physical Education','Arts','Music'].forEach(s => { %><option><%= s %></option><% }) %>
+                <% ['English','Mathematics','Science','Social Studies','Hindi','Telugu','Physics','Chemistry','Biology','Computer Science','Commerce','Accountancy','Economics','Physical Education','Arts','Music'].forEach(s => { %>
+                <option <%= f.current_subject===s ? 'selected' : '' %>><%= s %></option>
+                <% }) %>
               </select>
             </div>
           </div>
@@ -406,12 +412,12 @@
 
         <p class="section-title" style="margin-top:1.25rem">Bank &amp; Official Details</p>
         <div class="form-grid">
-          <div class="form-group"><label>Bank Name <span class="req">*</span></label><input type="text" name="bank_name" placeholder="Full bank name" required></div>
-          <div class="form-group"><label>Account Number <span class="req">*</span></label><input type="text" name="account_number" placeholder="Account number" required></div>
-          <div class="form-group"><label>IFSC Code <span class="req">*</span></label><input type="text" name="ifsc_code" maxlength="11" placeholder="11-character IFSC" required></div>
-          <div class="form-group"><label>PAN Number <span class="req">*</span></label><input type="text" name="pan_number" maxlength="10" placeholder="e.g. ABCDE1234F" required></div>
-          <div class="form-group"><label>PF Number</label><input type="text" name="pf_number" placeholder="Optional"></div>
-          <div class="form-group"><label>ESI Number</label><input type="text" name="esi_number" placeholder="Optional"></div>
+          <div class="form-group"><label>Bank Name <span class="req">*</span></label><input type="text" name="bank_name" placeholder="Full bank name" required value="<%= f.bank_name || '' %>"></div>
+          <div class="form-group"><label>Account Number <span class="req">*</span></label><input type="text" name="account_number" placeholder="Account number" required value="<%= f.account_number || '' %>"></div>
+          <div class="form-group"><label>IFSC Code <span class="req">*</span></label><input type="text" name="ifsc_code" maxlength="11" placeholder="11-character IFSC" required value="<%= f.ifsc_code || '' %>"></div>
+          <div class="form-group"><label>PAN Number <span class="req">*</span></label><input type="text" name="pan_number" maxlength="10" placeholder="e.g. ABCDE1234F" required value="<%= f.pan_number || '' %>"></div>
+          <div class="form-group"><label>PF Number</label><input type="text" name="pf_number" placeholder="Optional" value="<%= f.pf_number || '' %>"></div>
+          <div class="form-group"><label>ESI Number</label><input type="text" name="esi_number" placeholder="Optional" value="<%= f.esi_number || '' %>"></div>
         </div>
 
         <div class="reg-nav">
@@ -428,14 +434,11 @@
           <div class="reg-card-icon"><i class="fas fa-check-circle"></i></div>
           <p class="reg-card-title">Review &amp; Submit</p>
         </div>
-
         <div id="reviewSummary" style="margin-bottom:1.5rem"></div>
-
         <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:.5rem;padding:.75rem 1rem;font-size:.82rem;color:#92400e;margin-bottom:1.25rem">
           <i class="fas fa-exclamation-triangle"></i>
           By submitting, you certify that all information is accurate and documents are authentic.
         </div>
-
         <div class="reg-nav">
           <button type="button" class="btn-reg-back" onclick="goStep(6)"><i class="fas fa-arrow-left"></i> Back</button>
           <button type="submit" class="btn-reg-submit"><i class="fas fa-paper-plane"></i> Submit Registration</button>
@@ -450,27 +453,45 @@
 <%- include('../partials/footer-main') %>
 
 <script>
-let currentStep = 1;
+const INITIAL_STEP = <%= startStep %>;
+let currentStep = INITIAL_STEP;
 const totalSteps = 7;
+
+function initStepBar() {
+  for (let i = 1; i <= totalSteps; i++) {
+    const dot = document.getElementById('dot' + i);
+    const lbl = document.getElementById('lbl' + i);
+    dot.classList.remove('active','done');
+    lbl.classList.remove('active');
+    if (i < INITIAL_STEP) {
+      dot.classList.add('done');
+      dot.innerHTML = '<i class="fas fa-check" style="font-size:.75rem"></i>';
+    } else if (i === INITIAL_STEP) {
+      dot.classList.add('active');
+      lbl.classList.add('active');
+      document.getElementById('step' + i).classList.add('active');
+    }
+  }
+}
+initStepBar();
 
 function goStep(n) {
   document.getElementById('step' + currentStep).classList.remove('active');
-  document.getElementById('dot' + currentStep).classList.remove('active');
-  document.getElementById('lbl' + currentStep).classList.remove('active');
-
+  const prevDot = document.getElementById('dot' + currentStep);
+  const prevLbl = document.getElementById('lbl' + currentStep);
+  prevDot.classList.remove('active');
+  prevLbl.classList.remove('active');
   if (n > currentStep) {
-    document.getElementById('dot' + currentStep).classList.add('done');
-    document.getElementById('dot' + currentStep).innerHTML = '<i class="fas fa-check" style="font-size:.75rem"></i>';
+    prevDot.classList.add('done');
+    prevDot.innerHTML = '<i class="fas fa-check" style="font-size:.75rem"></i>';
   } else {
-    document.getElementById('dot' + currentStep).classList.remove('done');
-    document.getElementById('dot' + currentStep).innerHTML = currentStep;
+    prevDot.classList.remove('done');
+    prevDot.innerHTML = currentStep;
   }
-
   currentStep = n;
   document.getElementById('step' + n).classList.add('active');
   document.getElementById('dot' + n).classList.add('active');
   document.getElementById('lbl' + n).classList.add('active');
-
   if (n === 7) buildReview();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -488,14 +509,8 @@ function previewPic(input) {
   }
 }
 
-function toggleChip(el) {
-  el.classList.toggle('selected');
-  syncChipInputs();
-}
-function toggleChipNavy(el) {
-  el.classList.toggle('selected-navy');
-  syncChipInputs();
-}
+function toggleChip(el) { el.classList.toggle('selected'); syncChipInputs(); }
+function toggleChipNavy(el) { el.classList.toggle('selected-navy'); syncChipInputs(); }
 function syncChipInputs() {
   const container = document.getElementById('chipInputs');
   container.innerHTML = '';
@@ -510,6 +525,8 @@ function syncChipInputs() {
     container.appendChild(inp);
   });
 }
+// Sync pre-selected chips on load
+syncChipInputs();
 
 // Aadhar real-time check
 let aadharTimer;
@@ -525,7 +542,7 @@ document.getElementById('aadharInput').addEventListener('input', function() {
       try {
         const res = await fetch('/teachers/check-aadhar', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ aadhar_number: val })
         });
         const data = await res.json();
@@ -546,39 +563,27 @@ document.getElementById('aadharInput').addEventListener('input', function() {
 
 function buildReview() {
   const f = document.getElementById('regForm');
-  const get = (n) => { const el = f.querySelector('[name="' + n + '"]'); return el ? el.value : ''; };
-  const html = `
-    <div class="review-grid">
-      <div class="review-block">
-        <h4>Personal</h4>
-        <div class="review-row"><span>Aadhar</span><span>${get('aadhar_number')}</span></div>
-        <div class="review-row"><span>Name</span><span>${get('full_name')}</span></div>
-        <div class="review-row"><span>Phone</span><span>${get('phone')}</span></div>
-        <div class="review-row"><span>DOB</span><span>${get('date_of_birth')}</span></div>
-        <div class="review-row"><span>Gender</span><span>${get('gender')}</span></div>
+  const get = (n) => { const el = f.querySelector('[name="' + n + '"]'); return el ? el.value : '—'; };
+  document.getElementById('reviewSummary').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <div style="background:#f8fafc;border-radius:.75rem;padding:1.25rem">
+        <h4 style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;font-weight:700;margin:0 0 .75rem">Personal</h4>
+        <div style="font-size:.85rem;display:flex;flex-direction:column;gap:.35rem">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #f1f5f9;padding-bottom:.3rem"><span style="color:#64748b">Aadhar</span><span style="font-weight:600">${get('aadhar_number')}</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #f1f5f9;padding-bottom:.3rem"><span style="color:#64748b">Name</span><span style="font-weight:600">${get('full_name')}</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #f1f5f9;padding-bottom:.3rem"><span style="color:#64748b">Phone</span><span style="font-weight:600">${get('phone')}</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:#64748b">DOB</span><span style="font-weight:600">${get('date_of_birth')}</span></div>
+        </div>
       </div>
-      <div class="review-block">
-        <h4>Organisation &amp; Bank</h4>
-        <div class="review-row"><span>Branch</span><span>${get('current_branch')}</span></div>
-        <div class="review-row"><span>Bank</span><span>${get('bank_name')}</span></div>
-        <div class="review-row"><span>Account</span><span>${get('account_number')}</span></div>
-        <div class="review-row"><span>IFSC</span><span>${get('ifsc_code')}</span></div>
-        <div class="review-row"><span>PAN</span><span>${get('pan_number')}</span></div>
-      </div>
-      <div class="review-block">
-        <h4>Education</h4>
-        <div class="review-row"><span>10th</span><span>${get('tenth_board')} (${get('tenth_year')})</span></div>
-        <div class="review-row"><span>12th</span><span>${get('twelfth_board')} (${get('twelfth_year')})</span></div>
-        <div class="review-row"><span>UG</span><span>${get('ug_degree')} — ${get('ug_university')}</span></div>
-      </div>
-      <div class="review-block">
-        <h4>Address</h4>
-        <div class="review-row"><span>Street</span><span>${get('street')}</span></div>
-        <div class="review-row"><span>Pincode</span><span>${get('pincode')}</span></div>
-        <div class="review-row"><span>State</span><span>${get('state')}</span></div>
+      <div style="background:#f8fafc;border-radius:.75rem;padding:1.25rem">
+        <h4 style="font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;font-weight:700;margin:0 0 .75rem">Organisation &amp; Bank</h4>
+        <div style="font-size:.85rem;display:flex;flex-direction:column;gap:.35rem">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #f1f5f9;padding-bottom:.3rem"><span style="color:#64748b">Branch</span><span style="font-weight:600;max-width:160px;text-align:right">${get('current_branch')}</span></div>
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid #f1f5f9;padding-bottom:.3rem"><span style="color:#64748b">Bank</span><span style="font-weight:600">${get('bank_name')}</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:#64748b">PAN</span><span style="font-weight:600">${get('pan_number')}</span></div>
+        </div>
       </div>
     </div>`;
-  document.getElementById('reviewSummary').innerHTML = html;
 }
 </script>
 </body>
