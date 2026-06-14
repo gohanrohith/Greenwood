@@ -15,6 +15,8 @@
 
     <div class="sidebar-section">People</div>
     <a href="/admin/faculty" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='faculty' ? 'active' : '' %>"><i class="fas fa-chalkboard-teacher"></i> Faculty</a>
+    <a href="/admin/teachers" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='teachers' ? 'active' : '' %>"><i class="fas fa-user-tie"></i> Teachers</a>
+    <a href="/admin/payroll" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='payroll' ? 'active' : '' %>"><i class="fas fa-money-check-alt"></i> Payroll</a>
 
     <div class="sidebar-section">Admissions</div>
     <a href="/admin/admissions" class="sidebar-link <%= typeof currentPage !== 'undefined' && currentPage==='admissions' ? 'active' : '' %>"><i class="fas fa-user-graduate"></i> Enquiries</a>

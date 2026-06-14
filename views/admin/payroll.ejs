@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <style>
+    .payroll-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .month-selector { display: flex; gap: .5rem; align-items: center; }
+    .month-selector select { padding: .5rem .85rem; border: 1.5px solid #e2e8f0; border-radius: .5rem; font-family: inherit; font-size: .9rem; }
+    .payroll-status { display: flex; align-items: center; gap: .5rem; padding: .4rem .9rem; border-radius: 2rem; font-size: .8rem; font-weight: 700; }
+    .payroll-status.enabled { background: #dcfce7; color: #00663A; }
+    .payroll-status.disabled { background: #f1f5f9; color: #64748b; }
+    .payroll-table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+    .payroll-table th { padding: .65rem .85rem; background: #f8fafc; text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: #64748b; font-weight: 700; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
+    .payroll-table td { padding: .6rem .85rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    .payroll-table tr:hover td { background: #fafafa; }
+    .payroll-input { width: 70px; padding: .35rem .5rem; border: 1.5px solid #e2e8f0; border-radius: .35rem; font-family: inherit; font-size: .82rem; text-align: right; }
+    .payroll-input:focus { outline: none; border-color: #1F1B76; }
+    .payroll-input.wide { width: 100px; }
+    .net-preview { font-weight: 700; color: #00663A; font-size: .88rem; min-width: 80px; }
+    .warn-badge { display: inline-flex; align-items: center; gap: .3rem; background: #fef9c3; color: #b45309; padding: .2rem .6rem; border-radius: .35rem; font-size: .72rem; font-weight: 700; }
+    .payroll-summary { display: flex; gap: 1.5rem; padding: .85rem 1rem; background: #f8fafc; border-radius: .5rem; margin-top: 1rem; font-size: .85rem; flex-wrap: wrap; }
+    .payroll-summary span strong { font-size: 1.05rem; color: #1F1B76; }
+    .remark-input { width: 120px; padding: .3rem .5rem; border: 1.5px solid #e2e8f0; border-radius: .35rem; font-family: inherit; font-size: .78rem; }
+    .label-input { width: 90px; padding: .3rem .5rem; border: 1.5px solid #e2e8f0; border-radius: .35rem; font-family: inherit; font-size: .78rem; }
+    .btn-save-all { background: #1F1B76; color: #fff; border: none; padding: .65rem 1.5rem; border-radius: .5rem; font-family: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; }
+    .btn-save-all:hover { background: #17145a; }
+    .btn-toggle { padding: .5rem 1.1rem; border-radius: .5rem; font-family: inherit; font-size: .85rem; font-weight: 700; cursor: pointer; border: none; }
+    .btn-toggle.enable { background: #00663A; color: #fff; }
+    .btn-toggle.disable { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; }
+    .no-salary { display: flex; align-items: center; gap: .4rem; font-size: .78rem; color: #ef4444; font-weight: 600; }
+  </style>
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="admin-page-header">
+        <h1>Payroll</h1>
+        <p>Enter attendance, deductions, and bonus for each teacher. Release when ready.</p>
+      </div>
+
+      <!-- Month / Year Selector -->
+      <div class="payroll-header">
+        <form method="GET" action="/admin/payroll" class="month-selector">
+          <select name="month" onchange="this.form.submit()">
+            <% ['January','February','March','April','May','June','July','August','September','October','November','December'].forEach((m, i) => { %>
+            <option value="<%= i+1 %>" <%= selectedMonth === i+1 ? 'selected' : '' %>><%= m %></option>
+            <% }) %>
+          </select>
+          <select name="year" onchange="this.form.submit()">
+            <% for (let y = new Date().getFullYear() + 1; y >= 2024; y--) { %>
+            <option value="<%= y %>" <%= selectedYear === y ? 'selected' : '' %>><%= y %></option>
+            <% } %>
+          </select>
+        </form>
+
+        <div class="payroll-status <%= payrollEnabled ? 'enabled' : 'disabled' %>">
+          <i class="fas fa-<%= payrollEnabled ? 'check-circle' : 'lock' %>"></i>
+          <%= payrollEnabled ? 'RELEASED' : 'NOT RELEASED' %>
+        </div>
+
+        <form action="/admin/payroll/toggle?_csrf=<%= csrfToken %>" method="POST">
+          <input type="hidden" name="month" value="<%= selectedMonth %>">
+          <input type="hidden" name="year" value="<%= selectedYear %>">
+          <input type="hidden" name="enabled" value="<%= payrollEnabled ? '0' : '1' %>">
+          <button type="button" class="btn-toggle <%= payrollEnabled ? 'disable' : 'enable' %>"
+            onclick="if(confirm('<%= payrollEnabled ? 'Hide pay slips for this month?' : 'Release pay slips for this month?' %>')) this.form.submit()">
+            <i class="fas fa-<%= payrollEnabled ? 'eye-slash' : 'paper-plane' %>"></i>
+            <%= payrollEnabled ? 'Withdraw' : 'Release Slips' %>
+          </button>
+        </form>
+      </div>
+
+      <!-- Payroll Table -->
+      <form action="/admin/payroll/save?_csrf=<%= csrfToken %>" method="POST" id="payrollForm">
+        <input type="hidden" name="month" value="<%= selectedMonth %>">
+        <input type="hidden" name="year" value="<%= selectedYear %>">
+
+        <div class="admin-card" style="padding:0;overflow:hidden">
+          <div style="overflow-x:auto">
+            <table class="payroll-table">
+              <thead>
+                <tr>
+                  <th>Teacher</th>
+                  <th>ID</th>
+                  <th>Gross/Month</th>
+                  <th>Days in Month</th>
+                  <th>Days Present</th>
+                  <th>Advance (₹)</th>
+                  <th>Other Ded.</th>
+                  <th>Label</th>
+                  <th>Bonus (₹)</th>
+                  <th>Remarks</th>
+                  <th>Net Pay Preview</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% teachers.forEach((t, idx) => {
+                  const entry = entries[t.id] || {};
+                  const hasSalary = parseFloat(t.salary_basic||0) > 0;
+                  const gross = parseFloat(t.salary_basic||0)+parseFloat(t.salary_hra||0)+parseFloat(t.salary_da||0)+parseFloat(t.salary_transport||0);
+                %>
+                <tr>
+                  <td>
+                    <input type="hidden" name="teachers[<%= idx %>][id]" value="<%= t.id %>">
+                    <a href="/admin/teachers/<%= t.id %>" style="font-weight:600;color:#1e293b"><%= t.full_name %></a>
+                    <div style="font-size:.73rem;color:#94a3b8"><%= t.current_branch.split(' - ')[1] || t.current_branch %></div>
+                  </td>
+                  <td style="font-family:monospace;font-size:.8rem"><%= t.teacher_id || '—' %></td>
+                  <td style="font-weight:600">
+                    <% if (!hasSalary) { %>
+                    <span class="no-salary"><i class="fas fa-exclamation-triangle"></i> <a href="/admin/teachers/<%= t.id %>" style="color:#ef4444">Set salary</a></span>
+                    <% } else { %>₹ <%= gross.toLocaleString('en-IN') %><% } %>
+                  </td>
+                  <td><input type="number" name="teachers[<%= idx %>][days_in_month]" class="payroll-input" value="<%= entry.days_in_month || 26 %>" min="1" max="31" data-teacher="<%= idx %>" data-field="dim" oninput="recalc(<%= idx %>)"></td>
+                  <td><input type="number" name="teachers[<%= idx %>][days_present]" class="payroll-input" value="<%= entry.days_present || 0 %>" min="0" max="31" data-teacher="<%= idx %>" data-field="dp" oninput="recalc(<%= idx %>)"></td>
+                  <td><input type="number" name="teachers[<%= idx %>][advance_deduction]" class="payroll-input" value="<%= entry.advance_deduction || 0 %>" min="0" step="0.01" data-teacher="<%= idx %>" data-field="adv" oninput="recalc(<%= idx %>)"></td>
+                  <td><input type="number" name="teachers[<%= idx %>][other_deduction_amount]" class="payroll-input" value="<%= entry.other_deduction_amount || 0 %>" min="0" step="0.01" data-teacher="<%= idx %>" data-field="oth" oninput="recalc(<%= idx %>)"></td>
+                  <td><input type="text" name="teachers[<%= idx %>][other_deduction_label]" class="label-input" value="<%= entry.other_deduction_label || '' %>" placeholder="e.g. Fine"></td>
+                  <td><input type="number" name="teachers[<%= idx %>][bonus]" class="payroll-input" value="<%= entry.bonus || 0 %>" min="0" step="0.01" data-teacher="<%= idx %>" data-field="bon" oninput="recalc(<%= idx %>)"></td>
+                  <td><input type="text" name="teachers[<%= idx %>][remarks]" class="remark-input" value="<%= entry.remarks || '' %>" placeholder="Optional"></td>
+                  <td>
+                    <div class="net-preview" id="net_<%= idx %>">
+                      <% if (hasSalary) {
+                        const dp = entry.days_present || 0;
+                        const dim = entry.days_in_month || 26;
+                        const earned = (gross / dim * dp) + parseFloat(entry.bonus || 0);
+                        const pf = (parseFloat(t.salary_basic||0) / dim * dp) * (parseFloat(t.pf_percent||12) / 100);
+                        const esi = earned <= 21000 ? earned * (parseFloat(t.esi_percent||0.75) / 100) : 0;
+                        const net = earned - pf - esi - parseFloat(t.tds_flat||0) - parseFloat(entry.advance_deduction||0) - parseFloat(entry.other_deduction_amount||0);
+                      %>₹ <%= net.toLocaleString('en-IN', {minimumFractionDigits:2}) %>
+                      <% } else { %>—<% } %>
+                    </div>
+                    <!-- Store salary data for client-side recalc -->
+                    <script>
+                      window.tData = window.tData || {};
+                      window.tData[<%= idx %>] = {
+                        basic: <%= parseFloat(t.salary_basic||0) %>,
+                        hra: <%= parseFloat(t.salary_hra||0) %>,
+                        da: <%= parseFloat(t.salary_da||0) %>,
+                        transport: <%= parseFloat(t.salary_transport||0) %>,
+                        pf_pct: <%= parseFloat(t.pf_percent||12) %>,
+                        esi_pct: <%= parseFloat(t.esi_percent||0.75) %>,
+                        tds: <%= parseFloat(t.tds_flat||0) %>,
+                      };
+                    </script>
+                  </td>
+                </tr>
+                <% }) %>
+                <% if (!teachers.length) { %>
+                <tr><td colspan="11" style="text-align:center;padding:2rem;color:#94a3b8">No approved teachers with salary set. <a href="/admin/teachers">Go to Teachers →</a></td></tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+
+          <% if (teachers.length) { %>
+          <div style="padding:1rem;border-top:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+            <div class="payroll-summary">
+              <span>Teachers: <strong><%= teachers.length %></strong></span>
+              <span>Total Net: <strong id="totalNet">calculating...</strong></span>
+            </div>
+            <button type="submit" class="btn-save-all"><i class="fas fa-save"></i> Save All Entries</button>
+          </div>
+          <% } %>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+<script>
+function recalc(idx) {
+  const t = window.tData && window.tData[idx];
+  if (!t) return;
+  const get = (field) => parseFloat(document.querySelector('[data-teacher="' + idx + '"][data-field="' + field + '"]').value) || 0;
+  const dim = get('dim') || 26;
+  const dp  = get('dp');
+  const gross = t.basic + t.hra + t.da + t.transport;
+  const earned = (gross / dim * dp) + get('bon');
+  const pf  = (t.basic / dim * dp) * (t.pf_pct / 100);
+  const esi = earned <= 21000 ? earned * (t.esi_pct / 100) : 0;
+  const net = earned - pf - esi - t.tds - get('adv') - get('oth');
+  const el = document.getElementById('net_' + idx);
+  if (el) el.textContent = '₹ ' + net.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+  calcTotal();
+}
+
+function calcTotal() {
+  let total = 0;
+  document.querySelectorAll('[id^="net_"]').forEach(el => {
+    const val = parseFloat(el.textContent.replace(/[^\d.-]/g, ''));
+    if (!isNaN(val)) total += val;
+  });
+  const el = document.getElementById('totalNet');
+  if (el) el.textContent = '₹ ' + total.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+}
+calcTotal();
+</script>
+</body>
+</html>

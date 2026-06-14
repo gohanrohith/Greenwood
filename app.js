@@ -9,10 +9,12 @@ const path = require('path');
 
 const campusMiddleware = require('./middleware/campus');
 const { csrfMiddleware } = require('./middleware/csrf');
-const mainRoutes  = require('./routes/main');
-const campusRoutes = require('./routes/campus');
-const adminRoutes  = require('./routes/admin');
-const apiRoutes    = require('./routes/api');
+const mainRoutes    = require('./routes/main');
+const campusRoutes  = require('./routes/campus');
+const adminRoutes   = require('./routes/admin');
+const apiRoutes     = require('./routes/api');
+const teacherRoutes = require('./routes/teachers');
+const { payslipPage, payslipValidate } = require('./controllers/teacherController');
 
 const app = express();
 
@@ -84,6 +86,9 @@ const CAMPUS_SLUGS = ['hasanparthy', 'hunterroad', 'naimnagar', 'mancherial', 'g
 
 app.use('/api', apiRoutes);
 app.use('/admin', adminRoutes);
+app.use('/teachers', teacherRoutes);
+app.get('/payslip', payslipPage);
+app.post('/payslip/validate', require('./middleware/rateLimiter').formLimiter, require('./middleware/csrf').csrfProtect, payslipValidate);
 CAMPUS_SLUGS.forEach(slug => app.use(`/${slug}`, campusRoutes));
 app.use('/', mainRoutes);
 

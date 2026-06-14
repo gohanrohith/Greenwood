@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <style>
+    .teacher-filters { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
+    .teacher-filters select, .teacher-filters input { height: 38px; padding: 0 .75rem; border: 1.5px solid #e2e8f0; border-radius: .5rem; font-family: inherit; font-size: .85rem; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+    .status-dot.approved { background: #00663A; }
+    .status-dot.pending { background: #f59e0b; }
+    .status-dot.rejected { background: #ef4444; }
+    .salary-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .salary-dot.set { background: #00663A; }
+    .salary-dot.unset { background: #ef4444; }
+  </style>
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+      <div class="admin-page-header">
+        <h1>Teachers</h1>
+        <p>Manage staff registrations, assign IDs, and set salary structures.</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="dashboard-cards" style="margin-bottom:1.5rem">
+        <div class="dash-card">
+          <div class="dash-card-icon" style="background:#00663A"><i class="fas fa-user-check"></i></div>
+          <div class="dash-card-info"><span class="dash-num"><%= stats.approved %></span><span class="dash-label">Approved</span></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon" style="background:#f59e0b"><i class="fas fa-clock"></i></div>
+          <div class="dash-card-info"><span class="dash-num"><%= stats.pending %></span><span class="dash-label">Pending</span></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon" style="background:#ef4444"><i class="fas fa-user-times"></i></div>
+          <div class="dash-card-info"><span class="dash-num"><%= stats.rejected %></span><span class="dash-label">Rejected</span></div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-icon" style="background:#1F1B76"><i class="fas fa-id-card"></i></div>
+          <div class="dash-card-info"><span class="dash-num"><%= stats.salary_set %></span><span class="dash-label">Salary Set</span></div>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <!-- Filters -->
+        <div class="teacher-filters">
+          <input type="text" id="searchInput" placeholder="Search name / ID / branch..." oninput="filterTable()">
+          <select id="statusFilter" onchange="filterTable()">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <select id="branchFilter" onchange="filterTable()">
+            <option value="">All Branches</option>
+            <% [...new Set(teachers.map(t => t.current_branch))].forEach(b => { %>
+            <option><%= b %></option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div style="overflow-x:auto">
+          <table class="admin-table" id="teachersTable">
+            <thead>
+              <tr>
+                <th>Teacher</th>
+                <th>Teacher ID</th>
+                <th>Branch</th>
+                <th>Status</th>
+                <th>Salary</th>
+                <th>Registered</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% teachers.forEach(t => { %>
+              <tr data-name="<%= t.full_name.toLowerCase() %>"
+                  data-id="<%= (t.teacher_id || '').toLowerCase() %>"
+                  data-branch="<%= t.current_branch %>"
+                  data-status="<%= t.status %>">
+                <td>
+                  <div style="display:flex;align-items:center;gap:.6rem">
+                    <% if (t.profile_pic) { %>
+                    <img src="<%= t.profile_pic %>" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0">
+                    <% } else { %>
+                    <div style="width:36px;height:36px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-weight:700;color:#94a3b8;font-size:.9rem;flex-shrink:0">
+                      <%= t.full_name.charAt(0).toUpperCase() %>
+                    </div>
+                    <% } %>
+                    <div>
+                      <div style="font-weight:600;color:#1e293b"><%= t.full_name %></div>
+                      <div style="font-size:.75rem;color:#94a3b8"><%= t.email %></div>
+                    </div>
+                  </div>
+                </td>
+                <td style="font-family:monospace;font-size:.85rem">
+                  <%= t.teacher_id || '<span style="color:#cbd5e1">Not Assigned</span>' %>
+                </td>
+                <td style="font-size:.83rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><%= t.current_branch %></td>
+                <td>
+                  <form action="/admin/teachers/<%= t.id %>/status?_csrf=<%= csrfToken %>" method="POST">
+                    <select name="status" onchange="this.form.submit()" style="border:2px solid <%= t.status==='approved' ? '#00663A' : t.status==='rejected' ? '#ef4444' : '#f59e0b' %>;border-radius:.4rem;padding:.2rem .5rem;font-size:.8rem;font-weight:600;color:<%= t.status==='approved' ? '#00663A' : t.status==='rejected' ? '#ef4444' : '#b45309' %>;background:#fff;cursor:pointer">
+                      <option value="pending"  <%= t.status==='pending'  ? 'selected' : '' %>>Pending</option>
+                      <option value="approved" <%= t.status==='approved' ? 'selected' : '' %>>Approved</option>
+                      <option value="rejected" <%= t.status==='rejected' ? 'selected' : '' %>>Rejected</option>
+                    </select>
+                  </form>
+                </td>
+                <td>
+                  <span class="salary-dot <%= parseFloat(t.salary_basic) > 0 ? 'set' : 'unset' %>"></span>
+                  <%= parseFloat(t.salary_basic) > 0 ? '₹' + (parseFloat(t.salary_basic)+parseFloat(t.salary_hra)+parseFloat(t.salary_da)+parseFloat(t.salary_transport)).toLocaleString('en-IN') : 'Not Set' %>
+                </td>
+                <td style="font-size:.8rem;color:#94a3b8"><%= new Date(t.created_at).toLocaleDateString('en-IN') %></td>
+                <td>
+                  <div style="display:flex;gap:.4rem">
+                    <a href="/admin/teachers/<%= t.id %>" class="btn btn-sm btn-outline"><i class="fas fa-eye"></i> View</a>
+                    <form action="/admin/teachers/<%= t.id %>/delete?_csrf=<%= csrfToken %>" method="POST" onsubmit="return confirm('Delete this teacher?')">
+                      <button type="submit" class="btn btn-sm" style="background:#fef2f2;color:#ef4444;border:1px solid #fecaca"><i class="fas fa-trash"></i></button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+              <% }) %>
+              <% if (!teachers.length) { %>
+              <tr><td colspan="7" style="text-align:center;padding:2rem;color:#94a3b8">No teacher registrations yet.</td></tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+<script>
+function filterTable() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const status = document.getElementById('statusFilter').value;
+  const branch = document.getElementById('branchFilter').value;
+  document.querySelectorAll('#teachersTable tbody tr[data-name]').forEach(row => {
+    const nameMatch = row.dataset.name.includes(search) || row.dataset.id.includes(search) || row.dataset.branch.toLowerCase().includes(search);
+    const statusMatch = !status || row.dataset.status === status;
+    const branchMatch = !branch || row.dataset.branch === branch;
+    row.style.display = (nameMatch && statusMatch && branchMatch) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

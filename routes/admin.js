@@ -68,6 +68,19 @@ router.post('/newsletter/:id/delete',  ctrl.deleteNewsletterSub);
 router.get('/concerns', ctrl.concernsList);
 router.post('/concerns/:id/status', ctrl.updateConcernStatus);
 
+// Teachers
+router.get('/teachers', ctrl.teachersList);
+router.get('/teachers/check-id', ctrl.teacherCheckId);
+router.get('/teachers/:id', ctrl.teacherDetail);
+router.post('/teachers/:id/status', ctrl.teacherUpdateStatus);
+router.post('/teachers/:id/salary', ctrl.teacherSaveSalary);
+router.post('/teachers/:id/delete', ctrl.teacherDelete);
+
+// Payroll
+router.get('/payroll', ctrl.payrollPage);
+router.post('/payroll/save', ctrl.payrollSave);
+router.post('/payroll/toggle', ctrl.payrollToggle);
+
 // Session keepalive (auto-logout heartbeat)
 router.get('/keepalive', (req, res) => { req.session.touch(); res.sendStatus(204); });
 

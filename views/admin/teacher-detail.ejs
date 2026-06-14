@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <style>
+    .detail-hero { display: flex; align-items: center; gap: 1.25rem; padding: 1.5rem; background: linear-gradient(135deg, #1F1B76, #3730a3); color: #fff; border-radius: .75rem; margin-bottom: 1.5rem; }
+    .detail-avatar { width: 80px; height: 80px; border-radius: 50%; border: 3px solid rgba(255,255,255,.3); overflow: hidden; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; flex-shrink: 0; }
+    .detail-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .detail-info h2 { margin: 0 0 .25rem; font-size: 1.4rem; }
+    .detail-info p { margin: 0; opacity: .8; font-size: .88rem; }
+    .detail-badges { display: flex; gap: .5rem; margin-top: .5rem; flex-wrap: wrap; }
+    .badge-status { padding: .25rem .75rem; border-radius: 2rem; font-size: .75rem; font-weight: 700; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+    .detail-block { background: #f8fafc; border-radius: .75rem; padding: 1.25rem; }
+    .detail-block h3 { font-size: .78rem; text-transform: uppercase; letter-spacing: .07em; color: #94a3b8; font-weight: 700; margin: 0 0 1rem; }
+    .detail-row { display: flex; gap: .5rem; padding: .4rem 0; border-bottom: 1px solid #f1f5f9; font-size: .85rem; }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-row .lbl { color: #64748b; min-width: 100px; flex-shrink: 0; }
+    .detail-row .val { font-weight: 600; color: #1e293b; }
+    .salary-form { background: #fff; border: 2px solid #e2e8f0; border-radius: .75rem; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .salary-form h3 { margin: 0 0 1.25rem; font-size: 1rem; color: #1F1B76; display: flex; align-items: center; gap: .5rem; }
+    .salary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
+    .salary-field { display: flex; flex-direction: column; gap: .3rem; }
+    .salary-field label { font-size: .78rem; font-weight: 600; color: #475569; }
+    .salary-field input { padding: .55rem .75rem; border: 1.5px solid #e2e8f0; border-radius: .5rem; font-family: inherit; font-size: .9rem; }
+    .salary-field input:focus { outline: none; border-color: #1F1B76; }
+    .gross-preview { background: #e8f5ee; border-radius: .5rem; padding: .75rem 1rem; font-weight: 700; color: #00663A; font-size: .95rem; margin-bottom: 1rem; }
+    .id-row { display: flex; gap: .75rem; margin-bottom: 1.25rem; align-items: flex-end; flex-wrap: wrap; }
+    .id-field { flex: 1; min-width: 180px; }
+    .id-field label { font-size: .78rem; font-weight: 600; color: #475569; display: block; margin-bottom: .3rem; }
+    .id-field input { width: 100%; padding: .55rem .75rem; border: 1.5px solid #e2e8f0; border-radius: .5rem; font-family: monospace; font-size: .9rem; box-sizing: border-box; }
+    .id-field input:focus { outline: none; border-color: #1F1B76; }
+    .id-status { font-size: .75rem; margin-top: .25rem; height: 1rem; }
+    .edu-pill { display: inline-block; background: #e8f5ee; color: #00663A; border-radius: .35rem; padding: .2rem .6rem; font-size: .75rem; font-weight: 600; margin: .15rem; }
+    @media (max-width: 640px) {
+      .detail-grid { grid-template-columns: 1fr; }
+      .salary-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body class="site-admin">
+<div class="admin-wrapper">
+  <%- include('../partials/admin-sidebar') %>
+  <div class="admin-content">
+    <%- include('../partials/admin-topbar') %>
+    <div class="admin-body">
+
+      <div style="margin-bottom:1rem">
+        <a href="/admin/teachers" style="font-size:.85rem;color:#64748b;font-weight:600"><i class="fas fa-arrow-left"></i> Back to Teachers</a>
+      </div>
+
+      <!-- Hero -->
+      <div class="detail-hero">
+        <div class="detail-avatar">
+          <% if (teacher.profile_pic) { %>
+          <img src="<%= teacher.profile_pic %>" alt="<%= teacher.full_name %>">
+          <% } else { %><%= teacher.full_name.charAt(0).toUpperCase() %><% } %>
+        </div>
+        <div class="detail-info">
+          <h2><%= teacher.full_name %></h2>
+          <p><%= teacher.email %> &bull; <%= teacher.phone %></p>
+          <p style="margin-top:.2rem"><%= teacher.current_branch %></p>
+          <div class="detail-badges">
+            <span class="badge-status" style="background:<%= teacher.status==='approved' ? '#dcfce7' : teacher.status==='rejected' ? '#fef2f2' : '#fef9c3' %>;color:<%= teacher.status==='approved' ? '#00663A' : teacher.status==='rejected' ? '#dc2626' : '#b45309' %>">
+              <%= teacher.status.toUpperCase() %>
+            </span>
+            <% if (teacher.teacher_id) { %>
+            <span class="badge-status" style="background:#e0e7ff;color:#3730a3;font-family:monospace"><%= teacher.teacher_id %></span>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 1: Assign ID + Salary -->
+      <div class="salary-form">
+        <h3><i class="fas fa-id-card"></i> Teacher ID &amp; Salary Structure</h3>
+
+        <form action="/admin/teachers/<%= teacher.id %>/salary?_csrf=<%= csrfToken %>" method="POST">
+          <div class="id-row">
+            <div class="id-field">
+              <label>Teacher ID</label>
+              <input type="text" name="teacher_id" id="teacherIdInput" value="<%= teacher.teacher_id || '' %>" placeholder="e.g. GHS-001">
+              <div class="id-status" id="idStatus"></div>
+            </div>
+            <div class="id-field">
+              <label>CBSE Registration Number</label>
+              <input type="text" name="cbse_reg_number" value="<%= teacher.cbse_reg_number || '' %>" placeholder="Optional">
+            </div>
+            <div class="id-field">
+              <label>Designation</label>
+              <input type="text" name="designation" value="<%= teacher.designation || '' %>" placeholder="e.g. Senior Maths Teacher">
+            </div>
+          </div>
+
+          <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:0 0 .75rem">Monthly Salary Structure (₹)</p>
+          <div class="salary-grid">
+            <div class="salary-field"><label>Basic</label><input type="number" name="salary_basic" value="<%= teacher.salary_basic || 0 %>" min="0" step="0.01" oninput="updatePreview()"></div>
+            <div class="salary-field"><label>HRA</label><input type="number" name="salary_hra" value="<%= teacher.salary_hra || 0 %>" min="0" step="0.01" oninput="updatePreview()"></div>
+            <div class="salary-field"><label>DA</label><input type="number" name="salary_da" value="<%= teacher.salary_da || 0 %>" min="0" step="0.01" oninput="updatePreview()"></div>
+            <div class="salary-field"><label>Transport</label><input type="number" name="salary_transport" value="<%= teacher.salary_transport || 0 %>" min="0" step="0.01" oninput="updatePreview()"></div>
+          </div>
+
+          <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:0 0 .75rem">Deduction Rates</p>
+          <div class="salary-grid">
+            <div class="salary-field"><label>PF %</label><input type="number" name="pf_percent" value="<%= teacher.pf_percent || 12 %>" min="0" step="0.01"></div>
+            <div class="salary-field"><label>ESI %</label><input type="number" name="esi_percent" value="<%= teacher.esi_percent || 0.75 %>" min="0" step="0.01"></div>
+            <div class="salary-field"><label>TDS (flat ₹)</label><input type="number" name="tds_flat" value="<%= teacher.tds_flat || 0 %>" min="0" step="0.01"></div>
+          </div>
+
+          <div class="gross-preview" id="grossPreview">
+            Gross Monthly: ₹ <%= (parseFloat(teacher.salary_basic||0)+parseFloat(teacher.salary_hra||0)+parseFloat(teacher.salary_da||0)+parseFloat(teacher.salary_transport||0)).toLocaleString('en-IN') %>
+          </div>
+
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save ID &amp; Salary</button>
+        </form>
+      </div>
+
+      <!-- Section 2: Full Profile Read-only -->
+      <div class="detail-grid">
+        <div class="detail-block">
+          <h3>Personal</h3>
+          <div class="detail-row"><span class="lbl">Aadhar</span><span class="val" style="font-family:monospace"><%= teacher.aadhar_number %></span></div>
+          <div class="detail-row"><span class="lbl">DOB</span><span class="val"><%= new Date(teacher.date_of_birth).toLocaleDateString('en-IN') %></span></div>
+          <div class="detail-row"><span class="lbl">Gender</span><span class="val"><%= teacher.gender %></span></div>
+          <% if (teacher.blood_group) { %><div class="detail-row"><span class="lbl">Blood Group</span><span class="val"><%= teacher.blood_group %></span></div><% } %>
+          <% if (teacher.emergency_contact_name) { %>
+          <div class="detail-row"><span class="lbl">Emergency</span><span class="val"><%= teacher.emergency_contact_name %> (<%= teacher.emergency_contact_relation %>) <%= teacher.emergency_contact_mobile %></span></div>
+          <% } %>
+          <div class="detail-row"><span class="lbl">Address</span><span class="val"><%= teacher.street %>, <%= teacher.state %> — <%= teacher.pincode %></span></div>
+        </div>
+
+        <div class="detail-block">
+          <h3>Bank &amp; Official</h3>
+          <div class="detail-row"><span class="lbl">Bank</span><span class="val"><%= teacher.bank_name %></span></div>
+          <div class="detail-row"><span class="lbl">Account</span><span class="val" style="font-family:monospace"><%= teacher.account_number %></span></div>
+          <div class="detail-row"><span class="lbl">IFSC</span><span class="val" style="font-family:monospace"><%= teacher.ifsc_code %></span></div>
+          <div class="detail-row"><span class="lbl">PAN</span><span class="val" style="font-family:monospace"><%= teacher.pan_number %></span></div>
+          <% if (teacher.pf_number) { %><div class="detail-row"><span class="lbl">PF No.</span><span class="val"><%= teacher.pf_number %></span></div><% } %>
+          <% if (teacher.esi_number) { %><div class="detail-row"><span class="lbl">ESI No.</span><span class="val"><%= teacher.esi_number %></span></div><% } %>
+        </div>
+
+        <div class="detail-block">
+          <h3>Education</h3>
+          <% const tenth = teacher.edu_tenth ? JSON.parse(teacher.edu_tenth) : null; %>
+          <% const twelfth = teacher.edu_twelfth ? JSON.parse(teacher.edu_twelfth) : null; %>
+          <% const ug = teacher.edu_ug ? JSON.parse(teacher.edu_ug) : null; %>
+          <% const bed = teacher.edu_bed ? JSON.parse(teacher.edu_bed) : null; %>
+          <% const med = teacher.edu_med ? JSON.parse(teacher.edu_med) : null; %>
+          <% if (tenth) { %><div class="detail-row"><span class="lbl">10th</span><span class="val"><%= tenth.board %> (<%= tenth.year %>) — <%= tenth.percentage %>%</span></div><% } %>
+          <% if (twelfth) { %><div class="detail-row"><span class="lbl">12th</span><span class="val"><%= twelfth.board %> (<%= twelfth.year %>) — <%= twelfth.percentage %>%</span></div><% } %>
+          <% if (ug) { %><div class="detail-row"><span class="lbl">UG</span><span class="val"><%= ug.degree %> — <%= ug.university %> (<%= ug.year %>)</span></div><% } %>
+          <% if (bed && bed.board) { %><div class="detail-row"><span class="lbl">B.Ed</span><span class="val"><%= bed.board %> (<%= bed.year %>)</span></div><% } %>
+          <% if (med && med.board) { %><div class="detail-row"><span class="lbl">M.Ed</span><span class="val"><%= med.board %> (<%= med.year %>)</span></div><% } %>
+        </div>
+
+        <div class="detail-block">
+          <h3>Experience</h3>
+          <% if (teacher.previous_school) { %>
+          <div class="detail-row"><span class="lbl">Previous</span><span class="val"><%= teacher.previous_school %></span></div>
+          <% } %>
+          <% if (teacher.previous_classes) {
+            const cls = JSON.parse(teacher.previous_classes); %>
+          <div class="detail-row" style="flex-direction:column;gap:.25rem"><span class="lbl">Classes</span><div><% cls.forEach(c => { %><span class="edu-pill"><%= c %></span><% }) %></div></div>
+          <% } %>
+          <% if (teacher.previous_subjects) {
+            const subj = JSON.parse(teacher.previous_subjects); %>
+          <div class="detail-row" style="flex-direction:column;gap:.25rem"><span class="lbl">Subjects</span><div><% subj.forEach(s => { %><span class="edu-pill" style="background:#e0e7ff;color:#3730a3"><%= s %></span><% }) %></div></div>
+          <% } %>
+          <div class="detail-row"><span class="lbl">Current</span><span class="val"><%= teacher.current_class || '—' %> / <%= teacher.current_subject || '—' %></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="/js/admin.js"></script>
+<script>
+function updatePreview() {
+  const fields = ['salary_basic','salary_hra','salary_da','salary_transport'];
+  let total = 0;
+  fields.forEach(n => {
+    const el = document.querySelector('[name="' + n + '"]');
+    if (el) total += parseFloat(el.value) || 0;
+  });
+  document.getElementById('grossPreview').textContent = 'Gross Monthly: ₹ ' + total.toLocaleString('en-IN', {minimumFractionDigits: 2});
+}
+
+let idTimer;
+const originalId = '<%= teacher.teacher_id || '' %>';
+document.getElementById('teacherIdInput').addEventListener('input', function() {
+  clearTimeout(idTimer);
+  const val = this.value.trim();
+  const status = document.getElementById('idStatus');
+  if (!val || val === originalId) { status.textContent = ''; return; }
+  idTimer = setTimeout(async () => {
+    status.textContent = 'Checking...';
+    status.style.color = '#94a3b8';
+    const res = await fetch('/admin/teachers/check-id?teacher_id=' + encodeURIComponent(val));
+    const data = await res.json();
+    if (data.exists) {
+      status.textContent = '✗ ID already taken';
+      status.style.color = '#ef4444';
+    } else {
+      status.textContent = '✓ Available';
+      status.style.color = '#00663A';
+    }
+  }, 500);
+});
+</script>
+</body>
+</html>

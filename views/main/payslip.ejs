@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="icon" type="image/png" href="/emblem.png">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .payslip-wrap { max-width: 520px; margin: 3rem auto; padding: 0 1rem 4rem; }
+    .payslip-card { background: #fff; border-radius: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,.1); overflow: hidden; }
+    .payslip-card-header { background: var(--navy, #1F1B76); color: #fff; padding: 1.5rem; text-align: center; }
+    .payslip-card-header img { width: 56px; margin-bottom: .5rem; }
+    .payslip-card-header h2 { margin: 0; font-size: 1.1rem; font-weight: 800; }
+    .payslip-card-header p { margin: .25rem 0 0; font-size: .82rem; opacity: .8; }
+    .payslip-form { padding: 1.5rem; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
+    .form-group label { font-size: .82rem; font-weight: 600; color: #475569; }
+    .form-group input, .form-group select {
+      padding: .6rem .85rem; border: 1.5px solid #e2e8f0; border-radius: .5rem;
+      font-family: inherit; font-size: .9rem; background: #f8fafc;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none; border-color: var(--navy, #1F1B76); background: #fff;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-validate { width: 100%; padding: .8rem; background: var(--navy, #1F1B76); color: #fff; border: none; border-radius: .6rem; font-family: inherit; font-size: .95rem; font-weight: 700; cursor: pointer; }
+    .btn-validate:hover { background: #17145a; }
+    .alert-error { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: .75rem 1rem; border-radius: .5rem; margin-bottom: 1rem; font-size: .88rem; }
+
+    /* Pay Slip Styles */
+    .slip-wrap { background: #fff; border-radius: 1rem; box-shadow: 0 4px 24px rgba(0,0,0,.1); overflow: hidden; }
+    .slip-header { background: var(--navy, #1F1B76); color: #fff; padding: 1.5rem; text-align: center; }
+    .slip-header img { width: 56px; margin-bottom: .5rem; }
+    .slip-header h2 { margin: 0; font-size: 1rem; font-weight: 800; letter-spacing: .05em; }
+    .slip-header p { margin: .25rem 0 0; font-size: .8rem; opacity: .85; }
+    .slip-title { background: var(--green, #00663A); color: #fff; text-align: center; padding: .5rem; font-size: .85rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .slip-body { padding: 1.25rem; }
+    .slip-info { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }
+    .slip-info-row { display: flex; gap: .5rem; font-size: .8rem; }
+    .slip-info-row .lbl { color: #94a3b8; min-width: 80px; flex-shrink: 0; }
+    .slip-info-row .val { font-weight: 600; color: #1e293b; }
+    .slip-days { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; background: #f8fafc; border-radius: .5rem; padding: .75rem; margin-bottom: 1rem; text-align: center; font-size: .82rem; }
+    .slip-days .num { font-size: 1.4rem; font-weight: 800; color: var(--navy, #1F1B76); }
+    .slip-days .dlbl { color: #64748b; }
+    .slip-table { width: 100%; border-collapse: collapse; font-size: .82rem; margin-bottom: 1rem; }
+    .slip-table thead tr { background: #f8fafc; }
+    .slip-table th { padding: .5rem .75rem; text-align: left; font-weight: 700; color: #475569; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; border-bottom: 2px solid #e2e8f0; }
+    .slip-table th:last-child { text-align: right; }
+    .slip-table td { padding: .45rem .75rem; border-bottom: 1px solid #f1f5f9; }
+    .slip-table td:last-child { text-align: right; font-weight: 600; }
+    .slip-table tfoot td { font-weight: 700; padding: .6rem .75rem; background: #f8fafc; }
+    .slip-table tfoot td:last-child { text-align: right; }
+    .slip-net { background: var(--navy, #1F1B76); color: #fff; padding: .85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; border-radius: .5rem; margin-bottom: 1rem; }
+    .slip-net .label { font-size: .8rem; opacity: .85; }
+    .slip-net .amount { font-size: 1.35rem; font-weight: 800; }
+    .slip-words { background: #f8fafc; border-radius: .5rem; padding: .65rem .85rem; font-size: .78rem; color: #64748b; margin-bottom: 1rem; font-style: italic; }
+    .slip-footer { font-size: .72rem; color: #94a3b8; text-align: center; padding-top: .75rem; border-top: 1px solid #f1f5f9; }
+    .slip-remarks { background: #fffbeb; border: 1px solid #fde68a; border-radius: .5rem; padding: .6rem .85rem; font-size: .8rem; color: #92400e; margin-bottom: 1rem; }
+    .btn-print { display: block; width: 100%; margin-top: 1rem; padding: .7rem; background: var(--green, #00663A); color: #fff; border: none; border-radius: .6rem; font-family: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; text-align: center; }
+    .btn-print:hover { background: #004d2b; }
+    .btn-back { display: block; width: 100%; margin-top: .5rem; padding: .7rem; background: transparent; color: #475569; border: 1.5px solid #e2e8f0; border-radius: .6rem; font-family: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; text-align: center; }
+    @media print {
+      body > *:not(.slip-print-area) { display: none !important; }
+      .slip-print-area { display: block !important; }
+      .btn-print, .btn-back, header, footer, nav { display: none !important; }
+    }
+  </style>
+</head>
+<body class="site-main" style="background:#f8fafc">
+
+<%- include('../partials/topbar') %>
+<%- include('../partials/nav-main') %>
+
+<div class="payslip-wrap">
+
+  <% if (!slip) { %>
+  <!-- Validation Form -->
+  <div class="payslip-card">
+    <div class="payslip-card-header">
+      <img src="/emblem.png" alt="Greenwood">
+      <h2>GREENWOOD HIGH SCHOOL</h2>
+      <p>Staff Pay Slip Portal</p>
+    </div>
+    <div class="payslip-form">
+      <% if (error) { %><div class="alert-error"><i class="fas fa-exclamation-circle"></i> <%= error %></div><% } %>
+      <form action="/payslip/validate?_csrf=<%= csrfToken %>" method="POST">
+        <div class="form-group">
+          <label>Teacher ID or CBSE Registration Number</label>
+          <input type="text" name="identifier" placeholder="e.g. GHS-001" required>
+        </div>
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <input type="date" name="date_of_birth" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Month</label>
+            <select name="month" required>
+              <option value="">Select Month</option>
+              <% ['January','February','March','April','May','June','July','August','September','October','November','December'].forEach((m, i) => { %>
+              <option value="<%= i+1 %>"><%= m %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Year</label>
+            <select name="year" required>
+              <% for (let y = new Date().getFullYear(); y >= 2024; y--) { %><option value="<%= y %>"><%= y %></option><% } %>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn-validate"><i class="fas fa-search"></i> Get Pay Slip</button>
+      </form>
+    </div>
+  </div>
+
+  <% } else { %>
+  <!-- Pay Slip Display -->
+  <div class="slip-wrap slip-print-area">
+    <div class="slip-header">
+      <img src="/emblem.png" alt="Greenwood">
+      <h2>GREENWOOD HIGH SCHOOL — <%= slip.current_branch.split(' - ')[1] || slip.current_branch %></h2>
+      <p><%= slip.current_branch %></p>
+    </div>
+    <div class="slip-title">Pay Slip — <%= monthName %> <%= year %></div>
+
+    <div class="slip-body">
+      <div class="slip-info">
+        <div class="slip-info-row"><span class="lbl">Teacher ID</span><span class="val"><%= slip.teacher_id || '—' %></span></div>
+        <div class="slip-info-row"><span class="lbl">Name</span><span class="val"><%= slip.full_name %></span></div>
+        <div class="slip-info-row"><span class="lbl">Designation</span><span class="val"><%= slip.designation || '—' %></span></div>
+        <div class="slip-info-row"><span class="lbl">PAN</span><span class="val"><%= slip.pan_number %></span></div>
+        <% if (slip.pf_number) { %><div class="slip-info-row"><span class="lbl">PF No.</span><span class="val"><%= slip.pf_number %></span></div><% } %>
+        <% if (slip.esi_number) { %><div class="slip-info-row"><span class="lbl">ESI No.</span><span class="val"><%= slip.esi_number %></span></div><% } %>
+        <div class="slip-info-row"><span class="lbl">Bank</span><span class="val"><%= slip.bank_name %></span></div>
+        <div class="slip-info-row"><span class="lbl">Account</span><span class="val">XXXXXXXX<%= slip.account_number.slice(-4) %></span></div>
+      </div>
+
+      <div class="slip-days">
+        <div><div class="num"><%= entry.days_in_month %></div><div class="dlbl">Days in Month</div></div>
+        <div><div class="num" style="color:var(--green,#00663A)"><%= entry.days_present %></div><div class="dlbl">Days Present</div></div>
+      </div>
+
+      <table class="slip-table">
+        <thead>
+          <tr><th>Earnings</th><th style="text-align:right">Amount (₹)</th><th>Deductions</th><th style="text-align:right">Amount (₹)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Basic</td><td><%- (parseFloat(slip.salary_basic) * entry.days_present / entry.days_in_month).toFixed(2) %></td><td>PF (<%= slip.pf_percent %>%)</td><td><%= calc.pf_deduction %></td></tr>
+          <tr><td>HRA</td><td><%- (parseFloat(slip.salary_hra) * entry.days_present / entry.days_in_month).toFixed(2) %></td><td>ESI (<%= slip.esi_percent %>%)</td><td><%= calc.esi_deduction %></td></tr>
+          <tr><td>DA</td><td><%- (parseFloat(slip.salary_da) * entry.days_present / entry.days_in_month).toFixed(2) %></td><td>TDS</td><td><%= calc.tds_deduction %></td></tr>
+          <tr><td>Transport</td><td><%- (parseFloat(slip.salary_transport) * entry.days_present / entry.days_in_month).toFixed(2) %></td><td>Advance</td><td><%= calc.advance_deduction %></td></tr>
+          <% if (parseFloat(entry.bonus) > 0) { %><tr><td>Bonus</td><td><%= parseFloat(entry.bonus).toFixed(2) %></td><td></td><td></td></tr><% } %>
+          <% if (parseFloat(entry.other_deduction_amount) > 0) { %><tr><td></td><td></td><td><%= entry.other_deduction_label || 'Other' %></td><td><%= calc.other_deduction %></td></tr><% } %>
+        </tbody>
+        <tfoot>
+          <tr><td>Gross Earned</td><td><%= calc.earned_gross %></td><td>Total Deductions</td><td><%= calc.total_deductions %></td></tr>
+        </tfoot>
+      </table>
+
+      <div class="slip-net">
+        <div><div class="label">Net Pay</div><div style="font-size:.72rem;opacity:.7;margin-top:.1rem"><%= monthName %> <%= year %></div></div>
+        <div class="amount">₹ <%= parseFloat(calc.net_pay).toLocaleString('en-IN', {minimumFractionDigits:2}) %></div>
+      </div>
+
+      <div class="slip-words"><%= amountInWords %></div>
+
+      <% if (entry.remarks) { %>
+      <div class="slip-remarks"><strong>Remarks:</strong> <%= entry.remarks %></div>
+      <% } %>
+
+      <div class="slip-footer">Computer-generated pay slip. No signature required.</div>
+    </div>
+  </div>
+
+  <button class="btn-print" onclick="window.print()"><i class="fas fa-print"></i> Print / Download PDF</button>
+  <a href="/payslip" class="btn-back">← Check Another Month</a>
+
+  <% } %>
+</div>
+
+<%- include('../partials/footer-main') %>
+<script src="/js/main.js"></script>
+</body>
+</html>

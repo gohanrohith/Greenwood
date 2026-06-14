@@ -87,12 +87,13 @@ exports.logout = (req, res) => {
 
 // ── Dashboard ─────────────────────────────────────────
 exports.dashboard = async (req, res) => {
-  const [e, n, g, f, ev] = await Promise.all([
+  const [e, n, g, f, ev, t] = await Promise.all([
     q1('SELECT COUNT(*) as c FROM admission_enquiries WHERE status="new"'),
     q1('SELECT COUNT(*) as c FROM notices WHERE is_active=1'),
     q1('SELECT COUNT(*) as c FROM gallery WHERE is_active=1'),
     q1('SELECT COUNT(*) as c FROM faculty WHERE is_active=1'),
     q1('SELECT COUNT(*) as c FROM events WHERE is_active=1'),
+    q1('SELECT COUNT(*) as c FROM teachers WHERE status="approved"'),
   ]);
   const recentEnquiries = await q('SELECT * FROM admission_enquiries ORDER BY created_at DESC LIMIT 5');
   res.render('admin/dashboard', {
@@ -104,6 +105,7 @@ exports.dashboard = async (req, res) => {
       gallery:   g?.c || 0,
       faculty:   f?.c || 0,
       events:    ev?.c || 0,
+      teachers:  t?.c || 0,
     },
     recentEnquiries,
   });
@@ -432,4 +434,154 @@ exports.updateConcernStatus = async (req, res) => {
       [status, admin_notes || null, req.params.id]);
   }
   res.redirect('/admin/concerns');
+};
+
+// ── Teachers ──────────────────────────────────────────────────────────────────
+
+exports.teachersList = async (req, res) => {
+  const teachers = await q('SELECT * FROM teachers ORDER BY created_at DESC');
+  const stats = {
+    approved:   teachers.filter(t => t.status === 'approved').length,
+    pending:    teachers.filter(t => t.status === 'pending').length,
+    rejected:   teachers.filter(t => t.status === 'rejected').length,
+    salary_set: teachers.filter(t => parseFloat(t.salary_basic || 0) > 0).length,
+  };
+  res.render('admin/teachers', {
+    title: 'Teachers | Greenwood Admin',
+    teachers,
+    stats,
+    currentPage: 'teachers',
+    csrfToken: req.csrfToken ? req.csrfToken() : '',
+  });
+};
+
+exports.teacherDetail = async (req, res) => {
+  const teacher = await q1('SELECT * FROM teachers WHERE id = ?', [req.params.id]);
+  if (!teacher) return res.redirect('/admin/teachers');
+  res.render('admin/teacher-detail', {
+    title: `${teacher.full_name} | Greenwood Admin`,
+    teacher,
+    currentPage: 'teachers',
+    csrfToken: req.csrfToken ? req.csrfToken() : '',
+  });
+};
+
+exports.teacherUpdateStatus = async (req, res) => {
+  const { status } = req.body;
+  if (['pending','approved','rejected'].includes(status)) {
+    await q('UPDATE teachers SET status = ? WHERE id = ?', [status, req.params.id]);
+  }
+  res.redirect('/admin/teachers');
+};
+
+exports.teacherSaveSalary = async (req, res) => {
+  const { teacher_id, cbse_reg_number, designation,
+          salary_basic, salary_hra, salary_da, salary_transport,
+          pf_percent, esi_percent, tds_flat } = req.body;
+
+  if (teacher_id) {
+    const existing = await q1('SELECT id FROM teachers WHERE teacher_id = ? AND id != ?', [teacher_id, req.params.id]);
+    if (existing) {
+      const teacher = await q1('SELECT * FROM teachers WHERE id = ?', [req.params.id]);
+      return res.render('admin/teacher-detail', {
+        title: `${teacher.full_name} | Greenwood Admin`,
+        teacher,
+        currentPage: 'teachers',
+        csrfToken: req.csrfToken ? req.csrfToken() : '',
+        error: 'Teacher ID already taken.',
+      });
+    }
+  }
+
+  await q(`UPDATE teachers SET
+    teacher_id = ?, cbse_reg_number = ?, designation = ?,
+    salary_basic = ?, salary_hra = ?, salary_da = ?, salary_transport = ?,
+    pf_percent = ?, esi_percent = ?, tds_flat = ?
+    WHERE id = ?`,
+    [teacher_id || null, cbse_reg_number || null, designation || null,
+     parseFloat(salary_basic) || 0, parseFloat(salary_hra) || 0,
+     parseFloat(salary_da) || 0, parseFloat(salary_transport) || 0,
+     parseFloat(pf_percent) || 12, parseFloat(esi_percent) || 0.75,
+     parseFloat(tds_flat) || 0,
+     req.params.id]);
+  res.redirect(`/admin/teachers/${req.params.id}`);
+};
+
+exports.teacherCheckId = async (req, res) => {
+  const { teacher_id } = req.query;
+  const existing = await q1('SELECT id FROM teachers WHERE teacher_id = ?', [teacher_id]);
+  res.json({ exists: !!existing });
+};
+
+exports.teacherDelete = async (req, res) => {
+  await q('DELETE FROM teachers WHERE id = ?', [req.params.id]);
+  res.redirect('/admin/teachers');
+};
+
+// ── Payroll ───────────────────────────────────────────────────────────────────
+
+exports.payrollPage = async (req, res) => {
+  const month = parseInt(req.query.month) || new Date().getMonth() + 1;
+  const year  = parseInt(req.query.year)  || new Date().getFullYear();
+
+  const teachers = await q(`SELECT * FROM teachers WHERE status = 'approved' ORDER BY full_name`);
+  const rawEntries = await q(
+    `SELECT * FROM teacher_payroll_entries WHERE month = ? AND year = ?`,
+    [month, year]
+  );
+
+  const entries = {};
+  rawEntries.forEach(e => { entries[e.teacher_id] = e; });
+
+  const payrollEnabled = rawEntries.length > 0 && rawEntries[0].enabled === 1;
+
+  res.render('admin/payroll', {
+    title: 'Payroll | Greenwood Admin',
+    teachers,
+    entries,
+    selectedMonth: month,
+    selectedYear: year,
+    payrollEnabled,
+    currentPage: 'payroll',
+    csrfToken: req.csrfToken ? req.csrfToken() : '',
+  });
+};
+
+exports.payrollSave = async (req, res) => {
+  const { month, year, teachers: rows } = req.body;
+  if (!rows || !Array.isArray(rows)) return res.redirect(`/admin/payroll?month=${month}&year=${year}`);
+
+  for (const row of rows) {
+    const { id, days_in_month, days_present, advance_deduction, other_deduction_amount,
+            other_deduction_label, bonus, remarks } = row;
+    await q(`INSERT INTO teacher_payroll_entries
+      (teacher_id, month, year, days_in_month, days_present, advance_deduction,
+       other_deduction_amount, other_deduction_label, bonus, remarks)
+      VALUES (?,?,?,?,?,?,?,?,?,?)
+      ON DUPLICATE KEY UPDATE
+        days_in_month = VALUES(days_in_month),
+        days_present = VALUES(days_present),
+        advance_deduction = VALUES(advance_deduction),
+        other_deduction_amount = VALUES(other_deduction_amount),
+        other_deduction_label = VALUES(other_deduction_label),
+        bonus = VALUES(bonus),
+        remarks = VALUES(remarks),
+        updated_at = NOW()`,
+      [id, month, year,
+       parseInt(days_in_month) || 26, parseInt(days_present) || 0,
+       parseFloat(advance_deduction) || 0, parseFloat(other_deduction_amount) || 0,
+       other_deduction_label || null, parseFloat(bonus) || 0, remarks || null]);
+  }
+  res.redirect(`/admin/payroll?month=${month}&year=${year}`);
+};
+
+exports.payrollToggle = async (req, res) => {
+  const { month, year, enabled } = req.body;
+  const enabledVal = parseInt(enabled) === 1 ? 1 : 0;
+  const enabledAt  = enabledVal ? new Date() : null;
+  await q(
+    `UPDATE teacher_payroll_entries SET enabled = ?, enabled_at = ? WHERE month = ? AND year = ?`,
+    [enabledVal, enabledAt, month, year]
+  );
+  res.redirect(`/admin/payroll?month=${month}&year=${year}`);
 };
