@@ -121,8 +121,7 @@
   </div>
   <% } %>
 
-  <form action="/teachers/register" method="POST" enctype="multipart/form-data" id="regForm" novalidate>
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <form action="/teachers/register?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" id="regForm" novalidate>
 
     <!-- STEP 1: Profile & Personal -->
     <div class="step-content" id="step1">
