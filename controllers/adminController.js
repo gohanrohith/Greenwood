@@ -451,7 +451,6 @@ exports.teachersList = async (req, res) => {
     teachers,
     stats,
     currentPage: 'teachers',
-    csrfToken: req.csrfToken ? req.csrfToken() : '',
   });
 };
 
@@ -462,7 +461,6 @@ exports.teacherDetail = async (req, res) => {
     title: `${teacher.full_name} | Greenwood Admin`,
     teacher,
     currentPage: 'teachers',
-    csrfToken: req.csrfToken ? req.csrfToken() : '',
   });
 };
 
@@ -487,8 +485,7 @@ exports.teacherSaveSalary = async (req, res) => {
         title: `${teacher.full_name} | Greenwood Admin`,
         teacher,
         currentPage: 'teachers',
-        csrfToken: req.csrfToken ? req.csrfToken() : '',
-        error: 'Teacher ID already taken.',
+            error: 'Teacher ID already taken.',
       });
     }
   }
@@ -543,7 +540,6 @@ exports.payrollPage = async (req, res) => {
     selectedYear: year,
     payrollEnabled,
     currentPage: 'payroll',
-    csrfToken: req.csrfToken ? req.csrfToken() : '',
   });
 };
 
