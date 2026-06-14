@@ -103,8 +103,7 @@ exports.registerPage = (req, res) => {
   res.render('main/teachers-register', {
     title: 'Teacher Registration | Greenwood High School',
     canonicalUrl: `https://${process.env.MAIN_DOMAIN || 'ghs.sc.in'}/teachers/register`,
-    csrfToken: req.csrfToken ? req.csrfToken() : '',
-    success: req.query.success || null,
+        success: req.query.success || null,
     error: null,
   });
 };
@@ -115,8 +114,7 @@ exports.registerSubmit = (req, res, next) => {
     const renderErr = (msg) => res.render('main/teachers-register', {
       title: 'Teacher Registration | Greenwood High School',
       canonicalUrl: `https://${process.env.MAIN_DOMAIN || 'ghs.sc.in'}/teachers/register`,
-      csrfToken: req.csrfToken ? req.csrfToken() : '',
-      success: null,
+            success: null,
       error: msg,
     });
 
@@ -195,8 +193,7 @@ exports.payslipPage = (req, res) => {
   res.render('main/payslip', {
     title: 'Staff Pay Slip | Greenwood High School',
     canonicalUrl: `https://${process.env.MAIN_DOMAIN || 'ghs.sc.in'}/payslip`,
-    csrfToken: req.csrfToken ? req.csrfToken() : '',
-    error: null,
+        error: null,
     slip: null,
     calc: null,
     monthName: null,
@@ -208,8 +205,7 @@ exports.payslipValidate = async (req, res) => {
   const renderErr = (msg) => res.render('main/payslip', {
     title: 'Staff Pay Slip | Greenwood High School',
     canonicalUrl: `https://${process.env.MAIN_DOMAIN || 'ghs.sc.in'}/payslip`,
-    csrfToken: req.csrfToken ? req.csrfToken() : '',
-    error: msg, slip: null, calc: null, monthName: null,
+        error: msg, slip: null, calc: null, monthName: null,
   });
 
   const { identifier, date_of_birth, month, year } = req.body;
@@ -235,8 +231,7 @@ exports.payslipValidate = async (req, res) => {
   res.render('main/payslip', {
     title: 'Staff Pay Slip | Greenwood High School',
     canonicalUrl: `https://${process.env.MAIN_DOMAIN || 'ghs.sc.in'}/payslip`,
-    csrfToken: req.csrfToken ? req.csrfToken() : '',
-    error: null,
+        error: null,
     slip: teacher,
     entry,
     calc,

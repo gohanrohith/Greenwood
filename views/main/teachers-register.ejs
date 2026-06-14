@@ -526,7 +526,7 @@ document.getElementById('aadharInput').addEventListener('input', function() {
         const res = await fetch('/teachers/check-aadhar', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-          body: JSON.stringify({ aadhar_number: val, _csrf: '<%= csrfToken %>' })
+          body: JSON.stringify({ aadhar_number: val })
         });
         const data = await res.json();
         if (data.exists) {
