@@ -241,7 +241,7 @@ exports.search = async (req, res) => {
 exports.newsletterSubscribe = async (req, res) => {
   const { email, name } = req.body;
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.redirect('back');
+    return res.redirect('/?newsletter=error');
   }
   try {
     const { query } = require('../config/db');
