@@ -32,6 +32,7 @@ router.post('/events/:id/delete', ctrl.deleteEvent);
 // Gallery
 router.get('/gallery', ctrl.gallery);
 router.post('/gallery/upload', ctrl.uploadGallery);
+router.post('/gallery/reorder', ctrl.reorderGallery);
 router.post('/gallery/:id/delete', ctrl.deleteGallery);
 
 // Admissions

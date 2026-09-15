@@ -80,11 +80,13 @@ CREATE TABLE IF NOT EXISTS gallery (
   caption     VARCHAR(500) DEFAULT NULL,
   campus      VARCHAR(50) DEFAULT 'main',
   category    VARCHAR(100) DEFAULT 'general',
+  sort_order  INT DEFAULT 0,
   is_active   TINYINT(1) DEFAULT 1,
   uploaded_by INT,
   created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (uploaded_by) REFERENCES admins(id) ON DELETE SET NULL
 );
+-- Run if DB already exists: ALTER TABLE gallery ADD COLUMN sort_order INT NOT NULL DEFAULT 0;
 
 -- Faculty
 CREATE TABLE IF NOT EXISTS faculty (

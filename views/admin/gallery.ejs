@@ -10,11 +10,15 @@
   <link rel="stylesheet" href="/css/admin.css">
   <style>
     .gallery-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:1rem}
-    .gallery-admin-item{position:relative;border-radius:8px;overflow:hidden;background:#f4f4f4;aspect-ratio:1}
-    .gallery-admin-item img{width:100%;height:100%;object-fit:cover;display:block}
-    .gallery-admin-item .item-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;transition:opacity .2s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem}
-    .gallery-admin-item:hover .item-overlay{opacity:1}
+    .gallery-admin-item{border-radius:8px;overflow:hidden;background:#f4f4f4}
+    .gallery-admin-item .item-img-wrap{position:relative;aspect-ratio:1}
+    .gallery-admin-item .item-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
     .gallery-admin-item .item-caption{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.6);color:#fff;font-size:.7rem;padding:4px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .gallery-admin-item .item-controls{display:flex;align-items:center;justify-content:space-between;padding:5px 7px;gap:.4rem}
+    .gallery-drag-handle{cursor:grab;color:#aaa;font-size:.9rem;line-height:1;padding:2px 4px}
+    .gallery-drag-handle:active{cursor:grabbing}
+    .sortable-ghost{opacity:.35;outline:2px dashed #6c63ff}
+    .sort-disabled .gallery-drag-handle{cursor:default;opacity:.35}
   </style>
 </head>
 <body class="site-admin">
@@ -69,17 +73,23 @@
           <button class="btn btn-sm btn-outline campus-filter-btn active" data-campus="all" style="font-size:.76rem">All</button>
         </div>
 
-        <div class="gallery-admin-grid" id="galleryGrid">
+        <p id="sortNote" style="font-size:.78rem;color:var(--gray);margin-bottom:.5rem">
+          <i class="fas fa-info-circle"></i> Drag photos to reorder. Sorting is disabled when a campus filter is active.
+        </p>
+        <div class="gallery-admin-grid" id="galleryGrid" data-csrf="<%= csrfToken %>">
           <% gallery.forEach(item => { %>
-          <div class="gallery-admin-item" data-campus="<%= item.campus %>">
-            <img src="/uploads/gallery/<%= item.filename %>" alt="<%= item.caption || '' %>" loading="lazy">
-            <div class="item-overlay">
-              <form action="/gallery/<%= item.id %>/delete" method="POST" onsubmit="return confirm('Delete this image?')">
+          <div class="gallery-admin-item" data-campus="<%= item.campus %>" data-photo-id="<%= item.id %>">
+            <div class="item-img-wrap">
+              <img src="/uploads/gallery/<%= item.filename %>" alt="<%= item.caption || '' %>" loading="lazy">
+              <% if (item.caption) { %><div class="item-caption"><%= item.caption %></div><% } %>
+            </div>
+            <div class="item-controls">
+              <span class="gallery-drag-handle" title="Drag to reorder"><i class="fas fa-grip-horizontal"></i></span>
+              <form action="/gallery/<%= item.id %>/delete" method="POST" onsubmit="return confirm('Delete this image?')" style="margin:0">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                <button type="submit" class="btn btn-xs btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
               </form>
             </div>
-            <% if (item.caption) { %><div class="item-caption"><%= item.caption %></div><% } %>
           </div>
           <% }) %>
         </div>
@@ -88,18 +98,49 @@
     </div>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.6/Sortable.min.js"></script>
 <script src="/js/admin.js"></script>
 <script>
-  document.querySelectorAll('.campus-filter-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.campus-filter-btn').forEach(b => b.classList.remove('active'));
+(function () {
+  var grid = document.getElementById('galleryGrid');
+  var sortNote = document.getElementById('sortNote');
+  if (!grid || typeof Sortable === 'undefined') return;
+
+  var sortable = Sortable.create(grid, {
+    animation: 150,
+    handle: '.gallery-drag-handle',
+    ghostClass: 'sortable-ghost',
+    filter: '[style*="display: none"],[style*="display:none"]',
+    onEnd: function () {
+      var ids = [].slice.call(grid.querySelectorAll('[data-photo-id]'))
+        .filter(function (el) { return el.style.display !== 'none'; })
+        .map(function (el) { return el.dataset.photoId; });
+      var fd = new FormData();
+      fd.append('_csrf', grid.dataset.csrf);
+      ids.forEach(function (id) { fd.append('ids[]', id); });
+      fetch('/admin/gallery/reorder', {
+        method: 'POST',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        body: fd
+      }).catch(function () {});
+    }
+  });
+
+  document.querySelectorAll('.campus-filter-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.campus-filter-btn').forEach(function (b) { b.classList.remove('active'); });
       this.classList.add('active');
-      const campus = this.dataset.campus;
-      document.querySelectorAll('.gallery-admin-item').forEach(item => {
-        item.style.display = (campus === 'all' || item.dataset.campus === campus) ? '' : 'none';
+      var campus = this.dataset.campus;
+      var isAll = campus === 'all';
+      document.querySelectorAll('.gallery-admin-item').forEach(function (item) {
+        item.style.display = (isAll || item.dataset.campus === campus) ? '' : 'none';
       });
+      sortable.option('disabled', !isAll);
+      grid.classList.toggle('sort-disabled', !isAll);
+      if (sortNote) sortNote.style.display = isAll ? '' : 'none';
     });
   });
+})();
 </script>
 </body>
 </html>

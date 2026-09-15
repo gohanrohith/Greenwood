@@ -145,8 +145,16 @@ exports.deleteEvent = async (req, res) => {
 
 // ── Gallery ───────────────────────────────────────────
 exports.gallery = async (req, res) => {
-  const gallery = await q('SELECT * FROM gallery WHERE is_active=1 ORDER BY created_at DESC');
+  const gallery = await q('SELECT * FROM gallery WHERE is_active=1 ORDER BY sort_order ASC, id ASC');
   res.render('admin/gallery', { title: 'Gallery | Greenwood Admin', gallery });
+};
+
+exports.reorderGallery = async (req, res) => {
+  const ids = [].concat(req.body.ids || []);
+  for (let i = 0; i < ids.length; i++) {
+    await q('UPDATE gallery SET sort_order=? WHERE id=?', [i, ids[i]]);
+  }
+  res.json({ ok: true });
 };
 exports.uploadGallery = (req, res) => {
   galleryUpload(req, res, async err => {
