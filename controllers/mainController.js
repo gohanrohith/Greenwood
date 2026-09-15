@@ -23,7 +23,7 @@ async function getNotices(campus = 'all') {
 
 async function getGallery(campus = 'main', limit = 8) {
   return dbQuery(
-    `SELECT * FROM gallery WHERE is_active=1 AND campus=? ORDER BY created_at DESC LIMIT ?`,
+    `SELECT * FROM gallery WHERE is_active=1 AND campus=? ORDER BY sort_order ASC, id ASC LIMIT ?`,
     [campus, limit]
   );
 }
