@@ -146,8 +146,16 @@ exports.news = async (req, res) => {
 };
 
 exports.gallery = async (req, res) => {
-  const gallery = await getGallery('main', 48);
-  res.render('main/gallery', { title: 'Gallery | Greenwood High School', gallery });
+  const [gallery, albums] = await Promise.all([
+    getGallery('main', 48),
+    (async () => {
+      try {
+        const { query: q } = require('../config/db');
+        return await q(`SELECT * FROM gallery_albums WHERE is_active=1 ORDER BY created_at DESC`);
+      } catch { return []; }
+    })(),
+  ]);
+  res.render('main/gallery', { title: 'Gallery | Greenwood High School', gallery, albums });
 };
 
 exports.careers = (req, res) => {

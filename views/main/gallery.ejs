@@ -43,6 +43,31 @@
 
   <section class="section">
     <div class="container">
+
+      <% if (locals.albums && albums.length > 0) { %>
+      <h2 style="font-size:1.25rem;font-weight:700;margin-bottom:1.25rem">Event Albums</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:2.5rem">
+        <% albums.forEach(function(alb){ %>
+        <a href="<%= alb.gtimes_url || 'http://gtimes.in/gallery/'+alb.slug %>" target="_blank" rel="noopener"
+           style="display:block;border-radius:var(--radius-lg);overflow:hidden;text-decoration:none;background:var(--off-white);box-shadow:0 2px 8px rgba(0,0,0,.08)">
+          <% if (alb.cover_image) { %>
+          <img src="<%= alb.cover_image %>" alt="<%= alb.title %>"
+               style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block"
+               onerror="this.style.display='none'">
+          <% } else { %>
+          <div style="aspect-ratio:4/3;background:var(--light-gray);display:flex;align-items:center;justify-content:center">
+            <i class="fas fa-images" style="font-size:2.5rem;opacity:.2"></i>
+          </div>
+          <% } %>
+          <div style="padding:.75rem 1rem">
+            <p style="font-size:.88rem;font-weight:600;color:var(--ink);margin-bottom:.25rem"><%= alb.title %></p>
+            <span style="font-size:.75rem;color:var(--green);font-weight:600">View on GTimes <i class="fas fa-arrow-right" style="font-size:.7rem"></i></span>
+          </div>
+        </a>
+        <% }); %>
+      </div>
+      <% } %>
+
       <% if (gallery && gallery.length > 0) { %>
 
       <div class="filter-bar" id="filterBar">

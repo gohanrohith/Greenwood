@@ -46,6 +46,8 @@ exports.gtimesSync = async (req, res) => {
       await syncEvent(action, campus, data);
     } else if (type === 'article') {
       await syncArticle(action, campus, data);
+    } else if (type === 'gallery') {
+      await syncGallery(action, campus, data);
     } else {
       return res.status(400).json({ error: 'Unknown type' });
     }
@@ -80,6 +82,31 @@ async function syncEvent(action, campus, data) {
     await query(
       `INSERT INTO events (title, description, campus, event_date, image, category, source, gtimes_id, gtimes_url) VALUES (?,?,?,?,?,?,?,?,?)`,
       [title, description || null, campus, event_date || null, image, category || 'general', 'gtimes', gtimes_id, gtimes_url || null]
+    );
+  }
+}
+
+async function syncGallery(action, campus, data) {
+  const { gtimes_id, title, slug, cover_image_url, gtimes_url } = data;
+  if (action === 'delete') {
+    await query('UPDATE gallery_albums SET is_active=0 WHERE gtimes_id=?', [gtimes_id]);
+    return;
+  }
+  let cover_image = null;
+  if (cover_image_url && cover_image_url.startsWith('http')) {
+    const ext = path.extname(new URL(cover_image_url).pathname) || '.jpg';
+    cover_image = await fetchImage(cover_image_url, `album-${gtimes_id}${ext}`);
+  }
+  const existing = await query('SELECT id, cover_image FROM gallery_albums WHERE gtimes_id=?', [gtimes_id]);
+  if (existing.length > 0) {
+    await query(
+      `UPDATE gallery_albums SET title=?, slug=?, campus=?, cover_image=?, gtimes_url=?, is_active=1 WHERE gtimes_id=?`,
+      [title, slug, campus || 'all', cover_image || existing[0].cover_image, gtimes_url || null, gtimes_id]
+    );
+  } else {
+    await query(
+      `INSERT INTO gallery_albums (gtimes_id, title, slug, campus, cover_image, gtimes_url) VALUES (?,?,?,?,?,?)`,
+      [gtimes_id, title, slug, campus || 'all', cover_image, gtimes_url || null]
     );
   }
 }

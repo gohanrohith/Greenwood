@@ -88,6 +88,19 @@ CREATE TABLE IF NOT EXISTS gallery (
 );
 -- Run if DB already exists: ALTER TABLE gallery ADD COLUMN sort_order INT NOT NULL DEFAULT 0;
 
+-- GTimes gallery album cards (synced via webhook)
+CREATE TABLE IF NOT EXISTS gallery_albums (
+  id           INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  gtimes_id    INT UNSIGNED UNIQUE,
+  title        VARCHAR(255) NOT NULL,
+  slug         VARCHAR(255) NOT NULL,
+  campus       VARCHAR(50) DEFAULT 'all',
+  cover_image  VARCHAR(500),
+  gtimes_url   VARCHAR(500),
+  is_active    TINYINT(1) NOT NULL DEFAULT 1,
+  created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Faculty
 CREATE TABLE IF NOT EXISTS faculty (
   id            INT AUTO_INCREMENT PRIMARY KEY,
