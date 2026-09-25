@@ -135,6 +135,9 @@
             <div class="salary-field"><label>Phone</label><input type="text" name="phone" value="<%= teacher.phone %>" required></div>
           </div>
           <div class="salary-grid" style="grid-template-columns:repeat(3,1fr);margin-top:.75rem">
+            <div class="salary-field"><label>Date of Birth</label><input type="date" name="date_of_birth" value="<%= teacher.date_of_birth ? new Date(teacher.date_of_birth).toISOString().split('T')[0] : '' %>" required></div>
+          </div>
+          <div class="salary-grid" style="grid-template-columns:repeat(3,1fr);margin-top:.75rem">
             <div class="salary-field"><label>Branch</label><input type="text" name="current_branch" value="<%= teacher.current_branch %>" required></div>
             <div class="salary-field"><label>Class (assigned)</label><input type="text" name="current_class" value="<%= teacher.current_class || '' %>" placeholder="e.g. XI"></div>
             <div class="salary-field"><label>Subject (assigned)</label><input type="text" name="current_subject" value="<%= teacher.current_subject || '' %>" placeholder="e.g. Mathematics"></div>

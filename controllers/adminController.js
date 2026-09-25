@@ -526,18 +526,18 @@ exports.teacherDelete = async (req, res) => {
 };
 
 exports.teacherUpdateProfile = async (req, res) => {
-  const { full_name, email, phone, current_branch, current_class, current_subject,
+  const { full_name, email, phone, date_of_birth, current_branch, current_class, current_subject,
           street, pincode, state,
           bank_name, account_number, ifsc_code, pan_number, pf_number, esi_number,
           emergency_contact_name, emergency_contact_relation, emergency_contact_mobile } = req.body;
   await q(`UPDATE teachers SET
-    full_name=?, email=?, phone=?, current_branch=?, current_class=?, current_subject=?,
+    full_name=?, email=?, phone=?, date_of_birth=?, current_branch=?, current_class=?, current_subject=?,
     street=?, pincode=?, state=?,
     bank_name=?, account_number=?, ifsc_code=?, pan_number=?,
     pf_number=?, esi_number=?,
     emergency_contact_name=?, emergency_contact_relation=?, emergency_contact_mobile=?
     WHERE id=?`,
-    [full_name, email, phone, current_branch, current_class || null, current_subject || null,
+    [full_name, email, phone, date_of_birth, current_branch, current_class || null, current_subject || null,
      street, pincode, state,
      bank_name, account_number, ifsc_code, pan_number,
      pf_number || null, esi_number || null,
