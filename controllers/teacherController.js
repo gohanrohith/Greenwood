@@ -83,6 +83,8 @@ function amountToWords(amount) {
     return words(Math.floor(n / 10000000)) + ' Crore' + (n % 10000000 ? ' ' + words(n % 10000000) : '');
   }
   const n = Math.round(parseFloat(amount));
+  if (isNaN(n)) return 'Amount Unavailable';
+  if (n < 0) return 'Minus ' + words(-n) + ' Rupees Only';
   return n === 0 ? 'Zero Rupees Only' : words(n) + ' Rupees Only';
 }
 
@@ -229,6 +231,10 @@ exports.payslipValidate = async (req, res) => {
     [teacher.id, month, year]
   );
   if (!entry) return renderErr(`Pay slip for ${MONTH_NAMES[parseInt(month)]} ${year} has not been released yet. Please contact the school admin or try a different month.`);
+
+  if (!entry.days_present || parseInt(entry.days_present) === 0) {
+    return renderErr('Attendance for this month has not been recorded yet. Please contact HR.');
+  }
 
   const calc = calcPayroll(teacher, entry);
 

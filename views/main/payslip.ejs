@@ -71,6 +71,13 @@
       .slip-header, .slip-title, .slip-net, .slip-days .num {
         -webkit-print-color-adjust: exact; print-color-adjust: exact;
       }
+      .slip-table, .slip-table th, .slip-table td, .slip-table tfoot td {
+        border: 1px solid #999 !important;
+      }
+      .slip-table th { background: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .slip-table tfoot td { background: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .slip-days { border: 1px solid #ccc !important; }
+      .slip-info { border-bottom: 1px solid #999 !important; }
     }
   </style>
 </head>
@@ -128,7 +135,7 @@
     <div class="slip-header">
       <img src="/emblem.png" alt="Greenwood">
       <div class="slip-header-text">
-        <h2>GREENWOOD HIGH SCHOOL — <%= slip.current_branch.split(' - ')[1] || slip.current_branch %></h2>
+        <h2>GREENWOOD HIGH SCHOOL</h2>
         <p><%= slip.current_branch %></p>
       </div>
     </div>
