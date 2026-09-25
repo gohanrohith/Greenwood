@@ -23,7 +23,7 @@ body.site-admin, body.admin-login-page {
 
 /* â”€â”€â”€ LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .admin-wrapper { display: flex; min-height: 100vh; }
-.admin-content { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; min-width: 0; margin-left: 240px; }
+.admin-content { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; min-width: 0; margin-left: 240px; transition: margin-left .28s ease; }
 .admin-body    { flex: 1; padding: 2rem; }
 .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 998; }
 .sidebar-overlay.active { display: block; }
@@ -40,7 +40,11 @@ body.site-admin, body.admin-login-page {
   height: 100vh;
   z-index: 1000;
   overflow: hidden;
+  transition: left .28s ease;
 }
+/* Desktop collapse */
+body.sidebar-collapsed .admin-sidebar { left: -240px; }
+body.sidebar-collapsed .admin-content { margin-left: 0; }
 .sidebar-brand {
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid rgba(255,255,255,.08);
