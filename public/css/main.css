@@ -93,8 +93,8 @@ ul  { list-style: none; }
 .btn-white:hover { background: var(--off-white); }
 .btn-sm          { padding: 7px 16px; font-size: .78rem; }
 .btn-block       { display: block; width: 100%; text-align: center; }
-.btn-campus      { background: var(--campus-primary, var(--green)); color: var(--white); }
-.btn-campus:hover { opacity: .88; }
+.btn-campus      { background: var(--campus-primary, var(--green)); color: var(--white); transition: filter .2s, transform .15s; }
+.btn-campus:hover { filter: brightness(.88); transform: translateY(-1px); }
 .btn-footer-cta  {
   display: inline-block; margin-top: 1rem;
   background: var(--lime); color: var(--navy);
