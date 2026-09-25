@@ -109,7 +109,7 @@ exports.admissions = async (req, res) => {
     title: 'Admissions | Greenwood High School',
     campuses: getAllCampuses(),
     admissionsOpen: settingsMap.admissions_open !== '0',
-    admissionYear: settingsMap.admission_year || '2026-27',
+    admissionYear: settingsMap.admission_year || '2027-28',
     success: req.query.success || null,
     error: req.query.error || null,
   });
