@@ -22,7 +22,7 @@
 
       <div class="admin-card">
         <h3>Add Faculty Member</h3>
-        <form action="/faculty/create?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="admin-form">
+        <form action="/admin/faculty/create?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="admin-form">
           <div class="form-row">
             <div class="form-group">
               <label>Name *</label>
@@ -100,7 +100,7 @@
               <td><%= f.designation %></td>
               <td><%= f.subject || '—' %></td>
               <td>
-                <form action="/faculty/<%= f.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this faculty profile?')">
+                <form action="/admin/faculty/<%= f.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this faculty profile?')">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                 </form>

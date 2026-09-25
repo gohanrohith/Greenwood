@@ -17,7 +17,7 @@
       <div class="admin-page-header"><h1>Notices & Circulars</h1></div>
       <div class="admin-card">
         <h3>Add New Notice</h3>
-        <form action="/notices/create" method="POST" class="admin-form">
+        <form action="/admin/notices/create" method="POST" class="admin-form">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="form-row">
             <div class="form-group"><label>Title *</label><input type="text" name="title" required placeholder="Notice title"></div>
@@ -51,7 +51,7 @@
                 <td><span class="badge"><%= n.campus %></span></td>
                 <td><%= new Date(n.created_at).toLocaleDateString('en-IN') %></td>
                 <td>
-                  <form action="/notices/<%= n.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this notice?')">
+                  <form action="/admin/notices/<%= n.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this notice?')">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                   </form>

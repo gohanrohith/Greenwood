@@ -22,7 +22,7 @@
 
       <div class="admin-card">
         <h3>Add New Event</h3>
-        <form action="/events/create" method="POST" class="admin-form">
+        <form action="/admin/events/create" method="POST" class="admin-form">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="form-row">
             <div class="form-group">
@@ -93,7 +93,7 @@
               </td>
               <td>
                 <% if (ev.source !== 'gtimes') { %>
-                <form action="/events/<%= ev.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this event?')">
+                <form action="/admin/events/<%= ev.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('Delete this event?')">
                   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                 </form>

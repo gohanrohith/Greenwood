@@ -31,7 +31,7 @@
 
       <div class="admin-card">
         <h3>Upload Images</h3>
-        <form action="/gallery/upload?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="admin-form">
+        <form action="/admin/gallery/upload?_csrf=<%= csrfToken %>" method="POST" enctype="multipart/form-data" class="admin-form">
           <div class="form-row">
             <div class="form-group">
               <label>Caption</label>
@@ -85,7 +85,7 @@
             </div>
             <div class="item-controls">
               <span class="gallery-drag-handle" title="Drag to reorder"><i class="fas fa-grip-horizontal"></i></span>
-              <form action="/gallery/<%= item.id %>/delete" method="POST" onsubmit="return confirm('Delete this image?')" style="margin:0">
+              <form action="/admin/gallery/<%= item.id %>/delete" method="POST" onsubmit="return confirm('Delete this image?')" style="margin:0">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <button type="submit" class="btn btn-xs btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
               </form>
