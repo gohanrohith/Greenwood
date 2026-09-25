@@ -23,7 +23,7 @@ body.site-admin, body.admin-login-page {
 
 /* â”€â”€â”€ LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .admin-wrapper { display: flex; min-height: 100vh; }
-.admin-content { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; min-width: 0; }
+.admin-content { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; min-width: 0; margin-left: 240px; }
 .admin-body    { flex: 1; padding: 2rem; }
 .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 998; }
 .sidebar-overlay.active { display: block; }
@@ -35,8 +35,11 @@ body.site-admin, body.admin-login-page {
   color: rgba(255,255,255,.8);
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
-  transition: width .25s ease;
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  z-index: 1000;
+  overflow: hidden;
 }
 .sidebar-brand {
   padding: 1.25rem 1.5rem;
@@ -47,7 +50,7 @@ body.site-admin, body.admin-login-page {
 }
 .sidebar-brand span { font-size: 1.1rem; font-weight: 700; color: var(--admin-white); }
 #sidebarClose { background: none; border: none; color: rgba(255,255,255,.6); cursor: pointer; font-size: 1.1rem; display: none; }
-.sidebar-nav { padding: 1rem 0; display: flex; flex-direction: column; }
+.sidebar-nav { padding: 1rem 0; display: flex; flex-direction: column; flex: 1; overflow: hidden; }
 .sidebar-link {
   display: flex;
   align-items: center;
@@ -85,7 +88,10 @@ body.site-admin, body.admin-login-page {
   box-shadow: var(--admin-shadow);
 }
 #sidebarToggle { background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--admin-gray); }
-.admin-topbar-right { display: flex; align-items: center; gap: 1.5rem; font-size: .87rem; }
+.admin-topbar-title { font-weight: 600; font-size: .9rem; color: #212529; margin-right: auto; margin-left: .75rem; }
+.admin-topbar-right { display: flex; align-items: center; gap: 1.25rem; font-size: .87rem; }
+.admin-topbar-link { color: var(--admin-gray); font-size: .82rem; transition: color .2s; display: flex; align-items: center; gap: .3rem; }
+.admin-topbar-link:hover { color: var(--admin-primary); }
 .admin-logout-btn {
   background: var(--admin-primary);
   color: var(--admin-white);
@@ -189,7 +195,9 @@ body.site-admin, body.admin-login-page {
 
 /* â”€â”€â”€ BUTTONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
   padding: 9px 22px;
   border-radius: var(--admin-radius);
   font-weight: 600;
@@ -198,6 +206,7 @@ body.site-admin, body.admin-login-page {
   border: 2px solid transparent;
   transition: all .2s;
   text-decoration: none;
+  white-space: nowrap;
 }
 .btn-primary { background: var(--admin-primary); color: var(--admin-white); }
 .btn-primary:hover { background: var(--admin-primary-dark); }
@@ -205,6 +214,7 @@ body.site-admin, body.admin-login-page {
 .btn-outline:hover { background: var(--admin-primary); color: var(--admin-white); }
 .btn-block { display: block; width: 100%; text-align: center; }
 .btn-sm { padding: 5px 14px; font-size: .78rem; }
+.btn-xs { padding: 3px 8px; font-size: .73rem; }
 .btn-danger { background: #dc3545; color: #fff; border-color: #dc3545; }
 .btn-danger:hover { background: #b02a37; }
 
@@ -257,8 +267,9 @@ body.site-admin, body.admin-login-page {
   .admin-body { padding: 1.5rem; }
 }
 @media (max-width: 768px) {
-  .admin-sidebar { position: fixed; left: -240px; top: 0; bottom: 0; z-index: 1000; transition: left .3s ease; box-shadow: 4px 0 24px rgba(0,0,0,.3); }
-  .admin-sidebar.open { left: 0; }
+  .admin-sidebar { left: -240px; transition: left .3s ease; box-shadow: none; }
+  .admin-sidebar.open { left: 0; box-shadow: 4px 0 24px rgba(0,0,0,.3); }
+  .admin-content { margin-left: 0; }
   #sidebarClose { display: block; }
   .admin-body { padding: 1rem; }
   .form-row { grid-template-columns: 1fr; }
