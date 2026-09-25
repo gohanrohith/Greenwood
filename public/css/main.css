@@ -1198,3 +1198,56 @@ ul  { list-style: none; }
   .why-icon { width: 50px; height: 50px; font-size: 1.2rem; }
 }
 
+/* ── Animations ────────────────────────────────────────── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Navbar: scrolled compact ──────────────────────────── */
+.navbar .container { transition: padding .3s; }
+.logo { transition: height .3s; }
+.navbar.scrolled .container { padding: .25rem 0; }
+.navbar.scrolled .logo { height: 38px; }
+
+/* ── Nav: desktop underline hover ──────────────────────── */
+.nav-link:not(.nav-cta) { position: relative; }
+.nav-link:not(.nav-cta)::after {
+  content: ''; position: absolute; bottom: 4px; left: 11px; right: 11px;
+  height: 2px; background: var(--green);
+  transform: scaleX(0); transition: transform .2s cubic-bezier(.22,.61,.36,1);
+}
+.nav-link:not(.nav-cta):hover::after,
+.nav-link:not(.nav-cta).active::after { transform: scaleX(1); }
+@media (max-width: 900px) {
+  .nav-link:not(.nav-cta)::after { display: none; }
+}
+
+/* ── Hero: fadeDown stagger entrance ───────────────────── */
+.hero-sub     { animation: fadeDown .5s .05s cubic-bezier(.22,.61,.36,1) both; }
+.hero-title   { animation: fadeDown .5s .12s cubic-bezier(.22,.61,.36,1) both; }
+.hero-desc    { animation: fadeDown .5s .2s  cubic-bezier(.22,.61,.36,1) both; }
+.hero-actions { animation: fadeDown .5s .28s cubic-bezier(.22,.61,.36,1) both; }
+
+/* ── Page/campus hero: fadeDown entrance ───────────────── */
+.page-hero .container   { animation: fadeDown .5s .1s cubic-bezier(.22,.61,.36,1) both; }
+.campus-hero-content    { animation: fadeDown .5s .08s cubic-bezier(.22,.61,.36,1) both; }
+
+/* ── Scroll-reveal ──────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .55s cubic-bezier(.22,.61,.36,1), transform .55s cubic-bezier(.22,.61,.36,1);
+  transition-delay: var(--delay, 0ms);
+}
+[data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+/* ── Campus faculty card ────────────────────────────────── */
+.campus-faculty-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; }
+.campus-faculty-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; text-align: center; transition: transform .2s, box-shadow .2s; }
+.campus-faculty-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+/* ── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+

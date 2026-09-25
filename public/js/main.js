@@ -82,7 +82,56 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 // ── Sticky nav ────────────────────────────────────────
 const navbar = document.getElementById('mainNav');
 if (navbar) {
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 10);
-  }, { passive: true });
+  function updateNav() { navbar.classList.toggle('scrolled', window.scrollY > 10); }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
 }
+
+// ── Scroll-reveal + staggered grid children ───────────
+(function() {
+  document.querySelectorAll('.campus-cards, .why-grid, .achievements-grid, .achievements-full-grid, .testimonials-grid, .about-features, .about-grid, .campus-faculty-grid, .facilities-grid, .steps-grid, .campus-contacts, .downloads-grid').forEach(function(grid) {
+    Array.from(grid.children).forEach(function(child, i) {
+      if (!child.hasAttribute('data-reveal')) {
+        child.setAttribute('data-reveal', '');
+        child.style.setProperty('--delay', (i * 80) + 'ms');
+      }
+    });
+  });
+  document.querySelectorAll('.section-header').forEach(function(el) {
+    if (!el.hasAttribute('data-reveal')) el.setAttribute('data-reveal', '');
+  });
+  const obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(function(el) { obs.observe(el); });
+})();
+
+// ── CountUp for numeric stats ─────────────────────────
+(function() {
+  const stats = document.querySelectorAll('.stat-number[data-count]');
+  if (!stats.length) return;
+  const obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = +el.dataset.count;
+      const suffix = el.dataset.suffix || '';
+      const duration = 1200;
+      let start = null;
+      function tick(now) {
+        if (!start) start = now;
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = Math.round(p * target) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  stats.forEach(function(el) { obs.observe(el); });
+})();
