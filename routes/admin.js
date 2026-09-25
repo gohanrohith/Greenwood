@@ -75,6 +75,7 @@ router.get('/teachers/check-id', ctrl.teacherCheckId);
 router.get('/teachers/:id', ctrl.teacherDetail);
 router.post('/teachers/:id/status', ctrl.teacherUpdateStatus);
 router.post('/teachers/:id/salary', ctrl.teacherSaveSalary);
+router.post('/teachers/:id/update', ctrl.teacherUpdateProfile);
 router.post('/teachers/:id/delete', ctrl.teacherDelete);
 
 // Payroll

@@ -120,28 +120,66 @@
         </form>
       </div>
 
-      <!-- Section 2: Full Profile Read-only -->
+      <!-- Section 2: Edit Profile -->
+      <% if (typeof saved !== 'undefined' && saved) { %>
+      <div class="alert alert-success" style="margin-bottom:1rem"><i class="fas fa-check-circle"></i> Profile updated successfully.</div>
+      <% } %>
+      <div class="salary-form">
+        <h3><i class="fas fa-user-edit"></i> Edit Profile Details</h3>
+        <form action="/admin/teachers/<%= teacher.id %>/update?_csrf=<%= csrfToken %>" method="POST">
+
+          <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:0 0 .75rem">Contact &amp; Assignment</p>
+          <div class="salary-grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="salary-field"><label>Full Name</label><input type="text" name="full_name" value="<%= teacher.full_name %>" required></div>
+            <div class="salary-field"><label>Email</label><input type="email" name="email" value="<%= teacher.email %>" required></div>
+            <div class="salary-field"><label>Phone</label><input type="text" name="phone" value="<%= teacher.phone %>" required></div>
+          </div>
+          <div class="salary-grid" style="grid-template-columns:repeat(3,1fr);margin-top:.75rem">
+            <div class="salary-field"><label>Branch</label><input type="text" name="current_branch" value="<%= teacher.current_branch %>" required></div>
+            <div class="salary-field"><label>Class (assigned)</label><input type="text" name="current_class" value="<%= teacher.current_class || '' %>" placeholder="e.g. XI"></div>
+            <div class="salary-field"><label>Subject (assigned)</label><input type="text" name="current_subject" value="<%= teacher.current_subject || '' %>" placeholder="e.g. Mathematics"></div>
+          </div>
+
+          <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:.75rem 0 .75rem">Address</p>
+          <div class="salary-grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="salary-field" style="grid-column:span 1"><label>Street</label><input type="text" name="street" value="<%= teacher.street %>" required></div>
+            <div class="salary-field"><label>State</label><input type="text" name="state" value="<%= teacher.state %>" required></div>
+            <div class="salary-field"><label>Pincode</label><input type="text" name="pincode" value="<%= teacher.pincode %>" required></div>
+          </div>
+
+          <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:.75rem 0 .75rem">Bank &amp; Official</p>
+          <div class="salary-grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="salary-field"><label>Bank Name</label><input type="text" name="bank_name" value="<%= teacher.bank_name %>" required></div>
+            <div class="salary-field"><label>Account Number</label><input type="text" name="account_number" value="<%= teacher.account_number %>" required></div>
+            <div class="salary-field"><label>IFSC Code</label><input type="text" name="ifsc_code" value="<%= teacher.ifsc_code %>" required></div>
+          </div>
+          <div class="salary-grid" style="grid-template-columns:repeat(3,1fr);margin-top:.75rem">
+            <div class="salary-field"><label>PAN Number</label><input type="text" name="pan_number" value="<%= teacher.pan_number %>" required></div>
+            <div class="salary-field"><label>PF Number</label><input type="text" name="pf_number" value="<%= teacher.pf_number || '' %>" placeholder="Optional"></div>
+            <div class="salary-field"><label>ESI Number</label><input type="text" name="esi_number" value="<%= teacher.esi_number || '' %>" placeholder="Optional"></div>
+          </div>
+
+          <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin:.75rem 0 .75rem">Emergency Contact</p>
+          <div class="salary-grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="salary-field"><label>Name</label><input type="text" name="emergency_contact_name" value="<%= teacher.emergency_contact_name || '' %>" placeholder="Optional"></div>
+            <div class="salary-field"><label>Relation</label><input type="text" name="emergency_contact_relation" value="<%= teacher.emergency_contact_relation || '' %>" placeholder="e.g. Spouse"></div>
+            <div class="salary-field"><label>Mobile</label><input type="text" name="emergency_contact_mobile" value="<%= teacher.emergency_contact_mobile || '' %>" placeholder="Optional"></div>
+          </div>
+
+          <div style="margin-top:1.25rem">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Profile</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Section 3: Read-only — Education & Experience -->
       <div class="detail-grid">
         <div class="detail-block">
-          <h3>Personal</h3>
+          <h3>Personal (Read-only)</h3>
           <div class="detail-row"><span class="lbl">Aadhar</span><span class="val" style="font-family:monospace"><%= teacher.aadhar_number %></span></div>
           <div class="detail-row"><span class="lbl">DOB</span><span class="val"><%= new Date(teacher.date_of_birth).toLocaleDateString('en-IN') %></span></div>
           <div class="detail-row"><span class="lbl">Gender</span><span class="val"><%= teacher.gender %></span></div>
           <% if (teacher.blood_group) { %><div class="detail-row"><span class="lbl">Blood Group</span><span class="val"><%= teacher.blood_group %></span></div><% } %>
-          <% if (teacher.emergency_contact_name) { %>
-          <div class="detail-row"><span class="lbl">Emergency</span><span class="val"><%= teacher.emergency_contact_name %> (<%= teacher.emergency_contact_relation %>) <%= teacher.emergency_contact_mobile %></span></div>
-          <% } %>
-          <div class="detail-row"><span class="lbl">Address</span><span class="val"><%= teacher.street %>, <%= teacher.state %> — <%= teacher.pincode %></span></div>
-        </div>
-
-        <div class="detail-block">
-          <h3>Bank &amp; Official</h3>
-          <div class="detail-row"><span class="lbl">Bank</span><span class="val"><%= teacher.bank_name %></span></div>
-          <div class="detail-row"><span class="lbl">Account</span><span class="val" style="font-family:monospace"><%= teacher.account_number %></span></div>
-          <div class="detail-row"><span class="lbl">IFSC</span><span class="val" style="font-family:monospace"><%= teacher.ifsc_code %></span></div>
-          <div class="detail-row"><span class="lbl">PAN</span><span class="val" style="font-family:monospace"><%= teacher.pan_number %></span></div>
-          <% if (teacher.pf_number) { %><div class="detail-row"><span class="lbl">PF No.</span><span class="val"><%= teacher.pf_number %></span></div><% } %>
-          <% if (teacher.esi_number) { %><div class="detail-row"><span class="lbl">ESI No.</span><span class="val"><%= teacher.esi_number %></span></div><% } %>
         </div>
 
         <div class="detail-block">
@@ -171,7 +209,6 @@
             const subj = JSON.parse(teacher.previous_subjects); %>
           <div class="detail-row" style="flex-direction:column;gap:.25rem"><span class="lbl">Subjects</span><div><% subj.forEach(s => { %><span class="edu-pill" style="background:#e0e7ff;color:#3730a3"><%= s %></span><% }) %></div></div>
           <% } %>
-          <div class="detail-row"><span class="lbl">Current</span><span class="val"><%= teacher.current_class || '—' %> / <%= teacher.current_subject || '—' %></span></div>
         </div>
       </div>
 

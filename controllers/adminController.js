@@ -469,6 +469,7 @@ exports.teacherDetail = async (req, res) => {
     title: `${teacher.full_name} | Greenwood Admin`,
     teacher,
     currentPage: 'teachers',
+    saved: req.query.saved === '1',
   });
 };
 
@@ -522,6 +523,27 @@ exports.teacherCheckId = async (req, res) => {
 exports.teacherDelete = async (req, res) => {
   await q('DELETE FROM teachers WHERE id = ?', [req.params.id]);
   res.redirect('/admin/teachers');
+};
+
+exports.teacherUpdateProfile = async (req, res) => {
+  const { full_name, email, phone, current_branch, current_class, current_subject,
+          street, pincode, state,
+          bank_name, account_number, ifsc_code, pan_number, pf_number, esi_number,
+          emergency_contact_name, emergency_contact_relation, emergency_contact_mobile } = req.body;
+  await q(`UPDATE teachers SET
+    full_name=?, email=?, phone=?, current_branch=?, current_class=?, current_subject=?,
+    street=?, pincode=?, state=?,
+    bank_name=?, account_number=?, ifsc_code=?, pan_number=?,
+    pf_number=?, esi_number=?,
+    emergency_contact_name=?, emergency_contact_relation=?, emergency_contact_mobile=?
+    WHERE id=?`,
+    [full_name, email, phone, current_branch, current_class || null, current_subject || null,
+     street, pincode, state,
+     bank_name, account_number, ifsc_code, pan_number,
+     pf_number || null, esi_number || null,
+     emergency_contact_name || null, emergency_contact_relation || null, emergency_contact_mobile || null,
+     req.params.id]);
+  res.redirect(`/admin/teachers/${req.params.id}?saved=1`);
 };
 
 // ── Payroll ───────────────────────────────────────────────────────────────────
