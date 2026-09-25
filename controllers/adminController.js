@@ -484,7 +484,7 @@ exports.teacherUpdateStatus = async (req, res) => {
 exports.teacherSaveSalary = async (req, res) => {
   const { teacher_id, cbse_reg_number, designation,
           salary_basic, salary_hra, salary_da, salary_transport,
-          pf_percent, esi_percent, tds_flat } = req.body;
+          pf_percent, esi_percent, tds_flat, pt_flat } = req.body;
 
   if (teacher_id) {
     const existing = await q1('SELECT id FROM teachers WHERE teacher_id = ? AND id != ?', [teacher_id, req.params.id]);
@@ -502,7 +502,7 @@ exports.teacherSaveSalary = async (req, res) => {
   await q(`UPDATE teachers SET
     teacher_id = ?, cbse_reg_number = ?, designation = ?,
     salary_basic = ?, salary_hra = ?, salary_da = ?, salary_transport = ?,
-    pf_percent = ?, esi_percent = ?, tds_flat = ?
+    pf_percent = ?, esi_percent = ?, tds_flat = ?, pt_flat = ?
     WHERE id = ?`,
     [teacher_id || null, cbse_reg_number || null, designation || null,
      parseFloat(salary_basic) || 0, parseFloat(salary_hra) || 0,
@@ -510,6 +510,7 @@ exports.teacherSaveSalary = async (req, res) => {
      pf_percent !== '' && !isNaN(parseFloat(pf_percent)) ? parseFloat(pf_percent) : 12,
      esi_percent !== '' && !isNaN(parseFloat(esi_percent)) ? parseFloat(esi_percent) : 0.75,
      !isNaN(parseFloat(tds_flat)) ? parseFloat(tds_flat) : 0,
+     !isNaN(parseFloat(pt_flat)) ? parseFloat(pt_flat) : 200,
      req.params.id]);
   res.redirect(`/admin/teachers/${req.params.id}`);
 };

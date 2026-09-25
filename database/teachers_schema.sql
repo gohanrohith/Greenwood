@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS teachers (
   pf_percent                DECIMAL(5,2) DEFAULT 12.00,
   esi_percent               DECIMAL(5,2) DEFAULT 0.75,
   tds_flat                  DECIMAL(10,2) DEFAULT 0,
+  pt_flat                   DECIMAL(10,2) DEFAULT 200,
 
   -- Status
   status                    ENUM('pending','approved','rejected') DEFAULT 'pending',

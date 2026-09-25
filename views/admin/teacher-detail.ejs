@@ -110,6 +110,7 @@
             <div class="salary-field"><label>PF %</label><input type="number" name="pf_percent" value="<%= teacher.pf_percent || 12 %>" min="0" step="0.01"></div>
             <div class="salary-field"><label>ESI %</label><input type="number" name="esi_percent" value="<%= teacher.esi_percent || 0.75 %>" min="0" step="0.01"></div>
             <div class="salary-field"><label>TDS (flat ₹)</label><input type="number" name="tds_flat" value="<%= teacher.tds_flat || 0 %>" min="0" step="0.01"></div>
+            <div class="salary-field"><label>Prof. Tax (flat ₹)</label><input type="number" name="pt_flat" value="<%= teacher.pt_flat !== undefined && teacher.pt_flat !== null ? teacher.pt_flat : 200 %>" min="0" step="0.01"></div>
           </div>
 
           <div class="gross-preview" id="grossPreview">

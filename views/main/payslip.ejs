@@ -176,7 +176,8 @@
           <tr><td>Basic</td><td><%- (parseFloat(slip.salary_basic) * entry.days_present / entry.days_in_month).toFixed(2) %></td><td>PF (<%= slip.pf_percent %>%)</td><td><%= calc.pf_deduction %></td></tr>
           <tr><td>HRA</td><td><%- (parseFloat(slip.salary_hra) * entry.days_present / entry.days_in_month).toFixed(2) %></td><td>ESI (<%= slip.esi_percent %>%)</td><td><%= calc.esi_deduction %></td></tr>
           <tr><td>DA</td><td><%- (parseFloat(slip.salary_da) * entry.days_present / entry.days_in_month).toFixed(2) %></td><td>TDS</td><td><%= calc.tds_deduction %></td></tr>
-          <tr><td>Transport</td><td><%- (parseFloat(slip.salary_transport) * entry.days_present / entry.days_in_month).toFixed(2) %></td><td>Advance</td><td><%= calc.advance_deduction %></td></tr>
+          <tr><td>Transport</td><td><%- (parseFloat(slip.salary_transport) * entry.days_present / entry.days_in_month).toFixed(2) %></td><td>Prof. Tax</td><td><%= calc.pt_deduction %></td></tr>
+          <tr><td></td><td></td><td>Advance</td><td><%= calc.advance_deduction %></td></tr>
           <% if (parseFloat(entry.bonus) > 0) { %><tr><td>Bonus</td><td><%= parseFloat(entry.bonus).toFixed(2) %></td><td></td><td></td></tr><% } %>
           <% if (parseFloat(entry.other_deduction_amount) > 0) { %><tr><td></td><td></td><td><%= entry.other_deduction_label || 'Other' %></td><td><%= calc.other_deduction %></td></tr><% } %>
         </tbody>

@@ -48,9 +48,10 @@ function calcPayroll(teacher, entry) {
   const pf       = (parseFloat(teacher.salary_basic) / days_in * days_prs) * (parseFloat(teacher.pf_percent) / 100);
   const esi      = earned <= 21000 ? earned * (parseFloat(teacher.esi_percent) / 100) : 0;
   const tds      = parseFloat(teacher.tds_flat || 0);
+  const pt       = parseFloat(teacher.pt_flat || 0);
   const advance  = parseFloat(entry.advance_deduction || 0);
   const other    = parseFloat(entry.other_deduction_amount || 0);
-  const total_deductions = pf + esi + tds + advance + other;
+  const total_deductions = pf + esi + tds + pt + advance + other;
   const net_pay  = earned - total_deductions;
   return {
     gross_salary: gross_salary.toFixed(2),
@@ -59,6 +60,7 @@ function calcPayroll(teacher, entry) {
     pf_deduction: pf.toFixed(2),
     esi_deduction: esi.toFixed(2),
     tds_deduction: tds.toFixed(2),
+    pt_deduction: pt.toFixed(2),
     advance_deduction: advance.toFixed(2),
     other_deduction: other.toFixed(2),
     total_deductions: total_deductions.toFixed(2),
