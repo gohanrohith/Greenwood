@@ -117,6 +117,7 @@
 
 Tables: `admins`, `sessions`, `notices`, `events`, `articles`, `gallery`, `faculty`, `compliance_documents`, `downloads`, `admission_enquiries`, `contact_submissions`, `testimonials`, `newsletter_subscribers`, `settings`
 
+
 ---
 
 ## 8. Deployment Checklist ⏳ PENDING
